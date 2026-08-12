@@ -1,0 +1,172 @@
+<nav class="navbar navbar-expand-lg vendor-navbar">
+
+    <div class="container-fluid">
+
+        <!-- Logo -->
+
+        <a class="navbar-brand d-flex align-items-center" href="/vendor/dashboard">
+            <div class="logo-circle">
+                <img src="/images/auth/logo1.png" alt="VendorHub">
+            </div>
+            <div class="brand-text ms-3">
+
+                <h4 class="brand-title">
+
+                    Vendor<span>Hub</span>
+
+                    <i class="fas fa-leaf brand-icon"></i>
+
+                </h4>
+
+                <p class="brand-subtitle">
+
+                    Sell • Manage • Grow
+                </p>
+
+            </div>
+
+        </a>
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="header-left d-flex align-items-center">
+
+
+
+            <!-- Search Box -->
+            <div class="dashboard-search">
+
+                <input type="search" id="dashboardSearch" class="form-control" placeholder="Search Dashboard"
+                    autocomplete="off">
+
+                <button type="button" class="search-btn" id="searchButton">
+
+                    <i class="fas fa-search"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+        <!-- Right -->
+
+        <div class="d-flex align-items-center">
+
+            <!-- Notification -->
+
+            <a href="/vendor/notification/list" class="nav-icon position-relative">
+
+                <i class="fas fa-bell"></i>
+
+                <% if(notificationCount> 0){ %>
+
+                    <span class="badge bg-danger">
+                        <%= notificationCount %>
+                    </span>
+
+                    <% } %>
+
+            </a>
+
+            <!-- Messages -->
+            <a href="/vendor/message/list" class="nav-icon position-relative">
+
+                <i class="fas fa-envelope"></i>
+
+
+                <% if(messageCount> 0){ %>
+
+                    <span class="badge bg-primary">
+
+                        <%= messageCount %>
+
+                    </span>
+
+                    <% } %>
+
+
+            </a>
+
+            <!-- Profile -->
+
+            <!-- ================= PROFILE DROPDOWN ================= -->
+
+            <div class="dropdown ms-4">
+
+                <button type="button"
+                    class="profile-btn dropdown-toggle d-flex align-items-center border-0 bg-transparent"
+                    id="vendorProfileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    <!-- Profile Image -->
+                    <img src="<%= vendor && vendor.image ? vendor.image : '/images/auth/profile.jpg' %>" alt="Vendor"
+                        class="profile-image">
+
+                    <!-- Profile Information -->
+                    <div class="profile-info text-start ms-2">
+
+                        <h6 class="mb-0">
+                            <%= vendor?.user?.name || "Vendor" %>
+                        </h6>
+
+                        <small>
+                            Vendor
+                        </small>
+
+                    </div>
+
+                </button>
+
+
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="vendorProfileDropdown">
+
+                    <!-- Profile -->
+                    <li>
+                        <a class="dropdown-item" href="/vendor/profile">
+
+                            <i class="fas fa-user me-4"></i>
+
+                            My Profile
+
+                        </a>
+                    </li>
+
+
+                    <!-- Store -->
+                    <li>
+                        <a class="dropdown-item" href="/vendor/store">
+
+                            <i class="fas fa-store me-4"></i>
+
+                            My Store
+
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+
+                    <!-- Logout -->
+                    <li>
+                        <a class="dropdown-item text-danger" href="/auth/logout"
+                            onclick="return confirm('Are you sure you want to logout?');">
+
+                            <i class="fas fa-sign-out-alt me-2"></i>
+
+                            Logout
+
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>

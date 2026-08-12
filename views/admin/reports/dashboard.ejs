@@ -1,0 +1,246 @@
+<%- include("../layouts/header", { title: "Reports Dashboard" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+            <div class="content-body">
+                <div class="container-fluid p-4">
+
+                    <h3 class="mb-4">
+
+                        Reports Dashboard
+
+                    </h3>
+
+                    <div class="row">
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card bg-primary text-white shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Total Revenue</h6>
+
+                                    <h2>₹ <%= totalRevenue %>
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card bg-success text-white shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Total Orders</h6>
+
+                                    <h2>
+                                        <%= totalOrders %>
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card bg-warning shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Total Products</h6>
+
+                                    <h2>
+                                        <%= totalProducts %>
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card bg-danger text-white shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Total Customers</h6>
+
+                                    <h2>
+                                        <%= totalCustomers %>
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card border-success shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Delivered Orders</h6>
+
+                                    <h2 class="text-success">
+
+                                        <%= deliveredOrders %>
+
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card border-warning shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Pending Orders</h6>
+
+                                    <h2 class="text-warning">
+
+                                        <%= pendingOrders %>
+
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card border-danger shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Cancelled Orders</h6>
+
+                                    <h2 class="text-danger">
+
+                                        <%= cancelledOrders %>
+
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+
+                            <div class="card border-info shadow">
+
+                                <div class="card-body">
+
+                                    <h6>Total Vendors</h6>
+
+                                    <h2 class="text-info">
+
+                                        <%= totalVendors %>
+
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card shadow">
+
+                        <div class="card-header">
+
+                            Reports
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-md-3 mb-3">
+
+                                    <a href="/admin/reports/sales" class="btn btn-primary w-100">
+
+                                        Sales Report
+
+                                    </a>
+
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+
+                                    <a href="/admin/reports/orders" class="btn btn-success w-100">
+
+                                        Order Report
+
+                                    </a>
+
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+
+                                    <a href="/admin/reports/products" class="btn btn-warning w-100">
+
+                                        Product Report
+
+                                    </a>
+
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+
+                                    <a href="/admin/reports/customers" class="btn btn-info w-100">
+
+                                        Customer Report
+
+                                    </a>
+
+                                </div>
+
+                                <!-- <div class="col-md-3">
+
+                                    <a href="/admin/reports/vendors" class="btn btn-danger w-100">
+
+                                        Vendor Report
+
+                                    </a>
+
+                                </div> -->
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

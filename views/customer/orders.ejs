@@ -1,0 +1,425 @@
+<%- include('layouts/header') %>
+
+
+    <!-- ============================= -->
+    <!-- PAGE HEADER -->
+    <!-- ============================= -->
+
+    <div class="container-fluid page-header py-5">
+
+        <h1 class="text-center text-white display-6">
+            My Orders
+        </h1>
+
+        <ol class="breadcrumb justify-content-center mb-0">
+
+            <li class="breadcrumb-item">
+                <a href="/" class="text-white">
+                    Home
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active text-white">
+                My Orders
+            </li>
+
+        </ol>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- ORDERS SECTION -->
+    <!-- ============================= -->
+
+    <div class="container-fluid py-5">
+
+        <div class="container py-5">
+
+
+            <% if (!orders || orders.length===0) { %>
+
+
+                <!-- EMPTY ORDERS -->
+
+                <div class="text-center py-5">
+
+                    <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="
+                        width:100px;
+                        height:100px;
+                        border-radius:50%;
+                        background:#f8f9fa;
+                    ">
+
+                        <i class="fa fa-shopping-bag fa-3x text-primary"></i>
+
+                    </div>
+
+
+                    <h2 class="mb-3">
+                        No Orders Yet
+                    </h2>
+
+
+                    <p class="text-muted mb-4">
+
+                        You haven't placed any orders yet.
+
+                    </p>
+
+
+                    <a href="/product" class="btn btn-primary rounded-pill px-5 py-3">
+
+                        <i class="fa fa-shopping-cart me-2"></i>
+
+                        Start Shopping
+
+                    </a>
+
+                </div>
+
+
+                <% } else { %>
+
+
+                    <!-- ============================= -->
+                    <!-- ORDERS LIST -->
+                    <!-- ============================= -->
+
+                    <div class="row g-4">
+
+
+                        <% orders.forEach(order=> { %>
+
+
+                            <div class="col-12">
+
+
+                                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+
+                                    <!-- ORDER HEADER -->
+
+                                    <div class="card-header bg-white border-bottom p-4">
+
+                                        <div class="row align-items-center">
+
+
+                                            <div class="col-md-4">
+
+                                                <small class="text-muted d-block">
+                                                    ORDER NUMBER
+                                                </small>
+
+                                                <strong>
+
+                                                    <%= order.orderNumber %>
+
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mt-3 mt-md-0">
+
+                                                <small class="text-muted d-block">
+                                                    ORDER DATE
+                                                </small>
+
+                                                <strong>
+
+                                                    <%= new Date(order.createdAt).toLocaleDateString('en-IN') %>
+
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mt-3 mt-md-0">
+
+                                                <small class="text-muted d-block">
+                                                    PAYMENT
+                                                </small>
+
+                                                <strong>
+
+                                                    <%= order.paymentMethod %>
+
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div class="col-md-2 mt-3 mt-md-0 text-md-end">
+
+
+                                                <% if (order.orderStatus==="Pending" ) { %>
+
+                                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">
+                                                        Pending
+                                                    </span>
+
+
+                                                    <% } else if (order.orderStatus==="Confirmed" ) { %>
+
+                                                        <span class="badge bg-info px-3 py-2 rounded-pill">
+                                                            Confirmed
+                                                        </span>
+
+
+                                                        <% } else if (order.orderStatus==="Packed" ) { %>
+
+                                                            <span class="badge bg-primary px-3 py-2 rounded-pill">
+                                                                Packed
+                                                            </span>
+
+
+                                                            <% } else if (order.orderStatus==="Shipped" ) { %>
+
+                                                                <span class="badge bg-primary px-3 py-2 rounded-pill">
+                                                                    Shipped
+                                                                </span>
+
+
+                                                                <% } else if (order.orderStatus==="Delivered" ) { %>
+
+                                                                    <span
+                                                                        class="badge bg-success px-3 py-2 rounded-pill">
+                                                                        Delivered
+                                                                    </span>
+
+
+                                                                    <% } else if (order.orderStatus==="Cancelled" ) { %>
+
+                                                                        <span
+                                                                            class="badge bg-danger px-3 py-2 rounded-pill">
+                                                                            Cancelled
+                                                                        </span>
+
+
+                                                                        <% } else if (order.orderStatus==="Returned" ) {
+                                                                            %>
+
+                                                                            <span
+                                                                                class="badge bg-secondary px-3 py-2 rounded-pill">
+                                                                                Returned
+                                                                            </span>
+
+
+                                                                            <% } %>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- ORDER BODY -->
+
+                                    <div class="card-body p-4">
+
+
+                                        <% if (order.items && order.items.length> 0) { %>
+
+
+                                            <% order.items.forEach(item=> { %>
+
+
+                                                <div class="row align-items-center border-bottom py-3">
+
+
+                                                    <!-- PRODUCT IMAGE -->
+
+                                                    <div class="col-3 col-md-2">
+
+                                                        <% if ( item.product && item.product.images &&
+                                                            item.product.images.length> 0
+                                                            ) { %>
+
+
+                                                            <img src="<%= item.product.images[0].imageUrl %>"
+                                                                class="img-fluid rounded" style="
+                                                            width:80px;
+                                                            height:80px;
+                                                            object-fit:contain;
+                                                        " alt="<%= item.name %>">
+
+
+                                                            <% } else { %>
+
+
+                                                                <div class="d-flex align-items-center justify-content-center bg-light rounded"
+                                                                    style="
+                                                            width:80px;
+                                                            height:80px;
+                                                        ">
+
+                                                                    <i class="fa fa-image text-muted"></i>
+
+                                                                </div>
+
+
+                                                                <% } %>
+
+                                                    </div>
+
+
+                                                    <!-- PRODUCT NAME -->
+
+                                                    <div class="col-5 col-md-5">
+
+                                                        <h6 class="mb-1">
+
+                                                            <%= item.name %>
+
+                                                        </h6>
+
+                                                        <small class="text-muted">
+
+                                                            Quantity:
+                                                            <%= item.quantity %>
+
+                                                        </small>
+
+                                                    </div>
+
+
+                                                    <!-- PRICE -->
+
+                                                    <div class="col-4 col-md-2 text-end text-md-center">
+
+                                                        <small class="text-muted d-block">
+                                                            Price
+                                                        </small>
+
+                                                        ₹<%= Number(item.price).toFixed(2) %>
+
+                                                    </div>
+
+
+                                                    <!-- TOTAL -->
+
+                                                    <div class="col-12 col-md-3 text-md-end mt-2 mt-md-0">
+
+                                                        <strong>
+
+                                                            ₹<%= Number(item.total).toFixed(2) %>
+
+                                                        </strong>
+
+                                                    </div>
+
+
+                                                </div>
+
+
+                                                <% }) %>
+
+
+                                                    <% } %>
+
+
+                                    </div>
+
+
+                                    <!-- ORDER FOOTER -->
+
+                                    <div class="card-footer bg-light border-0 p-4">
+
+                                        <div class="row align-items-center">
+
+
+                                            <!-- TOTAL -->
+
+                                            <div class="col-md-6">
+
+                                                <span class="text-muted">
+
+                                                    Total Amount:
+
+                                                </span>
+
+                                                <strong class="fs-4 text-primary ms-2">
+
+                                                    ₹<%= Number(order.totalAmount).toFixed(2) %>
+
+                                                </strong>
+
+                                            </div>
+
+
+                                            <!-- BUTTONS -->
+
+                                            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+
+
+                                                <a href="/customer/orders/<%= order._id %>"
+                                                    class="btn btn-outline-primary rounded-pill px-4 me-2">
+
+                                                    <i class="fa fa-eye me-1"></i>
+
+                                                    View Details
+
+                                                </a>
+
+
+                                                <% if ( order.orderStatus==="Pending" || order.orderStatus==="Confirmed"
+                                                    ) { %>
+
+
+                                                    <form action="/customer/orders/cancel/<%= order._id %>"
+                                                        method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Are you sure you want to cancel this order?');">
+
+                                                        <button type="submit"
+                                                            class="btn btn-outline-danger rounded-pill px-4">
+
+                                                            <i class="fa fa-times me-1"></i>
+
+                                                            Cancel
+
+                                                        </button>
+
+                                                    </form>
+
+
+                                                    <% } %>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <% }) %>
+
+
+                    </div>
+
+
+                    <% } %>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- END -->
+    <!-- ============================= -->
+
+
+    <%- include('layouts/footer') %>

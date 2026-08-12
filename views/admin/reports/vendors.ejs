@@ -1,0 +1,262 @@
+<%- include("../layouts/header", { title: "Vendor Report" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="content-body">
+
+                <div class="container-fluid p-4">
+
+                    <!-- =========================
+             PAGE HEADER
+        ========================== -->
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <h3 class="fw-bold mb-1">
+                                <i class="fas fa-store text-primary me-2"></i>
+                                Vendor Report
+                            </h3>
+
+                            <p class="text-muted mb-0">
+                                Vendor-wise sales and revenue report
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <a href="/admin/reports/dashboard" class="btn btn-danger me-2">
+
+                                <i class="fas fa-arrow-left"></i>
+                                Report Dashboard
+
+                            </a>
+
+
+                            <button onclick="window.print()" class="btn btn-primary">
+
+                                <i class="fas fa-print"></i>
+                                Print Report
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+             VENDOR REPORT CARD
+        ========================== -->
+
+                    <div class="card shadow border-0 rounded-4">
+
+                        <div class="card-header bg-primary text-white py-3">
+
+                            <h5 class="mb-0">
+
+                                <i class="fas fa-chart-line me-2"></i>
+
+                                Vendor Sales Report
+
+                            </h5>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <% if (vendors && vendors.length> 0) { %>
+
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-hover align-middle mb-0">
+
+                                        <thead class="table-dark">
+
+                                            <tr class="text-center">
+
+                                                <th width="70">
+                                                    #
+                                                </th>
+
+                                                <th>
+                                                    Store Name
+                                                </th>
+
+                                                <th>
+                                                    Total Products Sold
+                                                </th>
+
+                                                <th>
+                                                    Total Revenue
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+
+                                        <tbody>
+
+
+                                            <% vendors.forEach((vendor, index)=> { %>
+
+
+                                                <tr>
+
+                                                    <!-- Number -->
+
+                                                    <td class="text-center fw-bold">
+
+                                                        <%= index + 1 %>
+
+                                                    </td>
+
+
+                                                    <!-- Store -->
+
+                                                    <td>
+
+                                                        <div class="d-flex align-items-center">
+
+                                                            <div class="bg-primary text-white rounded-circle
+                                                            d-flex align-items-center justify-content-center me-2"
+                                                                style="width:40px;height:40px;">
+
+                                                                <i class="fas fa-store"></i>
+
+                                                            </div>
+
+
+                                                    <td>
+
+                                                        <% if (vendor._id) { %>
+
+                                                            <strong>
+                                                                <%= vendor._id.storeName || "No Store Name" %>
+                                                            </strong>
+
+                                                            <% if (vendor._id.email) { %>
+
+                                                                <br>
+
+                                                                <small class="text-muted">
+                                                                    <%= vendor._id.email %>
+                                                                </small>
+
+                                                                <% } %>
+
+                                                                    <% } else { %>
+
+                                                                        <span class="text-danger">
+                                                                            Vendor Not Found
+                                                                        </span>
+
+                                                                        <% } %>
+
+                                                    </td>
+                                </div>
+
+                                </td>
+
+
+                                <!-- Products Sold -->
+
+                                <td class="text-center">
+
+                                    <span class="badge bg-primary px-3 py-2">
+
+                                        <i class="fas fa-box"></i>
+
+                                        <%= vendor.totalProducts || 0 %>
+
+                                    </span>
+
+                                </td>
+
+                                <td class="text-end">
+
+                                    <strong class="text-success">
+
+                                        ₹ <%= Number(vendor.totalSales || 0).toFixed(2) %>
+
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- Revenue -->
+
+                                <td class="text-end">
+
+                                    <strong class="text-success">
+
+                                        ₹ <%= Number( vendor.totalSales || 0 ).toFixed(2) %>
+
+                                    </strong>
+
+                                </td>
+
+
+                                </tr>
+
+
+                                <% }) %>
+
+
+                                    </tbody>
+
+                                    </table>
+
+                        </div>
+
+
+                        <% } else { %>
+
+
+                            <!-- =========================
+                         NO DATA
+                    ========================== -->
+
+                            <div class="text-center py-5">
+
+                                <i class="fas fa-store-slash fa-4x text-muted mb-3"></i>
+
+                                <h5 class="text-muted">
+
+                                    No Vendor Report Available
+
+                                </h5>
+
+                                <p class="text-muted">
+
+                                    There are no vendor sales records available.
+
+                                </p>
+
+                            </div>
+
+
+                            <% } %>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            </div>
+
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

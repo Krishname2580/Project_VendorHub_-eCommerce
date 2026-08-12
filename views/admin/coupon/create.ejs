@@ -1,0 +1,41 @@
+<h2>Create Coupon</h2>
+
+<form action="/admin/coupon/create" method="POST">
+
+    <input type="text" name="code" placeholder="Coupon Code" required>
+
+    <input type="text" name="description" placeholder="Description">
+
+    <select name="discountType">
+
+        <option value="Flat">
+
+            Flat
+
+        </option>
+
+        <option value="Percentage">
+
+            Percentage
+
+        </option>
+
+    </select>
+
+    <input type="number" name="discountValue" placeholder="Discount Value" required>
+
+    <input type="number" name="minimumOrderAmount" placeholder="Minimum Order Amount">
+
+    <input type="number" name="maximumDiscount" placeholder="Maximum Discount">
+
+    <input type="number" name="usageLimit" placeholder="Usage Limit">
+
+    <input type="date" name="expiryDate" required>
+
+    <button type="submit">
+
+        Create Coupon
+
+    </button>
+
+</form>

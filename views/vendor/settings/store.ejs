@@ -1,0 +1,243 @@
+<%- include("../layouts/header", { title: "Store Settings" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-10">
+
+                        <div class="card shadow">
+
+                            <div class="card-header">
+
+                                <h4>Store Settings</h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <form action="/vendor/settings/store" method="POST" enctype="multipart/form-data">
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Store Name
+
+                                            </label>
+
+                                            <input type="text" name="storeName" class="form-control"
+                                                value="<%= store.storeName || '' %>" required>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Business Email
+
+                                            </label>
+
+                                            <input type="email" name="businessEmail" class="form-control"
+                                                value="<%= store.businessEmail || '' %>">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Business Phone
+
+                                            </label>
+
+                                            <input type="text" name="businessPhone" class="form-control"
+                                                value="<%= store.businessPhone || '' %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Website
+
+                                            </label>
+
+                                            <input type="url" name="website" class="form-control"
+                                                value="<%= store.website || '' %>">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Store Description
+
+                                        </label>
+
+                                        <textarea name="description" rows="4"
+                                            class="form-control"><%= store.description || '' %></textarea>
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Store Address
+
+                                        </label>
+
+                                        <textarea name="address" rows="3"
+                                            class="form-control"><%= store.address || '' %></textarea>
+
+                                    </div>
+
+                                    <hr>
+
+                                    <h5>Store Images</h5>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Store Logo
+
+                                            </label>
+
+                                            <input type="file" name="logo" class="form-control">
+
+                                            <% if(store.logo){ %>
+
+                                                <img src="<%= store.logo %>" class="img-thumbnail mt-2" width="120">
+
+                                                <% } %>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Store Banner
+
+                                            </label>
+
+                                            <input type="file" name="banner" class="form-control">
+
+                                            <% if(store.banner){ %>
+
+                                                <img src="<%= store.banner %>" class="img-thumbnail mt-2" width="180">
+
+                                                <% } %>
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                    <h5>Social Media</h5>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Facebook</label>
+
+                                            <input type="url" name="facebook" class="form-control"
+                                                value="<%= store.facebook || '' %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Instagram</label>
+
+                                            <input type="url" name="instagram" class="form-control"
+                                                value="<%= store.instagram || '' %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Twitter / X</label>
+
+                                            <input type="url" name="twitter" class="form-control"
+                                                value="<%= store.twitter || '' %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>YouTube</label>
+
+                                            <input type="url" name="youtube" class="form-control"
+                                                value="<%= store.youtube || '' %>">
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Business Hours
+
+                                        </label>
+
+                                        <input type="text" name="businessHours" class="form-control"
+                                            placeholder="Mon - Sat : 9 AM - 8 PM"
+                                            value="<%= store.businessHours || '' %>">
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">
+
+                                        <i class="fas fa-save"></i>
+
+                                        Save Store Settings
+
+                                    </button>
+
+                                    <button type="reset" class="btn btn-warning">
+
+                                        Reset
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

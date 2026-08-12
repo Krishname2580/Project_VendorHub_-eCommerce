@@ -1,0 +1,69 @@
+<!-- ========================= -->
+<!-- Bootstrap JS -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ========================= -->
+<!-- jQuery -->
+<!-- ========================= -->
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- ========================= -->
+<!-- SweetAlert2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ========================= -->
+<!-- Chart.js -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ========================= -->
+<!-- DataTables -->
+<!-- ========================= -->
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- ========================= -->
+<!-- Initialize DataTable -->
+<!-- ========================= -->
+
+<script>
+
+    $(document).ready(function () {
+
+        $(".datatable").DataTable({
+
+            pageLength: 10,
+
+            responsive: true,
+
+            ordering: true
+
+        });
+
+    });
+
+</script>
+
+<!-- ========================= -->
+<!-- Auto Hide Alerts -->
+<!-- ========================= -->
+
+<script>
+
+    setTimeout(function () {
+
+        $(".alert").fadeOut();
+
+    }, 3000);
+
+</script>

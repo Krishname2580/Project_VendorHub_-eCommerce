@@ -1,0 +1,832 @@
+<%- include("../layouts/header", { title: "Approved Products" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+
+            <style>
+                /* =========================================================
+   APPROVED PRODUCTS PAGE
+========================================================= */
+
+                .approved-products-page {
+                    width: 100%;
+                    padding: 20px;
+                }
+
+                /* =========================================================
+   PAGE HEADER
+========================================================= */
+
+                .approved-page-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 25px;
+                }
+
+                .approved-page-title {
+                    margin: 0;
+                    font-weight: 700;
+                    font-size: 28px;
+                }
+
+                .approved-page-subtitle {
+                    margin: 5px 0 0;
+                    color: #6c757d;
+                }
+
+                /* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+                .approved-product-card {
+                    width: 100%;
+                    border: 0;
+                    border-radius: 15px;
+                    overflow: hidden;
+                }
+
+                .approved-product-card .card-header {
+                    padding: 16px 20px;
+                    background: #198754;
+                    color: #fff;
+                    border: 0;
+                }
+
+                .approved-product-card .card-body {
+                    padding: 20px;
+                }
+
+                /* =========================================================
+   TABLE
+========================================================= */
+
+                .approved-table {
+                    width: 100%;
+                    max-width: 100%;
+                    table-layout: fixed;
+                    border-collapse: collapse;
+                }
+
+                .approved-table th,
+                .approved-table td {
+                    vertical-align: middle;
+                    word-break: break-word;
+                    overflow-wrap: anywhere;
+                    white-space: normal;
+                }
+
+                /* Header */
+
+                .approved-table thead th {
+                    text-align: center;
+                    font-size: 13px;
+                    padding: 12px 7px;
+                }
+
+                /* Body */
+
+                .approved-table tbody td {
+                    font-size: 13px;
+                    padding: 12px 7px;
+                }
+
+                /* =========================================================
+   COLUMN WIDTHS
+========================================================= */
+
+                .approved-table th:nth-child(1),
+                .approved-table td:nth-child(1) {
+                    width: 4%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(2),
+                .approved-table td:nth-child(2) {
+                    width: 7%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(3),
+                .approved-table td:nth-child(3) {
+                    width: 11%;
+                }
+
+                .approved-table th:nth-child(4),
+                .approved-table td:nth-child(4) {
+                    width: 9%;
+                }
+
+                .approved-table th:nth-child(5),
+                .approved-table td:nth-child(5) {
+                    width: 8%;
+                }
+
+                .approved-table th:nth-child(6),
+                .approved-table td:nth-child(6) {
+                    width: 9%;
+                }
+
+                .approved-table th:nth-child(7),
+                .approved-table td:nth-child(7) {
+                    width: 9%;
+                }
+
+                .approved-table th:nth-child(8),
+                .approved-table td:nth-child(8) {
+                    width: 7%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(9),
+                .approved-table td:nth-child(9) {
+                    width: 6%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(10),
+                .approved-table td:nth-child(10) {
+                    width: 8%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(11),
+                .approved-table td:nth-child(11) {
+                    width: 7%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(12),
+                .approved-table td:nth-child(12) {
+                    width: 7%;
+                    text-align: center;
+                }
+
+                .approved-table th:nth-child(13),
+                .approved-table td:nth-child(13) {
+                    width: 8%;
+                    text-align: center;
+                }
+
+                /* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+                .approved-product-image {
+                    width: 50px;
+                    height: 50px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    display: block;
+                    margin: auto;
+                }
+
+                /* =========================================================
+   PRICE
+========================================================= */
+
+                .approved-price {
+                    color: #198754;
+                    font-weight: 700;
+                    white-space: nowrap;
+                }
+
+                /* =========================================================
+   BADGES
+========================================================= */
+
+                .approved-table .badge {
+                    font-size: 11px;
+                    padding: 6px 8px;
+                    white-space: normal;
+                }
+
+                /* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+                .approved-actions {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 3px;
+                    flex-wrap: wrap;
+                }
+
+                .approved-action-btn {
+                    width: 30px;
+                    height: 30px;
+                    padding: 0 !important;
+
+                    display: inline-flex !important;
+                    align-items: center;
+                    justify-content: center;
+
+                    border-radius: 5px !important;
+                }
+
+                .approved-action-btn i {
+                    font-size: 12px;
+                }
+
+                /* =========================================================
+   NO DATA
+========================================================= */
+
+                .approved-no-data {
+                    text-align: center;
+                    padding: 50px 20px !important;
+                }
+
+                .approved-no-data-icon {
+                    font-size: 55px;
+                    color: #adb5bd;
+                    margin-bottom: 15px;
+                }
+
+                /* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+                @media (max-width: 1200px) {
+
+                    .approved-products-page {
+                        padding: 15px;
+                    }
+
+                    .approved-table th,
+                    .approved-table td {
+                        font-size: 11px;
+                        padding: 8px 4px;
+                    }
+
+                    .approved-product-image {
+                        width: 42px;
+                        height: 42px;
+                    }
+
+                    .approved-action-btn {
+                        width: 27px;
+                        height: 27px;
+                    }
+
+                    .approved-action-btn i {
+                        font-size: 10px;
+                    }
+
+                }
+
+                @media (max-width: 768px) {
+
+                    .approved-page-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+
+                    .approved-page-title {
+                        font-size: 22px;
+                    }
+
+                    .approved-product-card .card-body {
+                        padding: 10px;
+                    }
+
+                    .approved-table th,
+                    .approved-table td {
+                        font-size: 10px;
+                        padding: 6px 3px;
+                    }
+
+                    .approved-product-image {
+                        width: 35px;
+                        height: 35px;
+                    }
+
+                    .approved-action-btn {
+                        width: 25px;
+                        height: 25px;
+                    }
+
+                }
+            </style>
+
+
+            <div class="content-body">
+
+                <div class="main-content">
+
+                    <div class="approved-products-page">
+
+
+                        <!-- =====================================================
+                 PAGE HEADER
+            ====================================================== -->
+
+                        <div class="approved-page-header">
+
+                            <div>
+
+                                <h2 class="approved-page-title">
+
+                                    <i class="fa-solid fa-circle-check text-success me-2"></i>
+
+                                    Approved Products
+
+                                </h2>
+
+                                <p class="approved-page-subtitle">
+
+                                    Manage all approved products
+
+                                </p>
+
+                            </div>
+
+
+                            <a href="/admin/product/list" class="btn btn-primary">
+
+                                <i class="fa-solid fa-boxes-stacked me-2"></i>
+
+                                All Products
+
+                            </a>
+
+                        </div>
+
+
+
+                        <!-- =====================================================
+                 PRODUCT CARD
+            ====================================================== -->
+
+                        <div class="card shadow approved-product-card">
+
+
+                            <!-- CARD HEADER -->
+
+                            <div class="card-header">
+
+                                <h5 class="mb-0">
+
+                                    <i class="fa-solid fa-list-check me-2"></i>
+
+                                    Approved Product List
+
+                                </h5>
+
+                            </div>
+
+
+
+                            <!-- CARD BODY -->
+
+                            <div class="card-body">
+
+
+                                <!-- =================================================
+                         TABLE
+                    ================================================== -->
+
+                                <table class="table table-hover approved-table">
+
+
+                                    <!-- TABLE HEADER -->
+
+                                    <thead class="table-dark">
+
+                                        <tr>
+
+                                            <th>
+                                                #
+                                            </th>
+
+                                            <th>
+                                                Image
+                                            </th>
+
+                                            <th>
+                                                Product
+                                            </th>
+
+                                            <th>
+                                                Category
+                                            </th>
+
+                                            <th>
+                                                Brand
+                                            </th>
+
+                                            <th>
+                                                Vendor
+                                            </th>
+
+                                            <th>
+                                                Store
+                                            </th>
+
+                                            <th>
+                                                Price
+                                            </th>
+
+                                            <th>
+                                                Stock
+                                            </th>
+
+                                            <th>
+                                                Status
+                                            </th>
+
+                                            <th>
+                                                Bestseller
+                                            </th>
+
+                                            <th>
+                                                Featured
+                                            </th>
+
+                                            <th>
+                                                Action
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+
+                                    <!-- =================================================
+                             TABLE BODY
+                        ================================================== -->
+
+                                    <tbody>
+
+
+                                        <% if(products && products.length> 0){ %>
+
+
+                                            <% products.forEach((product,index)=>{ %>
+
+
+                                                <tr>
+
+
+                                                    <!-- NUMBER -->
+
+                                                    <td>
+
+                                                        <strong>
+
+                                                            <%= index + 1 %>
+
+                                                        </strong>
+
+                                                    </td>
+
+
+
+                                                    <!-- IMAGE -->
+
+                                                    <td>
+
+                                                        <% if(product.thumbnail){ %>
+
+                                                            <img src="<%= product.thumbnail %>"
+                                                                class="approved-product-image shadow-sm"
+                                                                alt="<%= product.name %>">
+
+                                                            <% } else { %>
+
+                                                                <img src="/images/no-image.png"
+                                                                    class="approved-product-image shadow-sm"
+                                                                    alt="No Image">
+
+                                                                <% } %>
+
+                                                    </td>
+
+
+
+                                                    <!-- PRODUCT -->
+
+                                                    <td>
+
+                                                        <strong>
+
+                                                            <%= product.name %>
+
+                                                        </strong>
+
+                                                    </td>
+
+
+
+                                                    <!-- CATEGORY -->
+
+                                                    <td>
+
+                                                        <%= product.category ? product.category.name : "-" %>
+
+                                                    </td>
+
+
+
+                                                    <!-- BRAND -->
+
+                                                    <td>
+
+                                                        <%= product.brand ? product.brand.name : "-" %>
+
+                                                    </td>
+
+
+
+                                                    <!-- VENDOR -->
+
+                                                    <td>
+                                                        <%= product.vendor?.user?.name || "-" %>
+                                                    </td>
+
+
+
+                                                    <!-- STORE -->
+
+                                                    <td>
+
+                                                        <%= product.store ? product.store.storeName : "-" %>
+
+                                                    </td>
+
+
+
+                                                    <!-- PRICE -->
+
+                                                    <td>
+
+                                                        <span class="approved-price">
+
+                                                            ₹ <%= product.price %>
+
+                                                        </span>
+
+                                                    </td>
+
+
+
+                                                    <!-- STOCK -->
+
+                                                    <td>
+
+
+                                                        <% if(product.stock <=5){ %>
+
+                                                            <span class="badge bg-danger">
+
+                                                                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                                                                <%= product.stock %>
+
+                                                            </span>
+
+                                                            <% } else { %>
+
+                                                                <span class="badge bg-success">
+
+                                                                    <i class="fa-solid fa-cubes"></i>
+
+                                                                    <%= product.stock %>
+
+                                                                </span>
+
+                                                                <% } %>
+
+
+                                                    </td>
+
+
+
+                                                    <!-- STATUS -->
+
+                                                    <td>
+
+                                                        <span class="badge bg-success">
+
+                                                            <i class="fa-solid fa-check"></i>
+
+                                                            Approved
+
+                                                        </span>
+
+                                                    </td>
+
+
+
+                                                    <!-- BESTSELLER -->
+
+                                                    <td>
+
+
+                                                        <% if(product.isBestSeller){ %>
+
+                                                            <span class="badge bg-warning text-dark">
+
+                                                                <i class="fa-solid fa-star"></i>
+
+                                                                Yes
+
+                                                            </span>
+
+                                                            <% } else { %>
+
+                                                                <span class="badge bg-secondary">
+
+                                                                    <i class="fa-regular fa-star"></i>
+
+                                                                    No
+
+                                                                </span>
+
+                                                                <% } %>
+
+
+                                                    </td>
+
+
+
+                                                    <!-- FEATURED -->
+
+                                                    <td>
+
+
+                                                        <% if(product.isFeatured){ %>
+
+                                                            <span class="badge bg-primary">
+
+                                                                <i class="fa-solid fa-bookmark"></i>
+
+                                                                Yes
+
+                                                            </span>
+
+                                                            <% } else { %>
+
+                                                                <span class="badge bg-secondary">
+
+                                                                    <i class="fa-regular fa-bookmark"></i>
+
+                                                                    No
+
+                                                                </span>
+
+                                                                <% } %>
+
+
+                                                    </td>
+
+
+
+                                                    <!-- ACTION -->
+
+                                                    <td>
+
+
+                                                        <div class="approved-actions">
+
+
+                                                            <!-- VIEW -->
+
+                                                            <a href="/admin/product/details/<%= product._id %>"
+                                                                class="btn btn-info approved-action-btn"
+                                                                title="View Product">
+
+                                                                <i class="fa-solid fa-eye"></i>
+
+                                                            </a>
+
+
+
+                                                            <!-- BESTSELLER -->
+
+                                                            <a href="/admin/product/toggle-bestseller/<%= product._id %>"
+                                                                class="btn approved-action-btn
+                                                    <%= product.isBestSeller
+                                                        ? 'btn-warning'
+                                                        : 'btn-outline-warning' %>" title="<%= product.isBestSeller
+                                                        ? 'Remove Bestseller'
+                                                        : 'Mark Bestseller' %>">
+
+                                                                <i class="fa-solid fa-star"></i>
+
+                                                            </a>
+
+
+
+                                                            <!-- FEATURED -->
+
+                                                            <a href="/admin/product/toggle-featured/<%= product._id %>"
+                                                                class="btn approved-action-btn
+                                                    <%= product.isFeatured
+                                                        ? 'btn-primary'
+                                                        : 'btn-outline-primary' %>" title="<%= product.isFeatured
+                                                        ? 'Remove Featured'
+                                                        : 'Mark Featured' %>">
+
+                                                                <i class="fa-solid fa-bookmark"></i>
+
+                                                            </a>
+
+
+
+                                                            <!-- DELETE -->
+
+                                                            <a href="/admin/product/delete/<%= product._id %>"
+                                                                class="btn btn-danger approved-action-btn"
+                                                                title="Delete Product"
+                                                                onclick="return confirm('Delete this product?')">
+
+                                                                <i class="fa-solid fa-trash"></i>
+
+                                                            </a>
+
+
+                                                        </div>
+
+
+                                                    </td>
+
+
+                                                </tr>
+
+
+                                                <% }) %>
+
+
+                                                    <% } else { %>
+
+
+                                                        <!-- =================================================
+                                     NO PRODUCTS
+                                ================================================== -->
+
+                                                        <tr>
+
+                                                            <td colspan="13" class="approved-no-data">
+
+                                                                <i
+                                                                    class="fa-solid fa-box-open approved-no-data-icon"></i>
+
+
+                                                                <h5 class="text-muted">
+
+                                                                    No Approved Products Found
+
+                                                                </h5>
+
+
+                                                                <p class="text-secondary">
+
+                                                                    There are currently no approved products.
+
+                                                                </p>
+
+
+                                                                <a href="/admin/product/list" class="btn btn-primary">
+
+                                                                    <i class="fa-solid fa-boxes-stacked me-2"></i>
+
+                                                                    View All Products
+
+                                                                </a>
+
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                        <% } %>
+
+
+                                    </tbody>
+
+
+                                </table>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

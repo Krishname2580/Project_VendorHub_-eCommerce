@@ -1,0 +1,174 @@
+<%- include("../layouts/header", { title: "Sales Report" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+            <div class="content-body">
+                <div class="container-fluid p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <h3>Sales Report</h3>
+                        <div>
+                            <a href="/admin/reports/dashboard" class="btn btn-danger me-2">
+                                <i class="fas fa-arrow-left"></i> Report Dashboard
+                            </a>
+                            <button onclick="window.print()" class="btn btn-primary">
+
+                                <i class="fas fa-print"></i>
+
+                                Print Report
+
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card shadow">
+
+                        <div class="card-body">
+
+                            <table class="table table-bordered table-hover">
+
+                                <thead class="table-dark">
+
+                                    <tr>
+
+                                        <th>#</th>
+
+                                        <th>Order No</th>
+
+                                        <th>Customer</th>
+
+                                        <th>Payment</th>
+
+                                        <th>Payment Status</th>
+
+                                        <th>Total</th>
+
+                                        <th>Date</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <% let grandTotal=0; %>
+
+                                        <% if(sales.length> 0){ %>
+
+                                            <% sales.forEach((order,index)=>{ %>
+
+                                                <% grandTotal +=order.totalAmount; %>
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <%= index+1 %>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <%= order.orderNumber %>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <%= order.customer ? order.customer.name : "-" %>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <%= order.paymentMethod %>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <% if(order.paymentStatus=="Paid" ){ %>
+
+                                                                <span class="badge bg-success">
+
+                                                                    Paid
+
+                                                                </span>
+
+                                                                <% }else{ %>
+
+                                                                    <span class="badge bg-warning">
+
+                                                                        <%= order.paymentStatus %>
+
+                                                                    </span>
+
+                                                                    <% } %>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            ₹ <%= order.totalAmount %>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <%= order.createdAt.toLocaleDateString() %>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <% }) %>
+
+                                                        <% }else{ %>
+
+                                                            <tr>
+
+                                                                <td colspan="7" class="text-center">
+
+                                                                    No Sales Found
+
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <% } %>
+
+                                </tbody>
+
+                                <tfoot>
+
+                                    <tr>
+
+                                        <th colspan="5" class="text-end">
+
+                                            Grand Total
+
+                                        </th>
+
+                                        <th colspan="2">
+
+                                            ₹ <%= grandTotal %>
+
+                                        </th>
+
+                                    </tr>
+
+                                </tfoot>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

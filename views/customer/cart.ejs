@@ -1,0 +1,886 @@
+<%- include('layouts/header') %>
+
+    <style>
+        .cart-page {
+            background: #f8f9fa;
+        }
+
+        .cart-wrapper {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .cart-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            padding: 18px 25px;
+        }
+
+        .cart-table {
+            margin-bottom: 0;
+        }
+
+        .cart-table thead th {
+            background: #f8f9fa;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 18px 15px;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap;
+        }
+
+        .cart-table tbody td {
+            vertical-align: middle;
+            padding: 22px 15px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .cart-product {
+            display: flex;
+            align-items: center;
+            min-width: 280px;
+        }
+
+        .cart-product-image {
+            width: 90px;
+            height: 90px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #eee;
+        }
+
+        .cart-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cart-product-info {
+            margin-left: 18px;
+        }
+
+        .cart-product-info h6 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #333;
+        }
+
+        .cart-category {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .price-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        .quantity-box {
+            display: flex;
+            align-items: center;
+            width: 125px;
+            background: #f8f9fa;
+            border: 1px solid #e3e3e3;
+            border-radius: 30px;
+            padding: 3px;
+        }
+
+        .quantity-box .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: #fff;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-box .quantity-btn:hover {
+            background: var(--bs-primary);
+            color: #fff;
+        }
+
+        .quantity-box input {
+            width: 55px;
+            background: transparent;
+            font-weight: 600;
+            box-shadow: none;
+        }
+
+        .item-total {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--bs-primary);
+            white-space: nowrap;
+        }
+
+        .remove-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff5f5;
+            border: 1px solid #ffdede;
+            color: #dc3545;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .remove-btn:hover {
+            background: #dc3545;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .cart-table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .cart-table tbody tr:hover {
+            background: #fcfcfc;
+        }
+
+        .coupon-box {
+            background: #fff;
+            border-radius: 15px;
+            padding: 22px;
+            margin-top: 25px;
+            border: 1px solid #eee;
+        }
+
+        .coupon-input {
+            height: 52px;
+            border: 1px solid #ddd !important;
+            padding-left: 18px;
+            box-shadow: none !important;
+        }
+
+        .coupon-input:focus {
+            border-color: var(--bs-primary) !important;
+        }
+
+        .summary-card {
+            background: #fff;
+            border-radius: 18px;
+            border: 1px solid #eee;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .summary-header {
+            background: #f8f9fa;
+            padding: 22px 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-header h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .summary-body {
+            padding: 25px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-row h6 {
+            margin: 0;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .summary-row p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .shipping-free {
+            color: #198754;
+            font-weight: 700 !important;
+        }
+
+        .grand-total {
+            border-top: 1px solid #eee;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fafafa;
+        }
+
+        .grand-total h5 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .grand-total-price {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--bs-primary);
+        }
+
+        .checkout-btn {
+            margin: 22px 25px 25px;
+            display: block;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .secure-payment {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            padding: 0 20px 20px;
+        }
+
+        .secure-payment i {
+            color: #198754;
+            margin-right: 5px;
+        }
+
+        .empty-cart {
+            background: #fff;
+            border-radius: 20px;
+            padding: 70px 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-cart-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: #fff4e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-cart-icon i {
+            font-size: 42px;
+            color: var(--bs-primary);
+        }
+
+        @media (max-width: 768px) {
+
+            .cart-product {
+                min-width: 230px;
+            }
+
+            .cart-product-image {
+                width: 70px;
+                height: 70px;
+            }
+
+            .cart-product-info {
+                margin-left: 10px;
+            }
+
+            .cart-product-info h6 {
+                font-size: 14px;
+            }
+
+            .cart-table thead th {
+                font-size: 12px;
+            }
+
+            .cart-table tbody td {
+                padding: 15px 10px;
+            }
+
+            .coupon-box {
+                padding: 15px;
+            }
+        }
+    </style>
+
+
+    <!-- Cart Page Header -->
+    <div class="container-fluid page-header py-5">
+
+        <h1 class="text-center text-white display-6">
+            Shopping Cart
+        </h1>
+
+        <ol class="breadcrumb justify-content-center mb-0">
+
+            <li class="breadcrumb-item">
+                <a href="/" class="text-white">
+                    Home
+                </a>
+            </li>
+
+            <li class="breadcrumb-item">
+                <a href="/product" class="text-white">
+                    Products
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active text-white">
+                Cart
+            </li>
+
+        </ol>
+
+    </div>
+
+
+    <!-- Cart Page -->
+    <div class="container-fluid py-5 cart-page">
+
+        <div class="container py-4">
+
+            <% if (!cartItems || cartItems.length===0) { %>
+
+
+                <!-- EMPTY CART -->
+                <div class="empty-cart text-center">
+
+                    <div class="empty-cart-icon">
+
+                        <i class="fa fa-shopping-cart"></i>
+
+                    </div>
+
+                    <h2 class="fw-bold mb-3">
+                        Your Cart is Empty
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        Looks like you haven't added anything to your cart yet.
+                    </p>
+
+                    <a href="/shop" class="btn btn-primary rounded-pill px-5 py-3">
+
+                        <i class="fa fa-shopping-bag me-2"></i>
+
+                        Continue Shopping
+
+                    </a>
+
+                </div>
+
+
+                <% } else { %>
+
+
+                    <!-- CART TITLE -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <h2 class="fw-bold mb-1">
+                                My Cart
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                <%= cartItems.length %> item(s) in your cart
+                            </p>
+
+                        </div>
+
+                        <a href="/product" class="btn btn-outline-primary rounded-pill px-4">
+
+                            <i class="fa fa-arrow-left me-2"></i>
+
+                            Continue Shopping
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+
+                        <!-- CART PRODUCTS -->
+                        <div class="col-lg-8">
+
+                            <div class="cart-wrapper">
+
+                                <div class="cart-header">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <i class="fa fa-shopping-cart text-primary me-2"></i>
+
+                                        <strong>
+                                            Cart Items
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="table-responsive">
+
+                                    <table class="table cart-table">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>
+                                                    Product
+                                                </th>
+
+                                                <th>
+                                                    Price
+                                                </th>
+
+                                                <th>
+                                                    Quantity
+                                                </th>
+
+                                                <th>
+                                                    Total
+                                                </th>
+
+                                                <th>
+                                                    Remove
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+
+                                        <tbody>
+
+
+                                            <% cartItems.forEach(item=> { %>
+
+                                                <tr>
+
+
+                                                    <!-- PRODUCT -->
+
+                                                    <td>
+
+                                                        <div class="cart-product">
+
+                                                            <div class="cart-product-image">
+
+                                                                <img src="<%= item.product.images?.[0]?.imageUrl || item.product.thumbnail || '/img/no-image.png' %>"
+                                                                    alt="<%= item.product.name %>">
+
+                                                            </div>
+
+
+                                                            <div class="cart-product-info">
+
+                                                                <h6>
+                                                                    <%= item.product.name %>
+                                                                </h6>
+
+
+                                                                <% if (item.product.category) { %>
+
+                                                                    <div class="cart-category">
+
+                                                                        <i class="fa fa-tag me-1"></i>
+
+                                                                        <%= item.product.category.name ||
+                                                                            item.product.category %>
+
+                                                                    </div>
+
+                                                                    <% } %>
+
+
+                                                                        <% if (item.product.sku) { %>
+
+                                                                            <small class="text-muted">
+
+                                                                                SKU:
+                                                                                <%= item.product.sku %>
+
+                                                                            </small>
+
+                                                                            <% } %>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </td>
+
+
+                                                    <!-- PRICE -->
+
+                                                    <td>
+
+                                                        <span class="price-text">
+
+                                                            ₹<%= Number(item.product.price || 0).toLocaleString('en-IN')
+                                                                %>
+
+                                                        </span>
+
+                                                    </td>
+
+
+                                                    <!-- QUANTITY -->
+
+                                                    <td>
+
+                                                        <div class="quantity-box">
+
+                                                            <form action="/customer/cart/update/<%= item._id %>"
+                                                                method="POST" class="d-inline">
+                                                                <input type="hidden" name="action" value="decrease">
+
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                                    <i class="fa fa-minus"></i>
+                                                                </button>
+                                                            </form>
+
+
+                                                            <input type="text"
+                                                                class="form-control form-control-sm text-center border-0"
+                                                                value="<%= item.quantity %>" readonly>
+
+
+                                                            <form action="/customer/cart/update/<%= item._id %>"
+                                                                method="POST" class="d-inline">
+                                                                <input type="hidden" name="action" value="increase">
+
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </form>
+
+                                                        </div>
+
+                                                    </td>
+
+
+                                                    <!-- TOTAL -->
+
+                                                    <td>
+
+                                                        <span class="item-total">
+
+                                                            ₹<%= Number(item.product.price *
+                                                                item.quantity).toLocaleString('en-IN') %>
+
+                                                        </span>
+
+                                                    </td>
+
+
+                                                    <!-- REMOVE -->
+
+                                                    <td>
+
+                                                        <a href="/customer/cart/remove/<%= item._id %>"
+                                                            class="btn btn-md rounded-circle bg-light border">
+
+                                                            <i class="fa fa-times text-danger"></i>
+
+                                                        </a>
+
+                                                    </td>
+
+
+                                                </tr>
+
+
+                                                <% }) %>
+
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- COUPON -->
+
+                            <!-- <div class="coupon-box">
+
+                                <div class="row align-items-center g-3">
+
+                                    <div class="col-md-5">
+
+                                        <h6 class="fw-bold mb-1">
+
+                                            <i class="fa fa-ticket-alt text-primary me-2"></i>
+
+                                            Have a coupon?
+
+                                        </h6>
+
+                                        <small class="text-muted">
+
+                                            Enter your coupon code to get a discount.
+
+                                        </small>
+
+                                    </div>
+
+
+                                    <div class="col-md-7">
+
+                                        <form action="/cart/coupon" method="POST" class="d-flex gap-2">
+
+                                            <input type="text" name="coupon" class="form-control coupon-input"
+                                                placeholder="Enter coupon code">
+
+                                            <button class="btn btn-primary px-4" type="submit">
+
+                                                Apply
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div> -->
+
+                        </div>
+
+
+                        <!-- SUMMARY -->
+
+                        <div class="col-lg-4">
+
+                            <div class="summary-card">
+
+
+                                <div class="summary-header">
+
+                                    <h3>
+
+                                        Cart Summary
+
+                                    </h3>
+
+                                </div>
+
+
+                                <div class="summary-body">
+
+
+                                    <!-- SUBTOTAL -->
+
+                                    <div class="summary-row">
+
+                                        <h6>
+                                            Subtotal
+                                        </h6>
+
+                                        <p>
+                                            ₹<%= Number(total || 0).toLocaleString('en-IN') %>
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- SHIPPING -->
+
+                                    <div class="summary-row">
+
+                                        <h6>
+                                            Shipping
+                                        </h6>
+
+
+                                        <% if (total>= 500) { %>
+
+                                            <p class="shipping-free">
+
+                                                FREE
+
+                                            </p>
+
+                                            <% } else { %>
+
+                                                <p>
+                                                    ₹40
+                                                </p>
+
+                                                <% } %>
+
+                                    </div>
+
+
+                                    <!-- FREE SHIPPING MESSAGE -->
+
+                                    <% if (total < 500) { %>
+
+                                        <div class="alert alert-warning small">
+
+                                            <i class="fa fa-truck me-2"></i>
+
+                                            Add ₹<%= 500 - total %>
+                                                more for FREE delivery.
+
+                                        </div>
+
+                                        <% } else { %>
+
+                                            <div class="alert alert-success small">
+
+                                                <i class="fa fa-check-circle me-2"></i>
+
+                                                Congratulations! You got FREE delivery.
+
+                                            </div>
+
+                                            <% } %>
+
+
+                                </div>
+
+
+                                <!-- GRAND TOTAL -->
+
+                                <div class="grand-total">
+
+                                    <h5>
+                                        Grand Total
+                                    </h5>
+
+                                    <p class="grand-total-price">
+
+                                        ₹<%= Number(total + (total>= 500 ? 0 : 40)).toLocaleString('en-IN') %>
+
+                                    </p>
+
+                                </div>
+
+
+                                <!-- CHECKOUT -->
+
+                                <a href="/customer/checkout" class="btn btn-primary rounded-pill py-3 checkout-btn">
+
+                                    <i class="fa fa-lock me-2"></i>
+
+                                    Proceed to Checkout
+
+                                    <i class="fa fa-arrow-right ms-2"></i>
+
+                                </a>
+
+
+                                <div class="secure-payment">
+
+                                    <i class="fa fa-shield-alt"></i>
+
+                                    Secure & Safe Checkout
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- TRUST FEATURES -->
+
+                            <div class="bg-white rounded-4 mt-3 p-3 border">
+
+                                <div class="d-flex align-items-center mb-3">
+
+                                    <i class="fa fa-truck text-primary fa-lg me-3"></i>
+
+                                    <div>
+
+                                        <strong>Fast Delivery</strong>
+
+                                        <div class="small text-muted">
+                                            Quick & reliable delivery
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="d-flex align-items-center mb-3">
+
+                                    <i class="fa fa-undo text-primary fa-lg me-3"></i>
+
+                                    <div>
+
+                                        <strong>Easy Returns</strong>
+
+                                        <div class="small text-muted">
+                                            Hassle-free returns
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="d-flex align-items-center">
+
+                                    <i class="fa fa-shield-alt text-primary fa-lg me-3"></i>
+
+                                    <div>
+
+                                        <strong>Secure Payment</strong>
+
+                                        <div class="small text-muted">
+                                            Your payment is protected
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <% } %>
+
+        </div>
+
+    </div>
+
+
+    <!-- Cart Page End -->
+
+
+    <%- include('layouts/footer') %>

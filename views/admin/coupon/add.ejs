@@ -1,0 +1,206 @@
+<%- include("../layouts/header", { title: "Add Coupon" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-8">
+
+                            <div class="card shadow">
+
+                                <div class="card-header bg-primary text-white">
+
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-tags"></i>
+                                        Add New Coupon
+                                    </h4>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <form action="/admin/coupon/create" method="POST">
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">Coupon Title</label>
+
+                                                <input type="text" name="title" class="form-control"
+                                                    placeholder="Festival Offer" required>
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">Coupon Code</label>
+
+                                                <input type="text" name="code" class="form-control"
+                                                    placeholder="SAVE100" required>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="mb-3">
+
+                                            <label class="form-label">Description</label>
+
+                                            <textarea name="description" class="form-control" rows="3"
+                                                placeholder="Enter coupon description"></textarea>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Discount Type
+                                                </label>
+
+                                                <select name="discountType" class="form-select" required>
+
+                                                    <option value="">
+                                                        Select Type
+                                                    </option>
+
+                                                    <option value="Flat">
+                                                        Flat
+                                                    </option>
+
+                                                    <option value="Percentage">
+                                                        Percentage
+                                                    </option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Discount Value
+                                                </label>
+
+                                                <input type="number" name="discountValue" class="form-control"
+                                                    placeholder="100" required>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Minimum Purchase
+                                                </label>
+
+                                                <input type="number" name="minimumPurchase" class="form-control"
+                                                    value="0">
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Maximum Discount
+                                                </label>
+
+                                                <input type="number" name="maximumDiscount" class="form-control"
+                                                    value="0">
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Usage Limit
+                                                </label>
+
+                                                <input type="number" name="usageLimit" class="form-control" value="1">
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Expiry Date
+                                                </label>
+
+                                                <input type="date" name="expiryDate" class="form-control" required>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="mb-4">
+
+                                            <label class="form-label">
+                                                Status
+                                            </label>
+
+                                            <select name="status" class="form-select">
+
+                                                <option value="true">
+                                                    Active
+                                                </option>
+
+                                                <option value="false">
+                                                    Inactive
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class="text-end">
+
+                                            <a href="/admin/coupon/list" class="btn btn-secondary">
+
+                                                <i class="fas fa-arrow-left"></i>
+
+                                                Back
+
+                                            </a>
+
+                                            <button type="submit" class="btn btn-primary">
+
+                                                <i class="fas fa-save"></i>
+
+                                                Save Coupon
+
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

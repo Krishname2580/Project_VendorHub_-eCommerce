@@ -1,0 +1,136 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-primary text-white">
+
+                            <h4>My Profile</h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-md-3 text-center">
+
+                                    <img src="<%= vendor.user.image || '/images/auth/user.png' %>"
+                                        class="rounded-circle img-thumbnail" width="180">
+
+                                </div>
+
+                                <div class="col-md-9">
+
+                                    <table class="table">
+
+                                        <tr>
+
+                                            <th>Name</th>
+
+                                            <td>
+                                                <%= vendor.user.name %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Email</th>
+
+                                            <td>
+                                                <%= vendor.user.email %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Phone</th>
+
+                                            <td>
+                                                <%= vendor.user.phone %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>GST</th>
+
+                                            <td>
+                                                <%= vendor.gstNumber || "-" %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>PAN</th>
+
+                                            <td>
+                                                <%= vendor.panNumber || "-" %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Aadhar</th>
+
+                                            <td>
+                                                <%= vendor.aadharNumber || "-" %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Store</th>
+
+                                            <td>
+                                                <%= store ? store.storeName : "-" %>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Address</th>
+
+                                            <td>
+                                                <%= store ? store.address : "-" %>
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                    <a href="/vendor/profile/edit" class="btn btn-success">
+
+                                        <i class="fas fa-edit"></i>
+
+                                        Edit Profile
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>

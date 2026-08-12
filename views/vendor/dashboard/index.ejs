@@ -1,0 +1,1539 @@
+<%- include("../layouts/header", { title: "Vendor Dashboard" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+
+            <!-- ================================
+                 MAIN CONTENT
+            ================================= -->
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+
+                    <!-- ================================
+                         PAGE HEADER
+                    ================================= -->
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <h2 class="fw-bold mb-1">
+                                Vendor Dashboard
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Welcome back,
+                                <strong>
+                                    <%= vendor ? vendor.name : "Vendor" %>
+                                </strong>
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <span class="badge bg-success px-3 py-2">
+
+                                <i class="fas fa-chart-line me-1"></i>
+
+                                Sales Overview
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================
+                         SUMMARY CARDS
+                    ================================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- TOTAL SALES -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="dashboard-card sales-card">
+
+                                <div class="card-icon">
+
+                                    <i class="fas fa-indian-rupee-sign"></i>
+
+                                </div>
+
+                                <div class="card-content">
+
+                                    <p>
+                                        Total Sales
+                                    </p>
+
+                                    <h3>
+                                        ₹ <%= Number(totalSales || 0).toLocaleString("en-IN") %>
+                                    </h3>
+
+                                    <small>
+                                        <i class="fas fa-arrow-up"></i>
+                                        Total vendor sales
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TOTAL ORDERS -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="dashboard-card order-card">
+
+                                <div class="card-icon">
+
+                                    <i class="fas fa-shopping-bag"></i>
+
+                                </div>
+
+                                <div class="card-content">
+
+                                    <p>
+                                        Total Orders
+                                    </p>
+
+                                    <h3>
+                                        <%= totalOrders || 0 %>
+                                    </h3>
+
+                                    <small>
+                                        <i class="fas fa-box"></i>
+                                        Orders received
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TOTAL PRODUCTS -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="dashboard-card product-card">
+
+                                <div class="card-icon">
+
+                                    <i class="fas fa-box-open"></i>
+
+                                </div>
+
+                                <div class="card-content">
+
+                                    <p>
+                                        Total Products
+                                    </p>
+
+                                    <h3>
+                                        <%= totalProducts || 0 %>
+                                    </h3>
+
+                                    <small>
+                                        <i class="fas fa-cubes"></i>
+                                        Your products
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DELIVERED ORDERS -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="dashboard-card delivered-card">
+
+                                <div class="card-icon">
+
+                                    <i class="fas fa-check-circle"></i>
+
+                                </div>
+
+                                <div class="card-content">
+
+                                    <p>
+                                        Delivered Orders
+                                    </p>
+
+                                    <h3>
+                                        <%= deliveredOrders || 0 %>
+                                    </h3>
+
+                                    <small>
+                                        <i class="fas fa-truck"></i>
+                                        Successfully delivered
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================
+                         ORDER SUMMARY + PIE CHART
+                    ================================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- ORDER SUMMARY -->
+
+                        <div class="col-xl-7">
+
+                            <div class="dashboard-panel">
+
+                                <div class="panel-header">
+
+                                    <div>
+
+                                        <h4>
+                                            <i class="fas fa-shopping-cart"></i>
+                                            Order Summary
+                                        </h4>
+
+                                        <p>
+                                            Current order status overview
+                                        </p>
+
+                                    </div>
+
+                                    <a href="/vendor/orders"
+                                        class="btn btn-sm btn-primary">
+
+                                        View Orders
+
+                                    </a>
+
+                                </div>
+
+
+                                <div class="row g-3 mt-2">
+
+
+                                    <!-- Pending -->
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="status-box pending">
+
+                                            <div class="status-icon">
+
+                                                <i class="fas fa-clock"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <span>
+                                                    Pending
+                                                </span>
+
+                                                <strong>
+                                                    <%= pendingOrders || 0 %>
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Confirmed -->
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="status-box confirmed">
+
+                                            <div class="status-icon">
+
+                                                <i class="fas fa-check"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <span>
+                                                    Confirmed
+                                                </span>
+
+                                                <strong>
+                                                    <%= confirmedOrders || 0 %>
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Packed -->
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="status-box packed">
+
+                                            <div class="status-icon">
+
+                                                <i class="fas fa-box"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <span>
+                                                    Packed
+                                                </span>
+
+                                                <strong>
+                                                    <%= packedOrders || 0 %>
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Shipped -->
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="status-box shipped">
+
+                                            <div class="status-icon">
+
+                                                <i class="fas fa-truck"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <span>
+                                                    Shipped
+                                                </span>
+
+                                                <strong>
+                                                    <%= shippedOrders || 0 %>
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Delivered -->
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="status-box delivered">
+
+                                            <div class="status-icon">
+
+                                                <i class="fas fa-circle-check"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <span>
+                                                    Delivered
+                                                </span>
+
+                                                <strong>
+                                                    <%= deliveredOrders || 0 %>
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Cancelled -->
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="status-box cancelled">
+
+                                            <div class="status-icon">
+
+                                                <i class="fas fa-times"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <span>
+                                                    Cancelled
+                                                </span>
+
+                                                <strong>
+                                                    <%= cancelledOrders || 0 %>
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ORDER PIE CHART -->
+
+                        <div class="col-xl-5">
+
+                            <div class="dashboard-panel chart-panel">
+
+                                <div class="panel-header">
+
+                                    <div>
+
+                                        <h4>
+
+                                            <i class="fas fa-chart-pie"></i>
+
+                                            Order Overview
+
+                                        </h4>
+
+                                        <p>
+                                            Order status distribution
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="pie-wrapper">
+
+                                    <canvas id="orderPieChart"></canvas>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================
+                         MONTHLY SALES
+                    ================================= -->
+
+                    <div class="row g-4 mb-4">
+
+                        <div class="col-12">
+
+                            <div class="dashboard-panel sales-panel">
+
+
+                                <div class="panel-header">
+
+                                    <div>
+
+                                        <h4>
+
+                                            <i class="fas fa-chart-line"></i>
+
+                                            Monthly Sales
+
+                                        </h4>
+
+                                        <p>
+                                            Sales performance for the last 12 months
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="total-sales-badge">
+
+                                        Total:
+
+                                        ₹ <%= Number(totalSales || 0).toLocaleString("en-IN") %>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="sales-chart-wrapper">
+
+                                    <canvas id="salesChart"></canvas>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================
+                         QUICK SUMMARY
+                    ================================= -->
+
+                    <div class="row g-4 mb-5">
+
+
+                        <div class="col-md-3">
+
+                            <div class="mini-card">
+
+                                <i class="fas fa-clock text-warning"></i>
+
+                                <div>
+
+                                    <span>
+                                        Pending
+                                    </span>
+
+                                    <strong>
+                                        <%= pendingOrders || 0 %>
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+
+                            <div class="mini-card">
+
+                                <i class="fas fa-truck text-primary"></i>
+
+                                <div>
+
+                                    <span>
+                                        Shipped
+                                    </span>
+
+                                    <strong>
+                                        <%= shippedOrders || 0 %>
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+
+                            <div class="mini-card">
+
+                                <i class="fas fa-check-circle text-success"></i>
+
+                                <div>
+
+                                    <span>
+                                        Delivered
+                                    </span>
+
+                                    <strong>
+                                        <%= deliveredOrders || 0 %>
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3">
+
+                            <div class="mini-card">
+
+                                <i class="fas fa-rotate-left text-danger"></i>
+
+                                <div>
+
+                                    <span>
+                                        Returned
+                                    </span>
+
+                                    <strong>
+                                        <%= returnedOrders || 0 %>
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>
+
+            </div>
+
+
+
+
+                    <!-- =========================================
+                         CHART.JS
+                    ========================================== -->
+
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+                    <script>
+
+                        document.addEventListener(
+                            "DOMContentLoaded",
+                            function () {
+
+
+                                /* =========================================
+                                   MONTHLY SALES DATA
+                                ========================================== */
+
+                                const salesLabels =
+                                    <%- JSON.stringify(salesLabels || []) %>;
+
+                                const salesData =
+                                    <%- JSON.stringify(salesData || []) %>;
+
+
+                                console.log(
+                                    "Sales Labels:",
+                                    salesLabels
+                                );
+
+                                console.log(
+                                    "Sales Data:",
+                                    salesData
+                                );
+
+
+                                /* =========================================
+                                   MONTHLY SALES CHART
+                                ========================================== */
+
+                                const salesCanvas =
+                                    document.getElementById(
+                                        "salesChart"
+                                    );
+
+
+                                if (salesCanvas) {
+
+                                    new Chart(
+                                        salesCanvas,
+                                        {
+
+                                            type: "line",
+
+                                            data: {
+
+                                                labels: salesLabels,
+
+                                                datasets: [
+
+                                                    {
+
+                                                        label: "Monthly Sales",
+
+                                                        data: salesData,
+
+                                                        borderWidth: 3,
+
+                                                        fill: true,
+
+                                                        tension: 0.4,
+
+                                                        pointRadius: 5,
+
+                                                        pointHoverRadius: 7,
+
+                                                        borderColor:
+                                                            "#4776e6",
+
+                                                        backgroundColor:
+                                                            "rgba(71, 118, 230, 0.12)",
+
+                                                        pointBackgroundColor:
+                                                            "#4776e6",
+
+                                                        pointBorderColor:
+                                                            "#ffffff",
+
+                                                        pointBorderWidth: 2
+
+                                                    }
+
+                                                ]
+
+                                            },
+
+
+                                            options: {
+
+                                                responsive: true,
+
+                                                maintainAspectRatio: false,
+
+                                                interaction: {
+
+                                                    intersect: false,
+
+                                                    mode: "index"
+
+                                                },
+
+
+                                                plugins: {
+
+                                                    legend: {
+
+                                                        display: true,
+
+                                                        position: "top"
+
+                                                    },
+
+
+                                                    tooltip: {
+
+                                                        callbacks: {
+
+                                                            label: function (
+                                                                context
+                                                            ) {
+
+                                                                const value =
+                                                                    Number(
+                                                                        context.raw || 0
+                                                                    );
+
+                                                                return (
+                                                                    " Sales: ₹" +
+                                                                    value.toLocaleString(
+                                                                        "en-IN"
+                                                                    )
+                                                                );
+
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                },
+
+
+                                                scales: {
+
+                                                    y: {
+
+                                                        beginAtZero: true,
+
+                                                        ticks: {
+
+                                                            callback:
+                                                                function (
+                                                                    value
+                                                                ) {
+
+                                                                    return "₹" +
+                                                                        Number(
+                                                                            value
+                                                                        ).toLocaleString(
+                                                                            "en-IN"
+                                                                        );
+
+                                                                }
+
+                                                        },
+
+                                                        grid: {
+
+                                                            color:
+                                                                "rgba(0,0,0,0.07)"
+
+                                                        }
+
+                                                    },
+
+
+                                                    x: {
+
+                                                        grid: {
+
+                                                            display: false
+
+                                                        },
+
+                                                        ticks: {
+
+                                                            maxRotation: 45,
+
+                                                            minRotation: 0
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+                                    );
+
+                                }
+
+
+                                /* =========================================
+                                   ORDER PIE CHART
+                                ========================================== */
+
+                                const orderPieCanvas =
+                                    document.getElementById(
+                                        "orderPieChart"
+                                    );
+
+
+                                if (orderPieCanvas) {
+
+
+                                    const orderLabels = [
+
+                                        "Pending",
+                                        "Confirmed",
+                                        "Packed",
+                                        "Shipped",
+                                        "Delivered",
+                                        "Cancelled",
+                                        "Returned"
+
+                                    ];
+
+
+                                    const orderData = [
+
+                                        <%= pendingOrders || 0 %>,
+
+                                        <%= confirmedOrders || 0 %>,
+
+                                        <%= packedOrders || 0 %>,
+
+                                        <%= shippedOrders || 0 %>,
+
+                                        <%= deliveredOrders || 0 %>,
+
+                                        <%= cancelledOrders || 0 %>,
+
+                                        <%= returnedOrders || 0 %>
+
+                                    ];
+
+
+                                    new Chart(
+                                        orderPieCanvas,
+                                        {
+
+                                            type: "doughnut",
+
+                                            data: {
+
+                                                labels: orderLabels,
+
+                                                datasets: [
+
+                                                    {
+
+                                                        data: orderData,
+
+                                                        borderWidth: 3,
+
+                                                        borderColor:
+                                                            "#ffffff",
+
+                                                        backgroundColor: [
+
+                                                            "#ffc107",
+
+                                                            "#0d6efd",
+
+                                                            "#6f42c1",
+
+                                                            "#17a2b8",
+
+                                                            "#198754",
+
+                                                            "#dc3545",
+
+                                                            "#fd7e14"
+
+                                                        ]
+
+                                                    }
+
+                                                ]
+
+                                            },
+
+
+                                            options: {
+
+                                                responsive: true,
+
+                                                maintainAspectRatio: false,
+
+
+                                                cutout: "65%",
+
+
+                                                plugins: {
+
+                                                    legend: {
+
+                                                        position: "bottom",
+
+                                                        labels: {
+
+                                                            usePointStyle: true,
+
+                                                            padding: 15,
+
+                                                            font: {
+
+                                                                size: 11
+
+                                                            }
+
+                                                        }
+
+                                                    },
+
+
+                                                    tooltip: {
+
+                                                        callbacks: {
+
+                                                            label:
+                                                                function (
+                                                                    context
+                                                                ) {
+
+                                                                    return (
+                                                                        " " +
+                                                                        context.label +
+                                                                        ": " +
+                                                                        context.raw
+                                                                    );
+
+                                                                }
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+                                    );
+
+                                }
+
+                            }
+
+                        );
+
+                    </script>
+
+
+                    <style>
+                        /* =========================================
+                           DASHBOARD
+                        ========================================== */
+
+                        .content-body {
+                            background: #f5f7fb;
+                        }
+
+
+                        /* =========================================
+                           SUMMARY CARDS
+                        ========================================== */
+
+                        .dashboard-card {
+
+                            position: relative;
+
+                            min-height: 150px;
+
+                            padding: 25px;
+
+                            border-radius: 16px;
+
+                            background: #ffffff;
+
+                            display: flex;
+
+                            align-items: center;
+
+                            gap: 20px;
+
+                            box-shadow:
+                                0 5px 20px rgba(0, 0, 0, 0.06);
+
+                            transition: all 0.25s ease;
+
+                            overflow: hidden;
+
+                        }
+
+
+                        .dashboard-card:hover {
+
+                            transform: translateY(-4px);
+
+                            box-shadow:
+                                0 10px 30px rgba(0, 0, 0, 0.10);
+
+                        }
+
+
+                        .dashboard-card .card-icon {
+
+                            width: 60px;
+
+                            height: 60px;
+
+                            min-width: 60px;
+
+                            border-radius: 15px;
+
+                            display: flex;
+
+                            align-items: center;
+
+                            justify-content: center;
+
+                            font-size: 25px;
+
+                        }
+
+
+                        .dashboard-card .card-content p {
+
+                            margin: 0 0 5px;
+
+                            color: #7b8794;
+
+                            font-size: 14px;
+
+                        }
+
+
+                        .dashboard-card .card-content h3 {
+
+                            margin: 0;
+
+                            color: #202124;
+
+                            font-size: 25px;
+
+                            font-weight: 700;
+
+                        }
+
+
+                        .dashboard-card .card-content small {
+
+                            display: block;
+
+                            margin-top: 7px;
+
+                            color: #8a94a6;
+
+                            font-size: 11px;
+
+                        }
+
+
+                        .sales-card .card-icon {
+
+                            background: #e9f8ef;
+
+                            color: #198754;
+
+                        }
+
+
+                        .order-card .card-icon {
+
+                            background: #eef3ff;
+
+                            color: #4776e6;
+
+                        }
+
+
+                        .product-card .card-icon {
+
+                            background: #fff2e6;
+
+                            color: #f59e42;
+
+                        }
+
+
+                        .delivered-card .card-icon {
+
+                            background: #e7f8ef;
+
+                            color: #20a464;
+
+                        }
+
+
+                        /* =========================================
+                           PANELS
+                        ========================================== */
+
+                        .dashboard-panel {
+
+                            background: #ffffff;
+
+                            border-radius: 16px;
+
+                            padding: 22px;
+
+                            box-shadow:
+                                0 5px 20px rgba(0, 0, 0, 0.06);
+
+                            height: 100%;
+
+                        }
+
+
+                        .panel-header {
+
+                            display: flex;
+
+                            align-items: center;
+
+                            justify-content: space-between;
+
+                            gap: 15px;
+
+                            padding-bottom: 15px;
+
+                            border-bottom: 1px solid #edf0f5;
+
+                        }
+
+
+                        .panel-header h4 {
+
+                            margin: 0;
+
+                            font-size: 19px;
+
+                            font-weight: 700;
+
+                            color: #202124;
+
+                        }
+
+
+                        .panel-header h4 i {
+
+                            color: #4776e6;
+
+                            margin-right: 8px;
+
+                        }
+
+
+                        .panel-header p {
+
+                            margin: 5px 0 0;
+
+                            color: #8a94a6;
+
+                            font-size: 12px;
+
+                        }
+
+
+                        /* =========================================
+                           ORDER STATUS
+                        ========================================== */
+
+                        .status-box {
+
+                            min-height: 85px;
+
+                            border-radius: 12px;
+
+                            padding: 15px;
+
+                            display: flex;
+
+                            align-items: center;
+
+                            gap: 12px;
+
+                            border: 1px solid #edf0f5;
+
+                            transition: all 0.2s ease;
+
+                        }
+
+
+                        .status-box:hover {
+
+                            transform: translateY(-2px);
+
+                            box-shadow:
+                                0 5px 15px rgba(0, 0, 0, 0.06);
+
+                        }
+
+
+                        .status-icon {
+
+                            width: 42px;
+
+                            height: 42px;
+
+                            min-width: 42px;
+
+                            border-radius: 10px;
+
+                            display: flex;
+
+                            align-items: center;
+
+                            justify-content: center;
+
+                        }
+
+
+                        .status-box span {
+
+                            display: block;
+
+                            font-size: 12px;
+
+                            color: #8a94a6;
+
+                        }
+
+
+                        .status-box strong {
+
+                            display: block;
+
+                            margin-top: 2px;
+
+                            font-size: 21px;
+
+                            color: #202124;
+
+                        }
+
+
+                        .pending .status-icon {
+
+                            background: #fff4d6;
+
+                            color: #d99a00;
+
+                        }
+
+
+                        .confirmed .status-icon {
+
+                            background: #e8f1ff;
+
+                            color: #4776e6;
+
+                        }
+
+
+                        .packed .status-icon {
+
+                            background: #f0e8ff;
+
+                            color: #7048b8;
+
+                        }
+
+
+                        .shipped .status-icon {
+
+                            background: #e5f8fc;
+
+                            color: #138da5;
+
+                        }
+
+
+                        .delivered .status-icon {
+
+                            background: #e5f7ed;
+
+                            color: #198754;
+
+                        }
+
+
+                        .cancelled .status-icon {
+
+                            background: #ffe8eb;
+
+                            color: #dc3545;
+
+                        }
+
+
+                        /* =========================================
+                           PIE CHART
+                        ========================================== */
+
+                        .chart-panel {
+
+                            min-height: 380px;
+
+                        }
+
+
+                        .pie-wrapper {
+
+                            height: 300px;
+
+                            position: relative;
+
+                            margin-top: 10px;
+
+                        }
+
+
+                        /* =========================================
+                           SALES CHART
+                        ========================================== */
+
+                        .sales-panel {
+
+                            min-height: 480px;
+
+                        }
+
+
+                        .total-sales-badge {
+
+                            background: #198754;
+
+                            color: #ffffff;
+
+                            padding: 8px 15px;
+
+                            border-radius: 8px;
+
+                            font-size: 13px;
+
+                            font-weight: 600;
+
+                            white-space: nowrap;
+
+                        }
+
+
+                        .sales-chart-wrapper {
+
+                            position: relative;
+
+                            width: 100%;
+
+                            height: 350px;
+
+                            margin-top: 20px;
+
+                        }
+
+
+                        /* =========================================
+                           MINI CARDS
+                        ========================================== */
+
+                        .mini-card {
+
+                            background: #ffffff;
+
+                            border-radius: 13px;
+
+                            min-height: 90px;
+
+                            padding: 18px;
+
+                            display: flex;
+
+                            align-items: center;
+
+                            gap: 15px;
+
+                            box-shadow:
+                                0 5px 18px rgba(0, 0, 0, 0.05);
+
+                        }
+
+
+                        .mini-card > i {
+
+                            font-size: 25px;
+
+                        }
+
+
+                        .mini-card span {
+
+                            display: block;
+
+                            color: #8a94a6;
+
+                            font-size: 12px;
+
+                        }
+
+
+                        .mini-card strong {
+
+                            display: block;
+
+                            margin-top: 3px;
+
+                            color: #202124;
+
+                            font-size: 20px;
+
+                        }
+
+
+                        /* =========================================
+                           RESPONSIVE
+                        ========================================== */
+
+                        @media (max-width: 767px) {
+
+                            .dashboard-card {
+
+                                padding: 18px;
+
+                            }
+
+
+                            .dashboard-card .card-icon {
+
+                                width: 50px;
+
+                                height: 50px;
+
+                                min-width: 50px;
+
+                                font-size: 20px;
+
+                            }
+
+
+                            .dashboard-card .card-content h3 {
+
+                                font-size: 20px;
+
+                            }
+
+
+                            .panel-header {
+
+                                align-items: flex-start;
+
+                                flex-direction: column;
+
+                            }
+
+
+                            .total-sales-badge {
+
+                                align-self: flex-start;
+
+                            }
+
+
+                            .sales-chart-wrapper {
+
+                                height: 280px;
+
+                            }
+
+
+                            .pie-wrapper {
+
+                                height: 270px;
+
+                            }
+
+                        }
+
+                        
+
+                    </style>

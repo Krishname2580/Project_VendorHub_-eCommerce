@@ -1,0 +1,468 @@
+<%- include("../layouts/header", { title: "Website Settings" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+<div class="content-body">
+
+    <div class="container-fluid py-4">
+
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h2 class="fw-bold mb-1">
+                    <i class="fas fa-cog text-primary me-2"></i>
+                    Website Settings
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Manage your website configuration and general settings.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- Settings Card -->
+        <div class="card shadow border-0 rounded-4">
+
+            <!-- Card Header -->
+            <div class="card-header bg-primary text-white py-3">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-sliders-h me-2"></i>
+
+                    General Settings
+
+                </h5>
+
+            </div>
+
+
+            <!-- Card Body -->
+            <div class="card-body p-4">
+
+                <form
+                    action="/admin/settings/update"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <div class="row">
+
+
+                        <!-- =========================
+                             SITE INFORMATION
+                        ========================== -->
+
+                        <div class="col-12 mb-3">
+
+                            <h5 class="fw-bold border-bottom pb-2">
+
+                                <i class="fas fa-globe text-primary me-2"></i>
+
+                                Site Information
+
+                            </h5>
+
+                        </div>
+
+
+                        <!-- Site Name -->
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Site Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="siteName"
+                                class="form-control"
+                                placeholder="Enter site name"
+                                value="<%= setting?.siteName || '' %>"
+                            >
+
+                        </div>
+
+
+                        <!-- Email -->
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Email
+
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter website email"
+                                value="<%= setting?.email || '' %>"
+                            >
+
+                        </div>
+
+
+                        <!-- Phone -->
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Phone
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                placeholder="Enter phone number"
+                                value="<%= setting?.phone || '' %>"
+                            >
+
+                        </div>
+
+
+                        <!-- Currency -->
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Currency
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="currency"
+                                class="form-control"
+                                placeholder="Example: INR"
+                                value="<%= setting?.currency || 'INR' %>"
+                            >
+
+                        </div>
+
+
+                        <!-- Address -->
+                        <div class="col-md-12 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                <i class="fas fa-map-marker-alt text-danger me-1"></i>
+
+                                Address
+
+                            </label>
+
+                            <textarea
+                                name="address"
+                                class="form-control"
+                                rows="3"
+                                placeholder="Enter website address"
+                            ><%= setting?.address || '' %></textarea>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             PAYMENT & SHIPPING
+                        ========================== -->
+
+                        <div class="col-12 mb-3">
+
+                            <h5 class="fw-bold border-bottom pb-2">
+
+                                <i class="fas fa-shopping-cart text-success me-2"></i>
+
+                                Payment & Shipping
+
+                            </h5>
+
+                        </div>
+
+
+                        <!-- Tax -->
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Tax (%)
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <input
+                                    type="number"
+                                    name="tax"
+                                    class="form-control"
+                                    min="0"
+                                    step="0.01"
+                                    value="<%= setting?.tax || 0 %>"
+                                >
+
+                                <span class="input-group-text">
+
+                                    %
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Shipping -->
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Shipping Charge
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    ₹
+
+                                </span>
+
+                                <input
+                                    type="number"
+                                    name="shippingCharge"
+                                    class="form-control"
+                                    min="0"
+                                    step="0.01"
+                                    value="<%= setting?.shippingCharge || 0 %>"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             WEBSITE IMAGES
+                        ========================== -->
+
+                        <div class="col-12 mt-2 mb-3">
+
+                            <h5 class="fw-bold border-bottom pb-2">
+
+                                <i class="fas fa-images text-info me-2"></i>
+
+                                Website Images
+
+                            </h5>
+
+                        </div>
+
+
+                        <!-- Logo -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                <i class="fas fa-image me-1"></i>
+
+                                Website Logo
+
+                            </label>
+
+                            <input
+                                type="file"
+                                name="logo"
+                                class="form-control"
+                                accept="image/*"
+                            >
+
+
+                            <% if(setting?.logo){ %>
+
+                                <div class="mt-3 p-3 border rounded text-center">
+
+                                    <small class="text-muted d-block mb-2">
+
+                                        Current Logo
+
+                                    </small>
+
+                                    <img
+                                        src="/uploads/<%= setting.logo %>"
+                                        class="img-thumbnail"
+                                        width="150"
+                                        height="100"
+                                        style="object-fit: contain;"
+                                        onerror="this.style.display='none'"
+                                    >
+
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- Favicon -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                <i class="fas fa-star me-1"></i>
+
+                                Website Favicon
+
+                            </label>
+
+                            <input
+                                type="file"
+                                name="favicon"
+                                class="form-control"
+                                accept="image/*"
+                            >
+
+
+                            <% if(setting?.favicon){ %>
+
+                                <div class="mt-3 p-3 border rounded text-center">
+
+                                    <small class="text-muted d-block mb-2">
+
+                                        Current Favicon
+
+                                    </small>
+
+                                    <img
+                                        src="/uploads/<%= setting.favicon %>"
+                                        class="img-thumbnail"
+                                        width="70"
+                                        height="70"
+                                        style="object-fit: contain;"
+                                        onerror="this.style.display='none'"
+                                    >
+
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             MAINTENANCE MODE
+                        ========================== -->
+
+                        <div class="col-12 mb-4">
+
+                            <div class="card border-warning bg-light">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div>
+
+                                            <h6 class="fw-bold mb-1">
+
+                                                <i class="fas fa-tools text-warning me-2"></i>
+
+                                                Maintenance Mode
+
+                                            </h6>
+
+                                            <small class="text-muted">
+
+                                                Enable this when the website is under maintenance.
+
+                                            </small>
+
+                                        </div>
+
+
+                                        <div class="form-check form-switch">
+
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                name="maintenanceMode"
+                                                value="true"
+                                                style="width: 45px; height: 22px;"
+                                                <%= setting?.maintenanceMode ? "checked" : "" %>
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             BUTTONS
+                        ========================== -->
+
+                        <div class="col-12">
+
+                            <div class="border-top pt-3 d-flex justify-content-end gap-2">
+
+                                <a
+                                    href="/admin/dashboard"
+                                    class="btn btn-secondary"
+                                >
+
+                                    <i class="fas fa-times me-1"></i>
+
+                                    Cancel
+
+                                </a>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary px-4"
+                                >
+
+                                    <i class="fas fa-save me-1"></i>
+
+                                    Save Settings
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>

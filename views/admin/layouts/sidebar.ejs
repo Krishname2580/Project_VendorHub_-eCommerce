@@ -1,0 +1,848 @@
+<style>
+
+/* =========================================================
+   VENDORHUB SIDEBAR
+========================================================= */
+
+.admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e9ecef;
+
+    z-index: 1000;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.sidebar-brand {
+    height: 95px;
+
+    padding: 18px;
+
+    background: linear-gradient(
+        135deg,
+        #f8f9ff,
+        #ffffff
+    );
+
+    border-bottom: 1px solid #eeeeee;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.brand-link {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-circle {
+    width: 55px;
+    height: 55px;
+
+    min-width: 55px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+
+.logo-circle img {
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   BRAND TEXT
+========================================================= */
+
+.brand-content {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-width: 0;
+}
+
+
+.brand-title {
+    margin: 0;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    color: #4776e6;
+}
+
+
+.brand-title span {
+    color: #20b486;
+}
+
+
+.brand-icon {
+    color: #20b486;
+
+    font-size: 12px;
+
+    margin-left: 3px;
+}
+
+
+.brand-subtitle {
+    margin: 5px 0 0;
+
+    font-size: 10px;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    color: #7a869a;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   SIDEBAR SCROLL
+========================================================= */
+
+.sidebar-inner {
+    height: calc(100vh - 95px);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 10px 12px 30px;
+
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+}
+
+
+/* Chrome / Edge / Safari */
+
+.sidebar-inner::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.admin-menu {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+
+.admin-menu li {
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   SECTION TITLES
+========================================================= */
+
+.sidebar-title {
+    padding: 18px 15px 8px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    color: #9aa0a6;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   NORMAL MENU LINK
+========================================================= */
+
+.admin-menu li > a {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 45px;
+
+    padding: 0 14px;
+
+    margin: 2px 0;
+
+    border-radius: 10px;
+
+    color: #606770;
+
+    background: transparent;
+
+    text-decoration: none !important;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.admin-menu li > a i {
+    width: 34px;
+
+    min-width: 34px;
+
+    font-size: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #7b8190;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.admin-menu li > a .nav-text {
+    margin-left: 7px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.admin-menu li > a:hover {
+    background: #f0f4ff;
+
+    color: #4776e6;
+
+    transform: translateX(3px);
+}
+
+
+.admin-menu li > a:hover i {
+    color: #4776e6;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   ACTIVE MENU
+   THIS IS THE IMPORTANT PART
+========================================================= */
+
+.admin-menu li.active > a {
+
+    background: linear-gradient(
+        90deg,
+        #4e73df,
+        #6f8df5
+    ) !important;
+
+    color: #ffffff !important;
+
+    font-weight: 600;
+
+    transform: none !important;
+
+    box-shadow:
+        0 5px 15px rgba(78,115,223,0.25);
+
+}
+
+
+/* =========================================================
+   ACTIVE ICON
+========================================================= */
+
+.admin-menu li.active > a i {
+
+    color: #ffffff !important;
+
+}
+
+
+/* =========================================================
+   ACTIVE TEXT
+========================================================= */
+
+.admin-menu li.active > a .nav-text {
+
+    color: #ffffff !important;
+
+}
+
+
+/* =========================================================
+   ACTIVE HOVER
+   KEEP ACTIVE COLOR AFTER HOVER
+========================================================= */
+
+.admin-menu li.active > a:hover {
+
+    background: linear-gradient(
+        90deg,
+        #4e73df,
+        #6f8df5
+    ) !important;
+
+    color: #ffffff !important;
+
+    transform: none !important;
+
+}
+
+
+.admin-menu li.active > a:hover i {
+
+    color: #ffffff !important;
+
+}
+
+
+/* =========================================================
+   LEFT ACTIVE INDICATOR
+========================================================= */
+
+.admin-menu li.active > a::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 7px;
+
+    width: 4px;
+
+    height: 31px;
+
+    border-radius: 0 5px 5px 0;
+
+    background: #ffffff;
+
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.menu-badge {
+
+    margin-left: auto;
+
+    font-size: 9px;
+
+    padding: 4px 7px;
+
+    border-radius: 20px;
+
+    background: #eef2ff;
+
+    color: #4e73df;
+}
+
+
+/* Active badge */
+
+.admin-menu li.active > a .menu-badge {
+
+    background: rgba(255,255,255,0.2);
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background: #eeeeee;
+
+    margin: 14px 10px;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.logout-item > a {
+
+    color: #dc3545 !important;
+
+}
+
+
+.logout-item > a i {
+
+    color: #dc3545 !important;
+
+}
+
+
+.logout-item > a:hover {
+
+    background: #fff1f2 !important;
+
+    color: #dc3545 !important;
+
+    transform: translateX(3px);
+
+}
+
+
+.logout-item > a:hover i {
+
+    color: #dc3545 !important;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content-body {
+
+    margin-left: 250px;
+
+    min-height: 100vh;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .admin-sidebar {
+
+        width: 230px;
+
+    }
+
+    .content-body {
+
+        margin-left: 230px;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .admin-sidebar {
+
+        width: 220px;
+
+    }
+
+    .content-body {
+
+        margin-left: 0;
+
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================
+     ADMIN SIDEBAR
+========================================= -->
+
+<aside class="admin-sidebar">
+
+
+    <!-- ================= SIDEBAR BRAND ================= -->
+
+    <div class="sidebar-brand">
+
+        <a href="/admin/dashboard" class="brand-link">
+
+            <div class="logo-circle">
+                <img src="/images/auth/logo1.png" alt="VendorHub">
+            </div>
+
+            <div class="brand-content">
+
+                <h4 class="brand-title">
+                    Vendor<span>Hub</span>
+                    <i class="fas fa-leaf brand-icon"></i>
+                </h4>
+
+                <p class="brand-subtitle">
+                    Sell • Manage • Grow
+                </p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= SIDEBAR MENU ================= -->
+
+    <div class="sidebar-inner">
+
+        <ul class="admin-menu">
+
+            <!-- Dashboard -->
+
+            <li class="sidebar-title">
+                Main
+            </li>
+
+            <li class="<%= req.path === '/admin/dashboard' ? 'active' : '' %>">
+
+                <a href="/admin/dashboard">
+
+                    <i class="icon-speedometer menu-icon"></i>
+
+                    <span class="nav-text">
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- User Management -->
+
+            <li class="sidebar-title">
+                User Management
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/vendor') ? 'active' : '' %>">
+
+                <a href="/admin/vendor/list">
+
+                    <i class="icon-user menu-icon"></i>
+
+                    <span class="nav-text">
+                        Vendors
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/customer') ? 'active' : '' %>">
+
+                <a href="/admin/customer/list">
+
+                    <i class="icon-people menu-icon"></i>
+
+                    <span class="nav-text">
+                        Customers
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- Product Management -->
+
+            <li class="sidebar-title">
+                Product Management
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/category') ? 'active' : '' %>">
+
+                <a href="/admin/category/list">
+
+                    <i class="icon-grid menu-icon"></i>
+
+                    <span class="nav-text">
+                        Categories
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/brand') ? 'active' : '' %>">
+
+                <a href="/admin/brand/list">
+
+                    <i class="icon-tag menu-icon"></i>
+
+                    <span class="nav-text">
+                        Brands
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/product') ? 'active' : '' %>">
+
+                <a href="/admin/product/list">
+
+                    <i class="icon-basket menu-icon"></i>
+
+                    <span class="nav-text">
+                        Products
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- Orders -->
+
+            <li class="sidebar-title">
+                Orders
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/order') ? 'active' : '' %>">
+
+                <a href="/admin/order/list">
+
+                    <i class="icon-handbag menu-icon"></i>
+
+                    <span class="nav-text">
+                        Orders
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/coupon') ? 'active' : '' %>">
+
+                <a href="/admin/coupon/list">
+
+                    <i class="icon-wallet menu-icon"></i>
+
+                    <span class="nav-text">
+                        Coupons
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- Store -->
+
+            <li class="sidebar-title">
+                Store Management
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/store') ? 'active' : '' %>">
+
+                <a href="/admin/store/list">
+
+                    <i class="icon-home menu-icon"></i>
+
+                    <span class="nav-text">
+                        Stores
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- Reports -->
+
+            <li class="sidebar-title">
+                Analytics
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/reports') ? 'active' : '' %>">
+
+                <a href="/admin/reports/dashboard">
+
+                    <i class="icon-chart menu-icon"></i>
+
+                    <span class="nav-text">
+                        Reports
+                    </span>
+
+                    <span class="menu-badge">
+                        View
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- Others -->
+
+            <li class="sidebar-title">
+                Others
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/notification') ? 'active' : '' %>">
+
+                <a href="/admin/notification/list">
+
+                    <i class="icon-bell menu-icon"></i>
+
+                    <span class="nav-text">
+                        Notifications
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/settings') ? 'active' : '' %>">
+
+                <a href="/admin/settings/index">
+
+                    <i class="icon-settings menu-icon"></i>
+
+                    <span class="nav-text">
+                        Settings
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <li class="<%= req.path.startsWith('/admin/profile') ? 'active' : '' %>">
+
+                <a href="/admin/profile">
+
+                    <i class="icon-user-follow menu-icon"></i>
+
+                    <span class="nav-text">
+                        Profile
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- Logout -->
+
+            <li class="logout-item">
+
+                <a href="/auth/logout">
+
+                    <i class="icon-logout menu-icon"></i>
+
+                    <span class="nav-text">
+                        Logout
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+</aside>

@@ -1,0 +1,140 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <div class="container py-5">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h2>
+
+                    <i class="fas fa-map-marker-alt text-primary"></i>
+
+                    My Addresses
+
+                </h2>
+
+                <a href="/customer/address/add" class="btn btn-primary">
+
+                    <i class="fas fa-plus"></i>
+
+                    Add New Address
+
+                </a>
+
+            </div>
+
+            <% if(addresses.length===0){ %>
+
+                <div class="card shadow border-0">
+
+                    <div class="card-body text-center py-5">
+
+                        <i class="fas fa-map-marker-alt fa-4x text-secondary mb-3"></i>
+
+                        <h4>No Address Found</h4>
+
+                        <p class="text-muted">
+
+                            Please add your delivery address.
+
+                        </p>
+
+                        <a href="/customer/address/add" class="btn btn-success">
+
+                            Add Address
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <% } else { %>
+
+                    <div class="row">
+
+                        <% addresses.forEach(address=>{ %>
+
+                            <div class="col-md-6 mb-4">
+
+                                <div class="card shadow-sm border-0 h-100">
+
+                                    <div class="card-body">
+
+                                        <h5 class="fw-bold">
+
+                                            <%= address.fullName %>
+
+                                        </h5>
+
+                                        <p>
+
+                                            <i class="fas fa-phone text-success"></i>
+
+                                            <%= address.phone %>
+
+                                        </p>
+
+                                        <p>
+
+                                            <%= address.address %>
+
+                                        </p>
+
+                                        <p>
+
+                                            <%= address.city %>,
+
+                                                <%= address.state %>
+
+                                        </p>
+
+                                        <p>
+
+                                            <%= address.country %>
+
+                                                -
+
+                                                <%= address.pincode %>
+
+                                        </p>
+
+                                        <div class="mt-3">
+
+                                            <a href="/customer/address/edit/<%= address._id %>"
+                                                class="btn btn-warning btn-sm">
+
+                                                <i class="fas fa-edit"></i>
+
+                                                Edit
+
+                                            </a>
+
+                                            <a href="/customer/address/delete/<%= address._id %>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Delete this address?')">
+
+                                                <i class="fas fa-trash"></i>
+
+                                                Delete
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <% }) %>
+
+                    </div>
+
+                    <% } %>
+
+        </div>
+
+        <%- include("../layouts/footer") %>

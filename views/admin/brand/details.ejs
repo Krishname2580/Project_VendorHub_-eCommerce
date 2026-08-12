@@ -1,0 +1,183 @@
+<%- include("../layouts/header", { title: "Brand Details" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+            <div class="content-body">
+                <div class="container-fluid p-4">
+
+                    <div class="row">
+
+                        <div class="col-md-8 mx-auto">
+
+                            <div class="card shadow">
+
+                                <div class="card-header bg-info text-white">
+
+                                    <h4 class="mb-0">
+
+                                        Brand Details
+
+                                    </h4>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-4 text-center">
+
+                                            <% if(brand.image){ %>
+
+                                                <img src="<%= brand.image %>"
+                                                    class="img-fluid rounded shadow" style="max-height:220px;">
+
+                                                <% } else { %>
+
+                                                    <img src="/images/auth/default-product.png" class="img-fluid rounded shadow"
+                                                        style="max-height:220px;">
+
+                                                    <% } %>
+
+                                        </div>
+
+                                        <div class="col-md-8">
+
+                                            <table class="table table-bordered">
+
+                                                <tr>
+
+                                                    <th width="180">
+
+                                                        Brand Name
+
+                                                    </th>
+
+                                                    <td>
+
+                                                        <%= brand.name %>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <th>
+
+                                                        Description
+
+                                                    </th>
+
+                                                    <td>
+
+                                                        <%= brand.description || "No Description Available" %>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <th>
+
+                                                        Status
+
+                                                    </th>
+
+                                                    <td>
+
+                                                        <% if(brand.status){ %>
+
+                                                            <span class="badge bg-success">
+
+                                                                Active
+
+                                                            </span>
+
+                                                            <% } else { %>
+
+                                                                <span class="badge bg-danger">
+
+                                                                    Inactive
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <th>
+
+                                                        Created At
+
+                                                    </th>
+
+                                                    <td>
+
+                                                        <%= brand.createdAt.toLocaleString() %>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <th>
+
+                                                        Updated At
+
+                                                    </th>
+
+                                                    <td>
+
+                                                        <%= brand.updatedAt.toLocaleString() %>
+
+                                                    </td>
+
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-4 text-end">
+
+                                        <a href="/admin/brand/list" class="btn btn-secondary">
+
+                                            <i class="fas fa-arrow-left"></i>
+
+                                            Back
+
+                                        </a>
+
+                                        <a href="/admin/brand/edit/<%= brand._id %>" class="btn btn-warning">
+
+                                            <i class="fas fa-edit"></i>
+
+                                            Edit Brand
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

@@ -1,0 +1,81 @@
+<%- include('../layouts/header') %>
+
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Login</h1>
+        <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Login</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+    <!-- Login Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="p-5 bg-light rounded">
+                        <div class="text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
+                            <h4 class="text-primary border-bottom border-primary border-2 d-inline-block pb-2">Welcome
+                                Back</h4>
+                            <p class="mb-0 fs-6 text-dark">Login to your account to continue</p>
+                        </div>
+
+                        <% if (typeof message !=='undefined' && message) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= message %>
+                            </div>
+                            <% } %>
+
+                                <% if (typeof success !=='undefined' && success) { %>
+                                    <div class="alert alert-success" role="alert">
+                                        <%= success %>
+                                    </div>
+                                    <% } %>
+
+                                        <form action="/customer/login" method="POST">
+                                            <div class="row g-4 wow fadeInUp" data-wow-delay="0.1s">
+                                                <div class="col-12">
+                                                    <div class="form-floating">
+                                                        <input type="email" class="form-control" id="email" name="email"
+                                                            placeholder="Your Email" required>
+                                                        <label for="email">Your Email</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-floating">
+                                                        <input type="password" class="form-control" id="password"
+                                                            name="password" placeholder="Password" required>
+                                                        <label for="password">Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 d-flex justify-content-between align-items-center">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="remember"
+                                                            name="remember">
+                                                        <label class="form-check-label" for="remember">Remember
+                                                            me</label>
+                                                    </div>
+                                                    <a href="/customer/forgot-password" class="text-primary">Forgot
+                                                        Password?</a>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button class="btn btn-primary rounded-pill py-3 px-5 w-100"
+                                                        type="submit">Login</button>
+                                                </div>
+                                                <div class="col-12 text-center">
+                                                    <p class="mb-0">Don't have an account? <a href="/customer/register"
+                                                            class="text-primary">Register here</a></p>
+                                                </div>
+                                            </div>
+                                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+
+    <%- include('../layouts/footer') %>

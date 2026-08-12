@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- =========================================
+         BASIC META
+    ========================================== -->
+
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <meta name="description"
+          content="VendorHub Admin Dashboard">
+
+    <meta name="author"
+          content="VendorHub">
+
+
+    <!-- =========================================
+         PAGE TITLE
+    ========================================== -->
+
+    <title>
+        <%= title || "VendorHub Admin" %>
+    </title>
+
+
+    <!-- =========================================
+         FAVICON
+    ========================================== -->
+
+    <link rel="icon"
+          type="image/png"
+          href="/images/auth/logo1.png">
+
+
+    <!-- =========================================
+         BOOTSTRAP
+    ========================================== -->
+
+    <link rel="stylesheet"
+          href="/css/bootstrap.min.css">
+
+
+    <!-- =========================================
+         FONT AWESOME
+    ========================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <!-- =========================================
+         ADMIN PLUGINS
+    ========================================== -->
+
+    <link rel="stylesheet"
+          href="/admin/plugins/pg-calendar/css/pignose.calendar.min.css">
+
+    <link rel="stylesheet"
+          href="/admin/plugins/chartist/css/chartist.min.css">
+
+    <link rel="stylesheet"
+          href="/admin/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+
+
+    <!-- =========================================
+         ADMIN MAIN CSS
+    ========================================== -->
+
+    <link rel="stylesheet"
+          href="/admin/css/style.css">
+
+
+    <!-- =========================================
+         VENDORHUB CUSTOM CSS
+    ========================================== -->
+
+    <style>
+
+        /* =========================================
+           GLOBAL
+        ========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: #f8f9fc;
+            color: #4c5870;
+        }
+
+
+        /* =========================================
+           SIDEBAR
+        ========================================== */
+
+        .admin-sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 250px;
+
+            height: 100vh;
+
+            background: #ffffff;
+
+            border-right: 1px solid #e9ecef;
+
+            z-index: 1000;
+
+            overflow: hidden;
+
+            transition:
+                width 0.3s ease,
+                transform 0.3s ease;
+        }
+
+
+        /* Sidebar closed */
+
+        .admin-sidebar.sidebar-collapsed {
+
+            width: 0 !important;
+
+            min-width: 0 !important;
+
+            overflow: hidden !important;
+        }
+
+
+        /* =========================================
+           SIDEBAR SCROLL
+        ========================================== */
+
+        .sidebar-inner {
+
+            height: calc(100vh - 95px);
+
+            overflow-y: auto;
+
+            overflow-x: hidden;
+
+            scrollbar-width: none;
+
+            -ms-overflow-style: none;
+        }
+
+        .sidebar-inner::-webkit-scrollbar {
+
+            display: none;
+
+            width: 0;
+            height: 0;
+        }
+
+
+        /* =========================================
+           CONTENT
+        ========================================== */
+
+        .content-body {
+
+            margin-left: 250px;
+
+            width: calc(100% - 250px);
+
+            min-height: 100vh;
+
+            transition:
+                margin-left 0.3s ease,
+                width 0.3s ease;
+        }
+
+
+        /* Content after sidebar closes */
+
+        .content-body.sidebar-expanded {
+
+            margin-left: 0 !important;
+
+            width: 100% !important;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================== */
+
+        .header-content {
+
+            margin-left: 250px !important;
+
+            width: calc(100% - 250px) !important;
+
+            transition:
+                margin-left 0.3s ease,
+                width 0.3s ease;
+
+            position: relative;
+
+            z-index: 900;
+        }
+
+
+        /* Header after sidebar closes */
+
+        .header-content.sidebar-expanded {
+
+            margin-left: 0 !important;
+
+            width: 100% !important;
+
+            max-width: 100% !important;
+
+            left: 0 !important;
+
+            right: 0 !important;
+        }
+
+
+        /* Navbar */
+
+        .header-content .navbar {
+
+            width: 100% !important;
+
+            min-height: 70px;
+        }
+
+
+        .header-content .navbar-collapse {
+
+            width: 100%;
+        }
+
+
+        /* =========================================
+           SIDEBAR TOGGLE BUTTON
+        ========================================== */
+
+        .sidebar-toggle-btn {
+
+            width: 42px;
+
+            height: 42px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #f1f4ff;
+
+            color: #4e73df;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            margin-right: 15px;
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .sidebar-toggle-btn:hover {
+
+            background: #4e73df;
+
+            color: #ffffff;
+
+            transform: scale(1.05);
+        }
+
+
+        .sidebar-toggle-btn:focus {
+
+            outline: none;
+
+            box-shadow: none;
+        }
+
+
+        /* =========================================
+           SEARCH
+        ========================================== */
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        .header-left .icons {
+
+            width: 300px;
+        }
+
+
+        .header-left .form-control {
+
+            height: 42px;
+
+            border-radius: 8px 0 0 8px;
+
+            border: 1px solid #e1e5eb;
+
+            box-shadow: none;
+        }
+
+
+        .header-left .form-control:focus {
+
+            border-color: #4e73df;
+
+            box-shadow:
+                0 0 0 0.15rem
+                rgba(78, 115, 223, 0.12);
+        }
+
+
+        .header-left .input-group-text {
+
+            height: 42px;
+
+            background: #ffffff;
+
+            border: 1px solid #e1e5eb;
+
+            border-left: 0;
+
+            color: #7b8190;
+        }
+
+
+        /* =========================================
+           HEADER RIGHT
+        ========================================== */
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-left: auto;
+        }
+
+
+        /* =========================================
+           NOTIFICATION
+        ========================================== */
+
+        .notification_dropdown {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-right: 8px;
+        }
+
+
+        .notification-link {
+
+            position: relative;
+
+            width: 45px;
+
+            height: 45px;
+
+            display: flex !important;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            color: #606770 !important;
+
+            text-decoration: none;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .notification-link:hover {
+
+            background: #eef3ff;
+
+            color: #4776e6 !important;
+        }
+
+
+        .notification-link i {
+
+            font-size: 19px;
+
+            transition: 0.25s ease;
+        }
+
+
+        .notification-link:hover i {
+
+            color: #4776e6;
+
+            transform: rotate(8deg);
+        }
+
+
+        /* Notification count */
+
+        .notification-badge {
+
+            position: absolute;
+
+            top: 3px;
+
+            right: 2px;
+
+            min-width: 18px;
+
+            height: 18px;
+
+            padding: 0 4px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #dc3545;
+
+            color: #ffffff;
+
+            border-radius: 50%;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            line-height: 1;
+
+            border: 2px solid #ffffff;
+        }
+
+
+        /* =========================================
+           PROFILE
+        ========================================== */
+
+        .header-profile .nav-link {
+
+            display: flex;
+
+            align-items: center;
+
+            color: #4c5870;
+
+            text-decoration: none;
+        }
+
+
+        .header-profile .nav-link:hover {
+
+            color: #4776e6;
+        }
+
+
+        .header-profile img {
+
+            width: 40px;
+
+            height: 40px;
+
+            object-fit: cover;
+
+            border: 2px solid #eeeeee;
+        }
+
+
+        /* =========================================
+           DROPDOWN
+        ========================================== */
+
+        .header-profile .dropdown-menu {
+
+            min-width: 190px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 0, 0, 0.12);
+        }
+
+
+        .header-profile .dropdown-item {
+
+            padding: 10px 15px;
+
+            font-size: 14px;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .header-profile .dropdown-item:hover {
+
+            background: #f2f5ff;
+
+            color: #4776e6;
+        }
+
+
+        /* =========================================
+           TABLE
+        ========================================== */
+
+        .table-responsive {
+
+            overflow-x: auto;
+
+            scrollbar-width: thin;
+        }
+
+
+        .table th,
+        .table td {
+
+            vertical-align: middle !important;
+        }
+
+
+        .table th {
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           ACTION BUTTONS
+        ========================================== */
+
+        .action-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 6px;
+
+            white-space: nowrap;
+        }
+
+
+        .action-buttons .btn {
+
+            width: 36px;
+
+            height: 36px;
+
+            padding: 0;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 7px;
+        }
+
+
+        /* =========================================
+           PRODUCT IMAGE
+        ========================================== */
+
+        .product-image {
+
+            width: 60px;
+
+            height: 60px;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+
+            border: 1px solid #eeeeee;
+        }
+
+
+        /* =========================================
+           PRICE
+        ========================================== */
+
+        .price {
+
+            font-weight: 700;
+
+            color: #198754;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           BADGE
+        ========================================== */
+
+        .badge {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            padding: 6px 10px;
+
+            border-radius: 6px;
+        }
+
+
+        /* =========================================
+           CARD
+        ========================================== */
+
+        .card {
+
+            border: none;
+
+            border-radius: 12px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 991px) {
+
+            .admin-sidebar {
+
+                width: 230px;
+            }
+
+
+            .content-body {
+
+                margin-left: 230px;
+
+                width: calc(100% - 230px);
+            }
+
+
+            .header-content {
+
+                margin-left: 230px !important;
+
+                width: calc(100% - 230px) !important;
+            }
+
+
+            .header-left .icons {
+
+                width: 240px;
+            }
+
+        }
+
+
+        @media (max-width: 767px) {
+
+            .admin-sidebar {
+
+                width: 220px;
+            }
+
+
+            .content-body {
+
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+
+            .header-content {
+
+                margin-left: 0 !important;
+
+                width: 100% !important;
+            }
+
+
+            .header-left .icons {
+
+                width: 180px;
+            }
+
+
+            .header-profile .ml-2 {
+
+                display: none;
+            }
+
+
+            .header-profile .fa-angle-down {
+
+                display: none;
+            }
+
+        }
+
+
+        /* =========================================
+           PRINT
+        ========================================== */
+
+        @media print {
+
+            .header-content,
+            .admin-sidebar,
+            .navbar {
+
+                display: none !important;
+            }
+
+
+            .content-body {
+
+                margin-left: 0 !important;
+
+                width: 100% !important;
+            }
+
+        }
+        /* =========================================
+   NAVBAR / CONTENT SEPARATOR
+========================================= */
+
+.header-content {
+    position: relative;
+    z-index: 999;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    box-shadow: 0.3 2px 8px;
+
+    min-height: 95px;
+}
+
+/* Navbar */
+.header-content .navbar {
+    min-height: 95px;
+
+    background: #ffffff !important;
+
+    /* border-bottom: 1px solid #eeeeee; */
+}
+
+/* Make the separator visible */
+.header-content::after {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 1px;
+
+    background: #e5e7eb;
+}
+
+/* Content starts below navbar */
+.content-body {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+    </style>
+
+</head>
+
+<body>

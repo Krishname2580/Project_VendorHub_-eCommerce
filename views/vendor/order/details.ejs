@@ -1,0 +1,867 @@
+<%- include("../layouts/header",{title:"Order Details"}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <!-- Page Heading -->
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <h2 class="fw-bold">
+
+                                <i class="fas fa-receipt text-primary me-2"></i>
+
+                                Order Details
+
+                            </h2>
+
+                            <small class="text-muted">
+
+                                Order Number :
+
+                                <strong>
+
+                                    <%= order.orderNumber %>
+
+                                </strong>
+
+                            </small>
+
+                        </div>
+
+                        <div>
+
+                            <a href="/vendor/orders/:id" class="btn btn-secondary">
+
+                                <i class="fas fa-arrow-left"></i>
+
+                                Back
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ================= Customer & Payment ================= -->
+
+                    <div class="row">
+
+                        <!-- Customer -->
+
+                        <div class="col-lg-6">
+
+                            <div class="card shadow border-0 mb-4">
+
+                                <div class="card-header bg-primary text-white">
+
+                                    <h5 class="mb-0">
+
+                                        <i class="fas fa-user"></i>
+
+                                        Customer Information
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <table class="table table-borderless">
+
+                                        <tr>
+
+                                            <th width="170">
+
+                                                Name
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.customer.name %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Email
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.customer.email %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Order Date
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= new Date(order.createdAt).toLocaleString() %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Payment Method
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.paymentMethod %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Payment Status
+
+                                            </th>
+
+                                            <td>
+
+                                                <% if(order.paymentStatus=="Paid" ){ %>
+
+                                                    <span class="badge bg-success">
+
+                                                        Paid
+
+                                                    </span>
+
+                                                    <% }else if(order.paymentStatus=="Pending" ){ %>
+
+                                                        <span class="badge bg-warning">
+
+                                                            Pending
+
+                                                        </span>
+
+                                                        <% }else{ %>
+
+                                                            <span class="badge bg-danger">
+
+                                                                <%= order.paymentStatus %>
+
+                                                            </span>
+
+                                                            <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Shipping Address -->
+
+                        <div class="col-lg-6">
+
+                            <div class="card shadow border-0 mb-4">
+
+                                <div class="card-header bg-success text-white">
+
+                                    <h5 class="mb-0">
+
+                                        <i class="fas fa-map-marker-alt"></i>
+
+                                        Shipping Address
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <table class="table table-borderless">
+
+                                        <tr>
+
+                                            <th width="170">
+
+                                                Receiver
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.address.fullName %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Mobile
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.address.mobile %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Address
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.address.address %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                City
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.address.city %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                State
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.address.state %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Pincode
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= order.address.pincode %>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- ================= Ordered Products ================= -->
+
+                    <div class="card shadow border-0 mb-4">
+
+                        <div class="card-header bg-dark text-white">
+
+                            <h5 class="mb-0">
+
+                                <i class="fas fa-box-open me-2"></i>
+
+                                Ordered Products
+
+                            </h5>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <% if(orderItems.length){ %>
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-hover align-middle">
+
+                                        <thead class="table-light">
+
+                                            <tr>
+
+                                                <th width="90">Image</th>
+
+                                                <th>Product</th>
+
+                                                <th>SKU</th>
+
+                                                <th class="text-center">Price</th>
+
+                                                <th class="text-center">Qty</th>
+
+                                                <th class="text-center">Total</th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            <% orderItems.forEach(item=>{ %>
+
+                                                <tr>
+
+                                                    <td>
+
+                                                        <img src="<%= item.product.thumbnail %>"
+                                                            class="img-fluid rounded border"
+                                                            style="height:70px;width:70px;object-fit:cover;">
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <strong>
+
+                                                            <%= item.product.name %>
+
+                                                        </strong>
+
+                                                        <% if(item.variant){ %>
+
+                                                            <br>
+
+                                                            <small class="text-muted">
+
+                                                                Variant :
+                                                                <%= item.variant.name || item.variant._id %>
+
+                                                            </small>
+
+                                                            <% } %>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <%= item.product.sku %>
+
+                                                    </td>
+
+                                                    <td class="text-center">
+
+                                                        ₹ <%= item.price %>
+
+                                                    </td>
+
+                                                    <td class="text-center">
+
+                                                        <%= item.quantity %>
+
+                                                    </td>
+
+                                                    <td class="text-center fw-bold">
+
+                                                        ₹ <%= item.total %>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <% }) %>
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                                <% }else{ %>
+
+                                    <div class="text-center py-5">
+
+                                        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+
+                                        <h5>No Products Found</h5>
+
+                                    </div>
+
+                                    <% } %>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ================= Order Summary ================= -->
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+
+                            <div class="card shadow border-0 mb-4">
+
+                                <div class="card-header bg-info text-white">
+
+                                    <h5 class="mb-0">
+
+                                        <i class="fas fa-file-invoice-dollar me-2"></i>
+
+                                        Payment Summary
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <table class="table">
+
+                                        <tr>
+
+                                            <th>
+
+                                                Subtotal
+
+                                            </th>
+
+                                            <td class="text-end">
+
+                                                ₹ <%= order.subtotal %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Discount
+
+                                            </th>
+
+                                            <td class="text-end text-success">
+
+                                                - ₹ <%= order.discount %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Shipping
+
+                                            </th>
+
+                                            <td class="text-end">
+
+                                                ₹ <%= order.shippingCharge %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Tax
+
+                                            </th>
+
+                                            <td class="text-end">
+
+                                                ₹ <%= order.tax %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr class="table-primary">
+
+                                            <th>
+
+                                                Grand Total
+
+                                            </th>
+
+                                            <th class="text-end">
+
+                                                ₹ <%= order.totalAmount %>
+
+                                            </th>
+
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="card shadow border-0 mb-4">
+
+                                <div class="card-header bg-warning">
+
+                                    <h5 class="mb-0">
+
+                                        <i class="fas fa-truck me-2"></i>
+
+                                        Order Status
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body text-center">
+
+                                    <% if(order.orderStatus=="Pending" ){ %>
+
+                                        <span class="badge bg-warning fs-6 px-4 py-2">
+
+                                            Pending
+
+                                        </span>
+
+                                        <% } %>
+
+                                            <% if(order.orderStatus=="Confirmed" ){ %>
+
+                                                <span class="badge bg-primary fs-6 px-4 py-2">
+
+                                                    Confirmed
+
+                                                </span>
+
+                                                <% } %>
+
+                                                    <% if(order.orderStatus=="Packed" ){ %>
+
+                                                        <span class="badge bg-info fs-6 px-4 py-2">
+
+                                                            Packed
+
+                                                        </span>
+
+                                                        <% } %>
+
+                                                            <% if(order.orderStatus=="Shipped" ){ %>
+
+                                                                <span class="badge bg-secondary fs-6 px-4 py-2">
+
+                                                                    Shipped
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                                                    <% if(order.orderStatus=="Delivered" ){ %>
+
+                                                                        <span class="badge bg-success fs-6 px-4 py-2">
+
+                                                                            Delivered
+
+                                                                        </span>
+
+                                                                        <% } %>
+
+                                                                            <% if(order.orderStatus=="Cancelled" ){ %>
+
+                                                                                <span
+                                                                                    class="badge bg-danger fs-6 px-4 py-2">
+
+                                                                                    Cancelled
+
+                                                                                </span>
+
+                                                                                <% } %>
+
+                                                                                    <% if(order.orderStatus=="Returned"
+                                                                                        ){ %>
+
+                                                                                        <span
+                                                                                            class="badge bg-dark fs-6 px-4 py-2">
+
+                                                                                            Returned
+
+                                                                                        </span>
+
+                                                                                        <% } %>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- ================= Vendor Update Status ================= -->
+
+                    <div class="card shadow border-0 mb-4">
+
+                        <div class="card-header bg-success text-white">
+
+                            <h5 class="mb-0">
+
+                                <i class="fas fa-edit me-2"></i>
+
+                                Update Order Status
+
+                            </h5>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/vendor/order/status/<%= order._id %>" method="POST">
+
+                                <div class="row">
+
+                                    <div class="col-md-9">
+
+                                        <select class="form-select" name="status" required>
+
+                                            <option value="Pending" <%=order.orderStatus=="Pending" ? "selected" : "" %>
+                                                >
+
+                                                Pending
+
+                                            </option>
+
+                                            <option value="Confirmed" <%=order.orderStatus=="Confirmed" ? "selected"
+                                                : "" %>>
+
+                                                Confirmed
+
+                                            </option>
+
+                                            <option value="Packed" <%=order.orderStatus=="Packed" ? "selected" : "" %>>
+
+                                                Packed
+
+                                            </option>
+
+                                            <option value="Shipped" <%=order.orderStatus=="Shipped" ? "selected" : "" %>
+                                                >
+
+                                                Shipped
+
+                                            </option>
+
+                                            <option value="Delivered" <%=order.orderStatus=="Delivered" ? "selected"
+                                                : "" %>>
+
+                                                Delivered
+
+                                            </option>
+
+                                            <option value="Cancelled" <%=order.orderStatus=="Cancelled" ? "selected"
+                                                : "" %>>
+
+                                                Cancelled
+
+                                            </option>
+
+                                            <option value="Returned" <%=order.orderStatus=="Returned" ? "selected" : ""
+                                                %>>
+
+                                                Returned
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+
+                                        <button class="btn btn-success w-100">
+
+                                            <i class="fas fa-save me-2"></i>
+
+                                            Update
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ================= Quick Actions ================= -->
+
+                    <div class="card shadow border-0">
+
+                        <div class="card-header bg-dark text-white">
+
+                            <h5 class="mb-0">
+
+                                <i class="fas fa-bolt me-2"></i>
+
+                                Quick Actions
+
+                            </h5>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="d-flex flex-wrap gap-3">
+
+                                <button onclick="window.print()" class="btn btn-primary">
+
+                                    <i class="fas fa-print me-2"></i>
+
+                                    Print Invoice
+
+                                </button>
+
+                                <a href="/vendor/order/list" class="btn btn-secondary">
+
+                                    <i class="fas fa-arrow-left me-2"></i>
+
+                                    Back to Orders
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <style>
+                .table th {
+
+                    white-space: nowrap;
+
+                }
+
+                .card {
+
+                    border-radius: 12px;
+
+                }
+
+                .card-header {
+
+                    font-weight: 600;
+
+                }
+
+                .badge {
+
+                    font-size: 14px;
+
+                }
+
+                .table td {
+
+                    vertical-align: middle;
+
+                }
+
+                img {
+
+                    border-radius: 8px;
+
+                }
+
+                @media print {
+
+                    .sidebar,
+
+                    .navbar,
+
+                    .btn,
+
+                    .card-header {
+
+                        display: none !important;
+
+                    }
+
+                    .main-content {
+
+                        margin: 0;
+
+                        padding: 0;
+
+                    }
+
+                }
+            </style>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

@@ -1,0 +1,155 @@
+<%- include("../layouts/header", { title: "Request Payout" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-8">
+
+                        <div class="card shadow">
+
+                            <div class="card-header d-flex justify-content-between align-items-center">
+
+                                <h4>Request Payout</h4>
+
+                                <a href="/vendor/payouts" class="btn btn-secondary">
+
+                                    Back
+
+                                </a>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="alert alert-info">
+
+                                    <h5>
+
+                                        Available Balance :
+
+                                        <strong>
+
+                                            ₹ <%= availableBalance %>
+
+                                        </strong>
+
+                                    </h5>
+
+                                </div>
+
+                                <form action="/vendor/payouts/request" method="POST">
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Payout Amount
+
+                                        </label>
+
+                                        <input type="number" name="amount" id="amount" class="form-control"
+                                            max="<%= availableBalance %>" min="1" required>
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Select Bank Account
+
+                                        </label>
+
+                                        <select name="bankAccount" class="form-select" required>
+
+                                            <option value="">
+
+                                                Select Bank
+
+                                            </option>
+
+                                            <% bankAccounts.forEach(bank=>{ %>
+
+                                                <option value="<%= bank._id %>">
+
+                                                    <%= bank.bankName %>
+
+                                                        -
+
+                                                        ****<%= bank.accountNumber.slice(-4) %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Remarks
+
+                                        </label>
+
+                                        <textarea name="remarks" class="form-control" rows="4"
+                                            placeholder="Optional remarks"></textarea>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">
+
+                                        <i class="fas fa-paper-plane"></i>
+
+                                        Submit Request
+
+                                    </button>
+
+                                    <button type="reset" class="btn btn-warning">
+
+                                        Reset
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                document.querySelector("form").addEventListener("submit", function (e) {
+
+                    const amount = Number(document.getElementById("amount").value);
+
+                    const balance = Number("<%= availableBalance %>");
+
+                    if (amount > balance) {
+
+                        alert("Requested amount exceeds available balance.");
+
+                        e.preventDefault();
+
+                    }
+
+                });
+
+            </script>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

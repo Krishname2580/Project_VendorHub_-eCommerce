@@ -1,0 +1,852 @@
+<%- include("../layouts/header", { title: "Vendor List" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+
+<div class="content-body">
+
+    <div class="main-content">
+
+        <div class="container-fluid">
+
+            <!-- =====================================================
+                 PAGE HEADER
+            ====================================================== -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h2 class="fw-bold mb-1">
+
+                        <i class="fas fa-users text-primary me-2"></i>
+
+                        All Vendors
+
+                    </h2>
+
+                    <p class="text-muted mb-0">
+
+                        Manage all vendors from one place.
+
+                    </p>
+
+                </div>
+
+
+                <!-- STATUS BUTTONS -->
+
+                <div class="d-flex gap-2 flex-wrap">
+
+                    <!-- Pending -->
+
+                    <a href="/admin/vendor/pending"
+                       class="btn btn-warning">
+
+                        <i class="fas fa-hourglass-half me-1"></i>
+
+                        Pending
+
+                    </a>
+
+
+                    <!-- Approved -->
+
+                    <a href="/admin/vendor/approved"
+                       class="btn btn-success">
+
+                        <i class="fas fa-circle-check me-1"></i>
+
+                        Approved
+
+                    </a>
+
+
+                    <!-- Rejected -->
+
+                    <a href="/admin/vendor/rejected"
+                       class="btn btn-danger">
+
+                        <i class="fas fa-circle-xmark me-1"></i>
+
+                        Rejected
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 VENDOR CARD
+            ====================================================== -->
+
+            <div class="card border-0 shadow-lg rounded-4">
+
+
+                <!-- CARD HEADER -->
+
+                <div class="card-header bg-primary text-white py-3">
+
+                    <h5 class="mb-0">
+
+                        <i class="fas fa-store me-2"></i>
+
+                        Vendor Management
+
+                    </h5>
+
+                </div>
+
+
+                <!-- CARD BODY -->
+
+                <div class="card-body">
+
+
+                    <div class="table-responsive">
+
+
+                        <!-- =====================================================
+                             VENDOR TABLE
+                        ====================================================== -->
+
+                        <table class="table table-hover align-middle vendor-table">
+
+
+                            <!-- TABLE HEADER -->
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th style="width:5%;">
+
+                                        #
+
+                                    </th>
+
+
+                                    <th style="width:35%;">
+
+                                        <i class="fas fa-user me-1"></i>
+
+                                        Vendor
+
+                                    </th>
+
+
+                                    <th style="width:25%;">
+
+                                        <i class="fas fa-envelope me-1"></i>
+
+                                        Email
+
+                                    </th>
+
+
+                                    <th style="width:15%;">
+
+                                        <i class="fas fa-signal me-1"></i>
+
+                                        Status
+
+                                    </th>
+
+
+                                    <th style="width:20%;"
+                                        class="text-center">
+
+                                        <i class="fas fa-gears me-1"></i>
+
+                                        Action
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <!-- =====================================================
+                                 TABLE BODY
+                            ====================================================== -->
+
+                            <tbody>
+
+
+                                <% if(vendors && vendors.length > 0){ %>
+
+
+                                    <% vendors.forEach((vendor,index)=>{ %>
+
+
+                                        <tr>
+
+
+                                            <!-- ===============================
+                                                 NUMBER
+                                            ================================ -->
+
+                                            <td>
+
+                                                <strong>
+
+                                                    <%= index + 1 %>
+
+                                                </strong>
+
+                                            </td>
+
+
+                                            <!-- ===============================
+                                                 VENDOR IMAGE + NAME
+                                            ================================ -->
+
+                                            <td>
+
+
+                                                <div class="vendor-info">
+
+
+                                                    <!-- VENDOR IMAGE -->
+
+                                                    <img
+                                                        src="<%= vendor.user && vendor.user.image
+                                                            ? '/uploads/users/' + vendor.user.image
+                                                            : '/images/auth/user.png' %>"
+                                                        alt="Vendor"
+                                                        class="vendor-image"
+                                                        onerror="this.onerror=null; this.src='/images/auth/user.png';"
+                                                    >
+
+
+                                                    <!-- VENDOR NAME -->
+
+                                                    <div class="vendor-details">
+
+                                                        <h6 class="vendor-name mb-0">
+
+                                                            <%= vendor.user
+                                                                ? vendor.user.name
+                                                                : "N/A" %>
+
+                                                        </h6>
+
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            </td>
+
+
+                                            <!-- ===============================
+                                                 EMAIL
+                                            ================================ -->
+
+                                            <td>
+
+                                                <span class="vendor-email">
+
+                                                    <%= vendor.user
+                                                        ? vendor.user.email
+                                                        : "N/A" %>
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- ===============================
+                                                 STATUS
+                                            ================================ -->
+
+                                            <td>
+
+
+                                                <% if(vendor.approvalStatus === "Approved"){ %>
+
+
+                                                    <span class="badge bg-success status-badge">
+
+                                                        <i class="fas fa-circle-check me-1"></i>
+
+                                                        Approved
+
+                                                    </span>
+
+
+                                                <% } else if(vendor.approvalStatus === "Pending"){ %>
+
+
+                                                    <span class="badge bg-warning text-dark status-badge">
+
+                                                        <i class="fas fa-hourglass-half me-1"></i>
+
+                                                        Pending
+
+                                                    </span>
+
+
+                                                <% } else { %>
+
+
+                                                    <span class="badge bg-danger status-badge">
+
+                                                        <i class="fas fa-circle-xmark me-1"></i>
+
+                                                        Rejected
+
+                                                    </span>
+
+
+                                                <% } %>
+
+
+                                            </td>
+
+
+                                            <!-- ===============================
+                                                 ACTIONS
+                                            ================================ -->
+
+                                            <td class="text-center">
+
+
+                                                <div class="vendor-actions">
+
+
+                                                    <!-- =========================
+                                                         VIEW
+                                                    ========================== -->
+
+                                                    <a
+                                                        href="/admin/vendor/details/<%= vendor._id %>"
+                                                        class="vendor-action view-action"
+                                                        title="View Vendor"
+                                                    >
+
+                                                        <i class="fas fa-eye"></i>
+
+                                                    </a>
+
+
+                                                    <% if(vendor.approvalStatus === "Pending"){ %>
+
+
+                                                        <!-- =========================
+                                                             APPROVE
+                                                        ========================== -->
+
+                                                        <a
+                                                            href="/admin/vendor/approved/<%= vendor._id %>"
+                                                            class="vendor-action approve-action"
+                                                            title="Approve Vendor"
+                                                            onclick="return confirm('Approve this vendor?')"
+                                                        >
+
+                                                            <i class="fas fa-check"></i>
+
+                                                        </a>
+
+
+                                                        <!-- =========================
+                                                             REJECT
+                                                        ========================== -->
+
+                                                        <a
+                                                            href="/admin/vendor/rejected/<%= vendor._id %>"
+                                                            class="vendor-action reject-action"
+                                                            title="Reject Vendor"
+                                                            onclick="return confirm('Reject this vendor?')"
+                                                        >
+
+                                                            <i class="fas fa-xmark"></i>
+
+                                                        </a>
+
+
+                                                    <% } else if(vendor.approvalStatus === "Approved"){ %>
+
+
+                                                        <!-- =========================
+                                                             SUSPEND
+                                                        ========================== -->
+
+                                                        <a
+                                                            href="/admin/vendor/rejected/<%= vendor._id %>"
+                                                            class="vendor-action suspend-action"
+                                                            title="Suspend Vendor"
+                                                            onclick="return confirm('Suspend this vendor?')"
+                                                        >
+
+                                                            <i class="fas fa-ban"></i>
+
+                                                        </a>
+
+
+                                                    <% } else { %>
+
+
+                                                        <!-- =========================
+                                                             ACTIVATE
+                                                        ========================== -->
+
+                                                        <a
+                                                            href="/admin/vendor/activate/<%= vendor._id %>"
+                                                            class="vendor-action activate-action"
+                                                            title="Activate Vendor"
+                                                            onclick="return confirm('Activate this vendor?')"
+                                                        >
+
+                                                            <i class="fas fa-power-off"></i>
+
+                                                        </a>
+
+
+                                                    <% } %>
+
+
+                                                </div>
+
+
+                                            </td>
+
+
+                                        </tr>
+
+
+                                    <% }) %>
+
+
+                                <% } else { %>
+
+
+                                    <!-- =================================================
+                                         NO VENDORS
+                                    ================================================== -->
+
+                                    <tr>
+
+
+                                        <td colspan="5"
+                                            class="text-center py-5">
+
+
+                                            <img
+                                                src="/images/no-data.png"
+                                                width="140"
+                                                class="mb-3"
+                                                alt="No Data"
+                                            >
+
+
+                                            <h5 class="text-muted">
+
+                                                No Vendors Found
+
+                                            </h5>
+
+
+                                            <p class="text-muted mb-0">
+
+                                                There are currently no vendors available.
+
+                                            </p>
+
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                <% } %>
+
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =============================================================
+     CUSTOM CSS
+============================================================= -->
+
+<style>
+
+
+/* =============================================================
+   VENDOR IMAGE + NAME
+============================================================= */
+
+.vendor-info {
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    flex-wrap: nowrap;
+
+    gap: 14px;
+
+    min-width: 250px;
+
+}
+
+
+/* =============================================================
+   VENDOR IMAGE
+============================================================= */
+
+.vendor-image {
+
+    width: 50px;
+
+    height: 50px;
+
+    min-width: 50px;
+
+    min-height: 50px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    display: block;
+
+    background-color: #f1f3f5;
+
+    border: 2px solid #e9ecef;
+
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.12);
+
+}
+
+
+/* =============================================================
+   VENDOR DETAILS
+============================================================= */
+
+.vendor-details {
+
+    display: flex;
+
+    align-items: center;
+
+    min-width: 0;
+
+}
+
+
+.vendor-name {
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #343a40;
+
+    white-space: nowrap;
+
+}
+
+
+/* =============================================================
+   EMAIL
+============================================================= */
+
+.vendor-email {
+
+    color: #6c757d;
+
+    white-space: nowrap;
+
+}
+
+
+/* =============================================================
+   STATUS
+============================================================= */
+
+.status-badge {
+
+    padding: 9px 13px;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+}
+
+
+/* =============================================================
+   ACTION BUTTON CONTAINER
+============================================================= */
+
+.vendor-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-wrap: nowrap;
+
+}
+
+
+/* =============================================================
+   ACTION BUTTON
+============================================================= */
+
+.vendor-action {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: all 0.2s ease;
+
+}
+
+
+/* Hover */
+
+.vendor-action:hover {
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.18);
+
+}
+
+
+/* =============================================================
+   VIEW
+============================================================= */
+
+.view-action {
+
+    background-color: #4d7cff;
+
+}
+
+
+/* =============================================================
+   APPROVE
+============================================================= */
+
+.approve-action {
+
+    background-color: #55c765;
+
+}
+
+
+/* =============================================================
+   REJECT
+============================================================= */
+
+.reject-action {
+
+    background-color: #ff5252;
+
+}
+
+
+/* =============================================================
+   SUSPEND
+============================================================= */
+
+.suspend-action {
+
+    background-color: #f5a142;
+
+}
+
+
+/* =============================================================
+   ACTIVATE
+============================================================= */
+
+.activate-action {
+
+    background-color: #4d7cff;
+
+}
+
+
+/* =============================================================
+   TABLE
+============================================================= */
+
+.vendor-table {
+
+    margin-bottom: 0;
+
+}
+
+
+.vendor-table th {
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+
+    padding: 14px 12px;
+
+}
+
+
+.vendor-table td {
+
+    vertical-align: middle;
+
+    padding: 14px 12px;
+
+}
+
+
+/* Vendor column */
+
+.vendor-table th:nth-child(2),
+.vendor-table td:nth-child(2) {
+
+    min-width: 280px;
+
+}
+
+
+/* Email column */
+
+.vendor-table th:nth-child(3),
+.vendor-table td:nth-child(3) {
+
+    min-width: 220px;
+
+}
+
+
+/* Status column */
+
+.vendor-table th:nth-child(4),
+.vendor-table td:nth-child(4) {
+
+    min-width: 130px;
+
+}
+
+
+/* Action column */
+
+.vendor-table th:nth-child(5),
+.vendor-table td:nth-child(5) {
+
+    min-width: 160px;
+
+}
+
+
+/* =============================================================
+   MOBILE RESPONSIVE
+============================================================= */
+
+@media (max-width: 768px) {
+
+
+    .vendor-info {
+
+        min-width: 220px;
+
+    }
+
+
+    .vendor-image {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+
+        min-height: 45px;
+
+    }
+
+
+    .vendor-name {
+
+        font-size: 14px;
+
+    }
+
+
+    .vendor-table th,
+    .vendor-table td {
+
+        padding: 10px;
+
+    }
+
+
+}
+
+
+</style>
+
+
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>

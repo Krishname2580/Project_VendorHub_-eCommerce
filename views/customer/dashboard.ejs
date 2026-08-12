@@ -1,0 +1,78 @@
+<%- include('layouts/header') %>
+
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">My Dashboard</h1>
+        <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active text-white">Dashboard</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+    <!-- Dashboard Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="p-5 bg-light rounded">
+                        <div class="d-flex align-items-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center me-3"
+                                style="width: 70px; height: 70px;">
+                                <i class="fas fa-user fa-2x text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="mb-0">Welcome back, <%= user.name %>!</h3>
+                                <p class="mb-0 text-muted">
+                                    <%= user.email %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row g-4 mt-2">
+                            <div class="col-md-4">
+                                <a href="/orders" class="text-decoration-none">
+                                    <div class="p-4 text-center border rounded h-100">
+                                        <i class="fas fa-box fa-2x text-primary mb-3"></i>
+                                        <h5>My Orders</h5>
+                                        <p class="mb-0 text-muted">Track and view your orders</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/customer/wishlist" class="text-decoration-none">
+                                    <div class="p-4 text-center border rounded h-100">
+                                        <i class="fas fa-heart fa-2x text-primary mb-3"></i>
+                                        <h5>Wishlist</h5>
+                                        <p class="mb-0 text-muted">Items you've saved</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/account-settings" class="text-decoration-none">
+                                    <div class="p-4 text-center border rounded h-100">
+                                        <i class="fas fa-cog fa-2x text-primary mb-3"></i>
+                                        <h5>Account Settings</h5>
+                                        <p class="mb-0 text-muted">Update your details</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <form action="/customer/logout" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-outline-primary rounded-pill py-2 px-5">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Log Out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard End -->
+
+    <%- include('layouts/footer') %>

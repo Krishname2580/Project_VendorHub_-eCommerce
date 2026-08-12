@@ -1,0 +1,322 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="content-body">
+
+                <div class="container-fluid py-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <h2 class="fw-bold">
+
+                            <i class="fas fa-store text-primary me-2"></i>
+
+                            Store Details
+
+                        </h2>
+
+                        <a href="/admin/store/list" class="btn btn-secondary">
+
+                            <i class="fas fa-arrow-left"></i>
+
+                            Back
+
+                        </a>
+
+                    </div>
+
+                    <div class="card shadow border-0 rounded-4">
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <!-- Store Logo -->
+
+                                <div class="col-md-4 text-center">
+
+                                    <img src="<%= store.logo ? store.logo : '/images/no-image.png' %>"
+                                        class="img-fluid rounded shadow mb-3"
+                                        style="width:220px;height:220px;object-fit:cover;">
+
+                                    <h4>
+
+                                        <%= store.storeName %>
+
+                                    </h4>
+
+                                    <span class="badge <%= store.isActive ? 'bg-success' : 'bg-danger' %>">
+
+                                        <%= store.isActive ? 'Active' : 'Inactive' %>
+
+                                    </span>
+
+                                </div>
+
+                                <!-- Store Information -->
+
+                                <div class="col-md-8">
+
+                                    <table class="table table-bordered">
+
+                                        <tr>
+
+                                            <th width="220">
+
+                                                Store Name
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= store.storeName %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Vendor Name
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= vendor.user.name %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Vendor Email
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= vendor.user.email %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Vendor Phone
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= vendor.user.phone %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Store Email
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= store.email || "-" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Mobile
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= store.mobile || "-" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Address
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= store.address || "-" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                     
+                                       
+
+                                        <tr>
+
+                                            <th>
+
+                                                Facebook
+
+                                            </th>
+
+                                            <td>
+
+                                                <% if(store.facebook){ %>
+
+                                                    <a href="<%= store.facebook %>" target="_blank">
+
+                                                        <%= store.facebook %>
+
+                                                    </a>
+
+                                                    <% }else{ %>
+
+                                                        -
+
+                                                        <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Instagram
+
+                                            </th>
+
+                                            <td>
+
+                                                <% if(store.instagram){ %>
+
+                                                    <a href="<%= store.instagram %>" target="_blank">
+
+                                                        <%= store.instagram %>
+
+                                                    </a>
+
+                                                    <% }else{ %>
+
+                                                        -
+
+                                                        <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Twitter
+
+                                            </th>
+
+                                            <td>
+
+                                                <% if(store.twitter){ %>
+
+                                                    <a href="<%= store.twitter %>" target="_blank">
+
+                                                        <%= store.twitter %>
+
+                                                    </a>
+
+                                                    <% }else{ %>
+
+                                                        -
+
+                                                        <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Banner -->
+
+                            <hr>
+
+                            <h4 class="mb-3">
+
+                                Store Banner
+
+                            </h4>
+
+                            <div class="text-center mb-4">
+
+                                <img src="<%= store.banner ? store.banner : '/images/no-banner.png' %>"
+                                    class="img-fluid rounded shadow"
+                                    style="max-height:300px;width:100%;object-fit:cover;">
+
+                            </div>
+
+                            <!-- Description -->
+
+                            <div class="card border-0 bg-light">
+
+                                <div class="card-header">
+
+                                    <h5 class="mb-0">
+
+                                        Description
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <p>
+
+                                        <%= store.description || "No Description Available" %>
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>

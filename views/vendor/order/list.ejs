@@ -1,0 +1,455 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+                <div class="container-fluid py-4">
+
+                    <!-- Page Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+                            <h3 class="fw-bold mb-1">
+                                Customer Orders
+                            </h3>
+
+                            <p class="text-muted mb-0">
+                                Orders received for your products
+                            </p>
+                        </div>
+
+                        <div>
+                            <span class="badge bg-primary fs-6 px-3 py-2">
+                                <%= orders ? orders.length : 0 %> Orders
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Orders Card -->
+                    <div class="card border-0 shadow-sm">
+
+                        <div class="card-body p-0">
+
+                            <% if (!orders || orders.length===0) { %>
+
+                                <!-- Empty Orders -->
+                                <div class="text-center py-5">
+
+                                    <div class="mb-3">
+
+                                        <i class="fas fa-shopping-bag fa-4x text-muted"></i>
+
+                                    </div>
+
+                                    <h4 class="fw-bold">
+                                        No Orders Yet
+                                    </h4>
+
+                                    <p class="text-muted">
+                                        You haven't received any customer orders yet.
+                                    </p>
+
+                                </div>
+
+
+                                <% } else { %>
+
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover align-middle mb-0">
+
+                                            <!-- Table Header -->
+                                            <thead class="table-light">
+
+                                                <tr>
+
+                                                    <th class="px-4">
+                                                        Order
+                                                    </th>
+
+                                                    <th>
+                                                        Customer
+                                                    </th>
+
+                                                    <th>
+                                                        Products
+                                                    </th>
+
+                                                    <th>
+                                                        Amount
+                                                    </th>
+
+                                                    <th>
+                                                        Payment
+                                                    </th>
+
+                                                    <th>
+                                                        Status
+                                                    </th>
+
+                                                    <th>
+                                                        Date
+                                                    </th>
+
+                                                </tr>
+
+                                            </thead>
+
+
+                                            <!-- Table Body -->
+                                            <tbody>
+
+                                                <% orders.forEach(order=> { %>
+
+                                                    <% const vendorItems=order.items.filter(item=> {
+
+                                                        if (!item.vendor || !vendor || !vendor._id) {
+                                                        return false;
+                                                        }
+
+                                                        return item.vendor.toString() === vendor._id.toString();
+
+                                                        });
+
+                                                        const vendorTotal = vendorItems.reduce(
+                                                        (sum, item) => sum + (item.total || 0),
+                                                        0
+                                                        );
+                                                        %>
+
+
+                                                        <tr>
+
+
+                                                            <!-- Order Number -->
+                                                            <td class="px-4">
+
+                                                                <span class="fw-bold text-primary">
+
+                                                                    <%= order.orderNumber %>
+
+                                                                </span>
+
+                                                            </td>
+
+
+                                                            <!-- Customer -->
+                                                            <td>
+
+                                                                <div>
+
+                                                                    <strong>
+                                                                        <%= order.firstName %>
+                                                                            <%= order.lastName %>
+                                                                    </strong>
+
+                                                                </div>
+
+                                                                <small class="text-muted">
+
+                                                                    <%= order.email %>
+
+                                                                </small>
+
+                                                                <br>
+
+                                                                <small class="text-muted">
+
+                                                                    <i class="fas fa-phone me-1"></i>
+
+                                                                    <%= order.phone %>
+
+                                                                </small>
+
+                                                            </td>
+
+
+                                                            <!-- Products -->
+                                                            <td style="min-width: 250px;">
+
+                                                                <% if (vendorItems.length===0) { %>
+
+                                                                    <span class="text-muted">
+                                                                        No products
+                                                                    </span>
+
+                                                                    <% } else { %>
+
+
+                                                                        <% vendorItems.forEach(item=> { %>
+
+                                                                            <div class="d-flex align-items-center mb-2">
+
+
+                                                                                <!-- Product Image -->
+
+                                                                                <% if ( item.product &&
+                                                                                    item.product.thumbnail ) { %>
+
+                                                                                    <img src="<%= item.product.thumbnail %>"
+                                                                                        alt="<%= item.name %>" style="
+                                                                width:50px;
+                                                                height:50px;
+                                                                object-fit:contain;
+                                                                border-radius:8px;
+                                                                border:1px solid #eee;
+                                                            " class="me-2">
+
+                                                                                    <% } else { %>
+
+                                                                                        <div class="me-2 d-flex align-items-center justify-content-center"
+                                                                                            style="
+                                                                width:50px;
+                                                                height:50px;
+                                                                background:#f5f5f5;
+                                                                border-radius:8px;
+                                                            ">
+
+                                                                                            <i
+                                                                                                class="fas fa-image text-muted"></i>
+
+                                                                                        </div>
+
+                                                                                        <% } %>
+
+
+                                                                                            <!-- Product Details -->
+
+                                                                                            <div>
+
+                                                                                                <strong>
+                                                                                                    <%= item.name %>
+                                                                                                </strong>
+
+                                                                                                <br>
+
+                                                                                                <small
+                                                                                                    class="text-muted">
+
+                                                                                                    ₹<%= item.price.toFixed(2)
+                                                                                                        %>
+
+                                                                                                        ×
+
+                                                                                                        <%= item.quantity
+                                                                                                            %>
+
+                                                                                                </small>
+
+                                                                                            </div>
+
+
+                                                                            </div>
+
+                                                                            <% }) %>
+
+
+                                                                                <% } %>
+
+                                                            </td>
+
+
+                                                            <!-- Vendor Amount -->
+                                                            <td>
+
+                                                                <strong class="text-success">
+
+                                                                    ₹<%= vendorTotal.toFixed(2) %>
+
+                                                                </strong>
+
+                                                            </td>
+
+
+                                                            <!-- Payment -->
+                                                            <td>
+
+                                                                <% if (order.paymentMethod==="COD" ) { %>
+
+                                                                    <span class="badge bg-warning text-dark">
+
+                                                                        <i class="fas fa-money-bill-wave me-1"></i>
+
+                                                                        COD
+
+                                                                    </span>
+
+                                                                    <% } else if ( order.paymentMethod==="Razorpay" ) {
+                                                                        %>
+
+                                                                        <span class="badge bg-success">
+
+                                                                            Razorpay
+
+                                                                        </span>
+
+                                                                        <% } else if ( order.paymentMethod==="Stripe" )
+                                                                            { %>
+
+                                                                            <span class="badge bg-info">
+
+                                                                                Stripe
+
+                                                                            </span>
+
+                                                                            <% } else { %>
+
+                                                                                <span class="badge bg-secondary">
+
+                                                                                    <%= order.paymentMethod %>
+
+                                                                                </span>
+
+                                                                                <% } %>
+
+
+                                                                                    <br>
+
+                                                                                    <small class="text-muted">
+
+                                                                                        <%= order.paymentStatus %>
+
+                                                                                    </small>
+
+                                                            </td>
+
+
+                                                            <!-- Order Status -->
+                                                            <td>
+
+                                                                <% if (order.orderStatus==="Pending" ) { %>
+
+                                                                    <span class="badge bg-warning text-dark">
+
+                                                                        Pending
+
+                                                                    </span>
+
+
+                                                                    <% } else if ( order.orderStatus==="Confirmed" ) {
+                                                                        %>
+
+                                                                        <span class="badge bg-info">
+
+                                                                            Confirmed
+
+                                                                        </span>
+
+
+                                                                        <% } else if ( order.orderStatus==="Packed" ) {
+                                                                            %>
+
+                                                                            <span class="badge bg-primary">
+
+                                                                                Packed
+
+                                                                            </span>
+
+
+                                                                            <% } else if ( order.orderStatus==="Shipped"
+                                                                                ) { %>
+
+                                                                                <span class="badge bg-primary">
+
+                                                                                    Shipped
+
+                                                                                </span>
+
+
+                                                                                <% } else if (
+                                                                                    order.orderStatus==="Delivered" ) {
+                                                                                    %>
+
+                                                                                    <span class="badge bg-success">
+
+                                                                                        Delivered
+
+                                                                                    </span>
+
+
+                                                                                    <% } else if (
+                                                                                        order.orderStatus==="Cancelled"
+                                                                                        ) { %>
+
+                                                                                        <span class="badge bg-danger">
+
+                                                                                            Cancelled
+
+                                                                                        </span>
+
+
+                                                                                        <% } else if (
+                                                                                            order.orderStatus==="Returned"
+                                                                                            ) { %>
+
+                                                                                            <span class="badge bg-dark">
+
+                                                                                                Returned
+
+                                                                                            </span>
+
+
+                                                                                            <% } else { %>
+
+                                                                                                <span
+                                                                                                    class="badge bg-secondary">
+
+                                                                                                    <%= order.orderStatus
+                                                                                                        %>
+
+                                                                                                </span>
+
+                                                                                                <% } %>
+
+                                                            </td>
+
+
+                                                            <!-- Date -->
+                                                            <td>
+
+                                                                <span>
+
+                                                                    <%= new Date( order.createdAt
+                                                                        ).toLocaleDateString("en-IN", { day: "2-digit" ,
+                                                                        month: "short" , year: "numeric" }) %>
+
+                                                                </span>
+
+                                                                <br>
+
+                                                                <small class="text-muted">
+
+                                                                    <%= new Date( order.createdAt
+                                                                        ).toLocaleTimeString("en-IN", { hour: "2-digit"
+                                                                        , minute: "2-digit" }) %>
+
+                                                                </small>
+
+                                                            </td>
+
+
+                                                        </tr>
+
+
+                                                        <% }) %>
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+                                    <% } %>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <%- include("../layouts/footer") %>
+            </div>

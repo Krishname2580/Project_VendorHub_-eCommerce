@@ -1,0 +1,210 @@
+<%- include("../layouts/header", { title: "Customer List" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="content-body">
+
+                <div class="container-fluid py-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <h2>
+                            <i class="fas fa-users text-primary"></i>
+                            Customer List
+                        </h2>
+
+                    </div>
+
+                    <div class="card shadow">
+
+                        <div class="card-body">
+
+                            <% if(customers.length> 0){ %>
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-hover align-middle">
+
+                                        <thead class="table-dark">
+
+                                            <tr>
+
+                                                <th>#</th>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>Verified</th>
+                                                <th>Action</th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            <% customers.forEach((customer,index)=>{ %>
+
+                                                <tr>
+
+                                                    <td>
+                                                        <%= index+1 %>
+                                                    </td>
+
+                                                    <td>
+                                                        <% if (customer.image) { %>
+
+                                                            <img src="<%= customer.image %>" width="55"
+                                                                height="55" class="rounded-circle"
+                                                                style="object-fit: cover;"
+                                                                onerror="this.src='/images/profile.png'">
+
+                                                            <% } else { %>
+
+                                                                <img src="/images/auth/user.png" width="55" height="55"
+                                                                    class="rounded-circle" style="object-fit: cover;">
+
+                                                                <% } %>
+                                                    </td>
+
+                                                    <td>
+                                                        <%= customer.name %>
+                                                    </td>
+
+                                                    <td>
+                                                        <%= customer.email %>
+                                                    </td>
+
+                                                    <td>
+                                                        <%= customer.phone %>
+                                                    </td>
+
+                                                    <td>
+
+                                                        <span class="badge bg-info">
+
+                                                            <%= customer.role.roleName %>
+
+                                                        </span>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <% if(customer.isBlocked){ %>
+
+                                                            <span class="badge bg-danger">
+
+                                                                Blocked
+
+                                                            </span>
+
+                                                            <% }else{ %>
+
+                                                                <span class="badge bg-success">
+
+                                                                    Active
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <% if(customer.isVerified){ %>
+
+                                                            <span class="badge bg-success">
+
+                                                                Verified
+
+                                                            </span>
+
+                                                            <% }else{ %>
+
+                                                                <span class="badge bg-warning text-dark">
+
+                                                                    Pending
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <a href="/admin/customer/details/<%= customer._id %>"
+                                                            class="btn btn-info btn-sm">
+
+                                                            <i class="fas fa-eye"></i>
+
+                                                        </a>
+
+                                                        <a href="/admin/customer/status/<%= customer._id %>"
+                                                            class="btn btn-warning btn-sm">
+
+                                                            <% if(customer.isBlocked){ %>
+
+                                                                <i class="fas fa-lock-open"></i>
+
+                                                                <% }else{ %>
+
+                                                                    <i class="fas fa-ban"></i>
+
+                                                                    <% } %>
+
+                                                        </a>
+
+                                                        <a href="/admin/customer/delete/<%= customer._id %>"
+                                                            class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Delete Customer?')">
+
+                                                            <i class="fas fa-trash"></i>
+
+                                                        </a>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <% }) %>
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                                <% }else{ %>
+
+                                    <div class="text-center py-5">
+
+                                        <i class="fas fa-users fa-5x text-muted"></i>
+
+                                        <h4 class="mt-3">
+
+                                            No Customers Found
+
+                                        </h4>
+
+                                    </div>
+
+                                    <% } %>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

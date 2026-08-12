@@ -1,0 +1,2029 @@
+<%- include("../layouts/header", { title: "Admin Dashboard" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="content-body">
+
+
+                <div class="container-fluid py-4">
+
+                    <!-- ================= PAGE HEADER ================= -->
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <h2 class="fw-bold mb-1">
+
+                                <i class="bi bi-speedometer2 text-primary me-2"></i>
+
+                                Admin Dashboard
+
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Welcome to VendorHub Admin Panel
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <span class="badge bg-primary px-3 py-2">
+
+                                <i class="bi bi-calendar3 me-1"></i>
+
+                                Dashboard
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= STATISTICS ================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- Vendors -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Total Vendors
+                                            </p>
+
+                                            <h3 class="fw-bold mb-0">
+                                                <%= totalVendors || 0 %>
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="bg-primary bg-opacity-10 rounded-circle p-3">
+
+                                            <i class="bi bi-shop fs-3 text-primary"></i>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-3">
+
+                                        <a href="/admin/vendor/list" class="text-primary text-decoration-none">
+
+                                            View Vendors
+
+                                            <i class="bi bi-arrow-right ms-1"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Customers -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Total Customers
+                                            </p>
+
+                                            <h3 class="fw-bold mb-0">
+                                                <%= totalCustomers || 0 %>
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="bg-success bg-opacity-10 rounded-circle p-3">
+
+                                            <i class="bi bi-people fs-3 text-success"></i>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-3">
+
+                                        <a href="/admin/customer/list" class="text-success text-decoration-none">
+
+                                            View Customers
+
+                                            <i class="bi bi-arrow-right ms-1"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Products -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Total Products
+                                            </p>
+
+                                            <h3 class="fw-bold mb-0">
+                                                <%= totalProducts || 0 %>
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="bg-warning bg-opacity-10 rounded-circle p-3">
+
+                                            <i class="bi bi-box-seam fs-3 text-warning"></i>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-3">
+
+                                        <a href="/admin/product/list" class="text-warning text-decoration-none">
+
+                                            View Products
+
+                                            <i class="bi bi-arrow-right ms-1"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Orders -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Total Orders
+                                            </p>
+
+                                            <h3 class="fw-bold mb-0">
+                                                <%= totalOrders || 0 %>
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="bg-danger bg-opacity-10 rounded-circle p-3">
+
+                                            <i class="bi bi-cart-check fs-3 text-danger"></i>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-3">
+
+                                        <a href="/admin/order/list" class="text-danger text-decoration-none">
+
+                                            View Orders
+
+                                            <i class="bi bi-arrow-right ms-1"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= SECOND STATISTICS ================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- Revenue -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+
+                                            <i class="bi bi-currency-rupee fs-3 text-success"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Total Revenue
+                                            </p>
+
+                                            <h4 class="fw-bold mb-0">
+
+                                                ₹ <%= Number(totalRevenue || 0).toLocaleString("en-IN") %>
+
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Categories -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="bg-info bg-opacity-10 rounded-circle p-3 me-3">
+
+                                            <i class="bi bi-grid fs-3 text-info"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Categories
+                                            </p>
+
+                                            <h4 class="fw-bold mb-0">
+                                                <%= totalCategories || 0 %>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Brands -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+
+                                            <i class="bi bi-bookmark-star fs-3 text-primary"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Brands
+                                            </p>
+
+                                            <h4 class="fw-bold mb-0">
+                                                <%= totalBrands || 0 %>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Pending Products -->
+
+                        <div class="col-xl-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="bg-warning bg-opacity-10 rounded-circle p-3 me-3">
+
+                                            <i class="bi bi-hourglass-split fs-3 text-warning"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <p class="text-muted mb-1">
+                                                Pending Products
+                                            </p>
+
+                                            <h4 class="fw-bold mb-0">
+                                                <%= pendingProducts || 0 %>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= SALES + ORDER GRAPH ================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- Monthly Sales -->
+
+                        <div class="col-lg-8">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <div>
+
+                                        <h5 class="fw-bold mb-1">
+
+                                            <i class="bi bi-graph-up-arrow text-primary me-2"></i>
+
+                                            Monthly Sales
+
+                                        </h5>
+
+                                        <small class="text-muted">
+                                            Overall sales performance
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height:350px;">
+
+                                        <canvas id="salesChart"></canvas>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Order Overview -->
+
+                        <div class="col-lg-4">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <h5 class="fw-bold mb-0">
+
+                                        <i class="bi bi-cart3 text-primary me-2"></i>
+
+                                        Order Overview
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div class="text-center mb-4">
+
+                                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-4">
+
+                                            <i class="bi bi-cart-check fs-1 text-primary"></i>
+
+                                        </div>
+
+                                        <h2 class="fw-bold mt-3 mb-1">
+
+                                            <%= totalOrders || 0 %>
+
+                                        </h2>
+
+                                        <p class="text-muted mb-0">
+                                            Total Orders
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- Paid -->
+
+                                    <div class="mb-4">
+
+                                        <div class="d-flex justify-content-between mb-2">
+
+                                            <span>
+
+                                                <i class="bi bi-check-circle-fill text-success me-1"></i>
+
+                                                Paid Orders
+
+                                            </span>
+
+                                            <strong id="paidOrderCount">
+                                                0
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="progress" style="height:8px;">
+
+                                            <div id="paidProgress" class="progress-bar bg-success" style="width:0%">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Pending -->
+
+                                    <div class="mb-4">
+
+                                        <div class="d-flex justify-content-between mb-2">
+
+                                            <span>
+
+                                                <i class="bi bi-clock-fill text-warning me-1"></i>
+
+                                                Pending Orders
+
+                                            </span>
+
+                                            <strong id="pendingOrderCount">
+                                                0
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="progress" style="height:8px;">
+
+                                            <div id="pendingProgress" class="progress-bar bg-warning" style="width:0%">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Revenue -->
+
+                                    <div>
+
+                                        <div class="d-flex justify-content-between mb-2">
+
+                                            <span>
+
+                                                <i class="bi bi-currency-rupee text-primary me-1"></i>
+
+                                                Revenue
+
+                                            </span>
+
+                                            <strong>
+
+                                                ₹ <%= Number(totalRevenue || 0).toLocaleString("en-IN") %>
+
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="progress" style="height:8px;">
+
+                                            <div class="progress-bar bg-primary" style="width:100%">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= ORDER SUMMARY + CATEGORY ================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- Order Summary -->
+
+                        <div class="col-lg-8">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <h5 class="fw-bold">
+
+                                        <i class="bi bi-bar-chart-line text-primary me-2"></i>
+
+                                        Order Summary
+
+                                    </h5>
+
+                                    <p class="text-muted small">
+                                        Monthly order performance
+                                    </p>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height:330px;">
+
+                                        <canvas id="orderSummaryChart"></canvas>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Categories -->
+
+                        <div class="col-lg-4">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <h5 class="fw-bold">
+
+                                        <i class="bi bi-pie-chart text-primary me-2"></i>
+
+                                        Product Categories
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height:330px;">
+
+                                        <canvas id="categoryChart"></canvas>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= TOP PRODUCTS ================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- Top Selling Products -->
+
+                        <div class="col-lg-8">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <h5 class="fw-bold">
+
+                                        <i class="bi bi-trophy text-warning me-2"></i>
+
+                                        Top Selling Products
+
+                                    </h5>
+
+                                    <p class="text-muted small">
+                                        Products with highest sales
+                                    </p>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height:350px;">
+
+                                        <canvas id="topProductsChart"></canvas>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Low Stock -->
+
+                        <div class="col-lg-4">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <h5 class="fw-bold">
+
+                                        <i class="bi bi-exclamation-triangle text-danger me-2"></i>
+
+                                        Low Stock Products
+
+                                    </h5>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <% if (lowStockProducts && lowStockProducts.length> 0) { %>
+
+                                        <% lowStockProducts.forEach((product)=> { %>
+
+                                            <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+
+                                                <div class="bg-danger bg-opacity-10 rounded-circle p-2 me-3">
+
+                                                    <i class="bi bi-box text-danger"></i>
+
+                                                </div>
+
+                                                <div class="flex-grow-1">
+
+                                                    <h6 class="mb-1 fw-semibold">
+
+                                                        <%= product.name %>
+
+                                                    </h6>
+
+                                                    <small class="text-muted">
+
+                                                        Stock:
+
+                                                        <span class="text-danger fw-bold">
+
+                                                            <%= product.stock %>
+
+                                                        </span>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                            <% }) %>
+
+                                                <% } else { %>
+
+                                                    <div class="text-center py-5">
+
+                                                        <i class="bi bi-check-circle-fill text-success fs-1"></i>
+
+                                                        <p class="text-muted mt-2 mb-0">
+
+                                                            All products have sufficient stock.
+
+                                                        </p>
+
+                                                    </div>
+
+                                                    <% } %>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= LATEST VENDORS ================= -->
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- Latest Vendors -->
+
+                        <div class="col-lg-6">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <h5 class="fw-bold">
+
+                                            <i class="bi bi-shop-window text-primary me-2"></i>
+
+                                            Latest Vendors
+
+                                        </h5>
+
+                                        <a href="/admin/vendor/list" class="text-primary text-decoration-none">
+
+                                            View All
+
+                                            <i class="bi bi-arrow-right"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <% if (latestVendors && latestVendors.length> 0) { %>
+
+                                        <% latestVendors.forEach((vendor)=> { %>
+
+                                            <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+
+                                                <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+
+                                                    <i class="bi bi-shop text-primary fs-5"></i>
+
+                                                </div>
+
+                                                <div class="flex-grow-1">
+
+                                                    <h6 class="mb-1 fw-semibold">
+
+                                                        <%= vendor.storeName || vendor.user?.name || "Vendor" %>
+
+                                                    </h6>
+
+                                                    <small class="text-muted">
+
+                                                        <%= vendor.user?.email || "No email" %>
+
+                                                    </small>
+
+                                                </div>
+
+                                                <span class="badge
+                                    <%= vendor.approvalStatus === 'Approved'
+                                        ? 'bg-success'
+                                        : vendor.approvalStatus === 'Rejected'
+                                            ? 'bg-danger'
+                                            : 'bg-warning text-dark' %>">
+
+                                                    <%= vendor.approvalStatus %>
+
+                                                </span>
+
+                                            </div>
+
+                                            <% }) %>
+
+                                                <% } else { %>
+
+                                                    <div class="text-center py-4 text-muted">
+
+                                                        <i class="bi bi-shop fs-1"></i>
+
+                                                        <p class="mb-0 mt-2">
+                                                            No vendors found
+                                                        </p>
+
+                                                    </div>
+
+                                                    <% } %>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Latest Orders -->
+
+                        <div class="col-lg-6">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <h5 class="fw-bold">
+
+                                            <i class="bi bi-cart-check text-success me-2"></i>
+
+                                            Latest Orders
+
+                                        </h5>
+
+                                        <a href="/admin/order/list" class="text-primary text-decoration-none">
+
+                                            View All
+
+                                            <i class="bi bi-arrow-right"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <% if (latestOrders && latestOrders.length> 0) { %>
+
+                                        <% latestOrders.forEach((order)=> { %>
+
+                                            <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+
+                                                <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+
+                                                    <i class="bi bi-receipt text-success fs-5"></i>
+
+                                                </div>
+
+                                                <div class="flex-grow-1">
+
+                                                    <h6 class="mb-1 fw-semibold">
+
+                                                        Order #<%= order.orderNumber || order._id.toString().slice(-6)
+                                                            %>
+
+                                                    </h6>
+
+                                                    <small class="text-muted">
+
+                                                        <%= order.customer?.name || order.firstName || "Customer" %>
+
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="text-end">
+
+                                                    <strong class="d-block">
+
+                                                        ₹ <%= Number(order.totalAmount || 0).toLocaleString("en-IN") %>
+
+                                                    </strong>
+
+                                                    <small class="text-muted">
+
+                                                        <%= order.orderStatus || "Pending" %>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                            <% }) %>
+
+                                                <% } else { %>
+
+                                                    <div class="text-center py-4 text-muted">
+
+                                                        <i class="bi bi-cart-x fs-1"></i>
+
+                                                        <p class="mb-0 mt-2">
+                                                            No orders found
+                                                        </p>
+
+                                                    </div>
+
+                                                    <% } %>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!-- ========================================================= -->
+
+          
+
+           <!-- ========================================================= -->
+<!-- CHART.JS -->
+<!-- ========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("====================================");
+    console.log("DASHBOARD CHART SCRIPT STARTED");
+    console.log("====================================");
+
+
+    // =========================================================
+    // DATA FROM CONTROLLER
+    // =========================================================
+
+    const monthlySales =
+        <%- JSON.stringify(monthlySales || []) %>;
+
+    const categoryChart =
+        <%- JSON.stringify(categoryChart || []) %>;
+
+    const topProducts =
+        <%- JSON.stringify(topProducts || []) %>;
+
+    const orderSummary =
+        <%- JSON.stringify(orderSummary || []) %>;
+
+    const totalOrders =
+        <%= totalOrders || 0 %>;
+
+    const paidOrderCount =
+        <%= onlineOrders || 0 %>;
+
+
+ 
+
+    // =========================================================
+    // MONTH NAMES
+    // =========================================================
+
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+
+    // =========================================================
+    // HELPER FUNCTION
+    // =========================================================
+
+    function getCanvas(id) {
+
+        const canvas = document.getElementById(id);
+
+        if (!canvas) {
+
+            console.error(
+                "Canvas not found:",
+                id
+            );
+
+            return null;
+        }
+
+        return canvas;
+    }
+
+
+    // =========================================================
+    // IMPORTANT:
+    // Remove old Chart instance and recreate canvas
+    // =========================================================
+
+    function resetCanvas(id) {
+
+        let canvas =
+            document.getElementById(id);
+
+        if (!canvas) {
+
+            console.error(
+                "Canvas not found:",
+                id
+            );
+
+            return null;
+        }
+
+
+        try {
+
+            const existingChart =
+                Chart.getChart(canvas);
+
+            if (existingChart) {
+
+                console.log(
+                    "Destroying old chart:",
+                    id
+                );
+
+                existingChart.destroy();
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Could not destroy old chart:",
+                id,
+                error
+            );
+        }
+
+
+        // Create a fresh canvas.
+        // This completely prevents:
+        // "Canvas is already in use"
+
+        const newCanvas =
+            document.createElement("canvas");
+
+        newCanvas.id = id;
+
+        canvas.parentNode.replaceChild(
+            newCanvas,
+            canvas
+        );
+
+        return newCanvas;
+    }
+
+
+    // =========================================================
+    // 1. MONTHLY SALES
+    // =========================================================
+
+    // =====================================================
+// MONTHLY SALES
+// =====================================================
+
+const salesCanvas = document.getElementById("salesChart");
+
+if (salesCanvas) {
+
+    const existingSalesChart = Chart.getChart(salesCanvas);
+
+    if (existingSalesChart) {
+        existingSalesChart.destroy();
+    }
+
+    // Current month
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
+    new Chart(salesCanvas, {
+
+        type: "line",
+
+        data: {
+
+            labels: monthlySales.map(item => {
+
+                return monthNames[
+                    Number(item._id.month) - 1
+                ];
+
+            }),
+
+            datasets: [
+
+                {
+
+                    label: "Monthly Sales",
+
+                    data: monthlySales.map(item => {
+
+                        return Number(
+                            item.totalSales || 0
+                        );
+
+                    }),
+
+                    borderWidth: 3,
+
+                    tension: 0.4,
+
+                    fill: true,
+
+                    backgroundColor:
+                        "rgba(78, 115, 223, 0.10)",
+
+                    borderColor:
+                        "#4e73df",
+
+                    pointBackgroundColor:
+                        "#4e73df",
+
+                    pointRadius: 5
+
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    display: true
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function (context) {
+
+                            const item =
+                                monthlySales[context.dataIndex];
+
+                            // Previous months
+                            if (
+                                Number(item._id.year) < currentYear ||
+                                (
+                                    Number(item._id.year) === currentYear &&
+                                    Number(item._id.month) < currentMonth
+                                )
+                            ) {
+
+                                return "Previous month";
+
+                            }
+
+                            return "₹ " +
+                                Number(
+                                    context.raw || 0
+                                ).toLocaleString("en-IN");
+
+                        }
+
+                    }
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        callback: function (value) {
+
+                            return "₹ " +
+                                Number(value)
+                                    .toLocaleString("en-IN");
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+
+    // =========================================================
+    // 2. ORDER SUMMARY
+    // =========================================================
+
+    try {
+
+        const orderCanvas =
+            resetCanvas("orderSummaryChart");
+
+
+        if (
+            orderCanvas &&
+            typeof Chart !== "undefined"
+        ) {
+
+            console.log(
+                "Creating Order Summary Chart..."
+            );
+
+
+            const orderLabels =
+                orderSummary.map(function (item) {
+
+                    return monthNames[
+                        Number(item._id?.month || 1) - 1
+                    ];
+
+                });
+
+
+            const orderData =
+                orderSummary.map(function (item) {
+
+                    return Number(
+                        item.totalOrders || 0
+                    );
+
+                });
+
+
+            // Previous months faded,
+            // latest month highlighted.
+
+            const orderColors =
+                orderData.map(function (value, index) {
+
+                    if (
+                        index ===
+                        orderData.length - 1
+                    ) {
+
+                        return "#4e73df";
+
+                    }
+
+                    return "rgba(78, 115, 223, 0.25)";
+
+                });
+
+
+            new Chart(orderCanvas, {
+
+                type: "bar",
+
+                data: {
+
+                    labels:
+                        orderLabels,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Total Orders",
+
+                            data:
+                                orderData,
+
+                            backgroundColor:
+                                orderColors,
+
+                            borderRadius: 6,
+
+                            barThickness: 30
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: true
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                precision: 0,
+
+                                stepSize: 1
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+
+            console.log(
+                "ORDER SUMMARY CHART CREATED"
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "ORDER SUMMARY CHART ERROR:",
+            error
+        );
+
+    }
+
+
+    // =========================================================
+    // 3. CATEGORY CHART
+    // =========================================================
+
+    try {
+
+        const categoryCanvas =
+            resetCanvas("categoryChart");
+
+
+        if (
+            categoryCanvas &&
+            typeof Chart !== "undefined"
+        ) {
+
+            console.log(
+                "Creating Category Chart..."
+            );
+
+
+            const categoryLabels =
+                categoryChart.map(function (item) {
+
+                    return (
+                        item.category?.name ||
+                        item.name ||
+                        "Unknown"
+                    );
+
+                });
+
+
+            const categoryData =
+                categoryChart.map(function (item) {
+
+                    return Number(
+                        item.total || 0
+                    );
+
+                });
+
+
+            new Chart(categoryCanvas, {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels:
+                        categoryLabels,
+
+                    datasets: [
+
+                        {
+
+                            data:
+                                categoryData,
+
+                            backgroundColor: [
+
+                                "#4e73df",
+                                "#1cc88a",
+                                "#36b9cc",
+                                "#f6c23e",
+                                "#e74a3b",
+                                "#858796",
+                                "#6f42c1",
+                                "#fd7e14"
+
+                            ],
+
+                            borderWidth: 2,
+
+                            borderColor:
+                                "#ffffff"
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    cutout: "65%",
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "bottom"
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+
+            console.log(
+                "CATEGORY CHART CREATED"
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "CATEGORY CHART ERROR:",
+            error
+        );
+
+    }
+
+
+    // =========================================================
+    // 4. TOP SELLING PRODUCTS
+    // =========================================================
+
+    try {
+
+        console.log(
+            "===================================="
+        );
+
+        console.log(
+            "STARTING TOP PRODUCTS"
+        );
+
+        console.log(
+            "TOP PRODUCTS DATA:",
+            topProducts
+        );
+
+
+        const topProductsCanvas =
+            resetCanvas("topProductsChart");
+
+
+        console.log(
+            "TOP PRODUCTS CANVAS:",
+            topProductsCanvas
+        );
+
+
+        if (!topProductsCanvas) {
+
+            console.error(
+                "ERROR: topProductsChart canvas not found"
+            );
+
+        } else if (
+            typeof Chart === "undefined"
+        ) {
+
+            console.error(
+                "ERROR: Chart.js not loaded"
+            );
+
+        } else if (
+            !Array.isArray(topProducts)
+        ) {
+
+            console.error(
+                "ERROR: topProducts is not an array"
+            );
+
+        } else if (
+            topProducts.length === 0
+        ) {
+
+            console.warn(
+                "NO TOP SELLING PRODUCTS"
+            );
+
+
+            // Optional message inside card
+
+            const parent =
+                topProductsCanvas.parentElement;
+
+            if (parent) {
+
+                parent.innerHTML = `
+
+                    <div class="text-center py-5">
+
+                        <i class="bi bi-box-seam fs-1 text-muted"></i>
+
+                        <p class="text-muted mt-3 mb-0">
+
+                            No selling products available.
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        } else {
+
+
+            // =================================================
+            // PRODUCT NAMES
+            // =================================================
+
+            const productNames =
+                topProducts.map(function (item) {
+
+                    return (
+                        item.name ||
+                        "Product"
+                    );
+
+                });
+
+
+            // =================================================
+            // SOLD QUANTITY
+            // =================================================
+
+            const productSold =
+                topProducts.map(function (item) {
+
+                    return Number(
+                        item.sold || 0
+                    );
+
+                });
+
+
+            console.log(
+                "PRODUCT NAMES:",
+                productNames
+            );
+
+            console.log(
+                "PRODUCT SOLD:",
+                productSold
+            );
+
+
+            // =================================================
+            // CREATE TOP PRODUCTS CHART
+            // =================================================
+
+            new Chart(
+                topProductsCanvas,
+                {
+
+                    type: "bar",
+
+
+                    data: {
+
+                        labels:
+                            productNames,
+
+                        datasets: [
+
+                            {
+
+                                label:
+                                    "Units Sold",
+
+                                data:
+                                    productSold,
+
+                                backgroundColor: [
+
+                                    "#4e73df",
+                                    "#1cc88a",
+                                    "#36b9cc",
+                                    "#f6c23e",
+                                    "#e74a3b",
+                                    "#858796",
+                                    "#6f42c1",
+                                    "#fd7e14"
+
+                                ],
+
+                                borderRadius: 8,
+
+                                borderWidth: 0
+
+                            }
+
+                        ]
+
+                    },
+
+
+                    options: {
+
+                        indexAxis: "y",
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+
+                        animation: {
+
+                            duration: 1000
+
+                        },
+
+
+                        plugins: {
+
+                            legend: {
+
+                                display: false
+
+                            },
+
+
+                            tooltip: {
+
+                                callbacks: {
+
+                                    label:
+                                        function (context) {
+
+                                            return (
+                                                " Units Sold: " +
+                                                Number(
+                                                    context.raw || 0
+                                                )
+                                            );
+
+                                        }
+
+                                }
+
+                            }
+
+                        },
+
+
+                        scales: {
+
+                            x: {
+
+                                beginAtZero: true,
+
+                                ticks: {
+
+                                    precision: 0,
+
+                                    stepSize: 1
+
+                                }
+
+                            },
+
+
+                            y: {
+
+                                ticks: {
+
+                                    autoSkip: false,
+
+                                    callback:
+                                        function (
+                                            value
+                                        ) {
+
+                                            const label =
+                                                this.getLabelForValue(
+                                                    value
+                                                );
+
+
+                                            if (
+                                                label &&
+                                                label.length > 30
+                                            ) {
+
+                                                return (
+                                                    label.substring(
+                                                        0,
+                                                        30
+                                                    ) +
+                                                    "..."
+                                                );
+
+                                            }
+
+
+                                            return label;
+
+                                        }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "TOP PRODUCTS CHART ERROR:",
+            error
+        );
+
+    }
+
+
+    // =========================================================
+    // 5. ORDER OVERVIEW
+    // =========================================================
+
+    try {
+
+        const confirmedOrders =
+            orderSummary.reduce(
+                function (total, item) {
+
+                    return (
+                        total +
+                        Number(
+                            item.totalOrders || 0
+                        )
+                    );
+
+                },
+                0
+            );
+
+
+        const pendingOrderCount =
+            Math.max(
+                Number(totalOrders) -
+                confirmedOrders,
+                0
+            );
+
+
+        const paidCountElement =
+            document.getElementById(
+                "paidOrderCount"
+            );
+
+
+        const pendingCountElement =
+            document.getElementById(
+                "pendingOrderCount"
+            );
+
+
+        const paidProgress =
+            document.getElementById(
+                "paidProgress"
+            );
+
+
+        const pendingProgress =
+            document.getElementById(
+                "pendingProgress"
+            );
+
+
+        if (paidCountElement) {
+
+            paidCountElement.textContent =
+                paidOrderCount;
+
+        }
+
+
+        if (pendingCountElement) {
+
+            pendingCountElement.textContent =
+                pendingOrderCount;
+
+        }
+
+
+        if (
+            paidProgress &&
+            totalOrders > 0
+        ) {
+
+            const percentage =
+                Math.min(
+
+                    (
+                        Number(paidOrderCount) /
+                        Number(totalOrders)
+                    ) * 100,
+
+                    100
+
+                );
+
+
+            paidProgress.style.width =
+                percentage + "%";
+
+        }
+
+
+        if (
+            pendingProgress &&
+            totalOrders > 0
+        ) {
+
+            const percentage =
+                Math.min(
+
+                    (
+                        pendingOrderCount /
+                        Number(totalOrders)
+                    ) * 100,
+
+                    100
+
+                );
+
+
+            pendingProgress.style.width =
+                percentage + "%";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "ORDER OVERVIEW ERROR:",
+            error
+        );
+
+    }
+
+
+    // =========================================================
+    // FINISHED
+    // =========================================================
+
+    console.log(
+        "===================================="
+    );
+
+    console.log(
+        "ALL DASHBOARD CHARTS FINISHED"
+    );
+
+    console.log(
+        "===================================="
+
+    );
+
+});
+
+</script>
+
+            <%- include("../layouts/footer") %>

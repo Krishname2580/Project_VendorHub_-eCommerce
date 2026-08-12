@@ -1,0 +1,263 @@
+<%- include('layouts/header') %>
+
+
+<div class="container-fluid page-header py-5">
+
+    <h1 class="text-center text-white display-6">
+        Order Details
+    </h1>
+
+</div>
+
+
+<div class="container py-5">
+
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body p-4">
+
+
+            <!-- ORDER INFORMATION -->
+
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+
+                    <h5>
+                        Order Information
+                    </h5>
+
+                    <p class="mb-1">
+
+                        <strong>Order:</strong>
+
+                        <%= order.orderNumber %>
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        <strong>Date:</strong>
+
+                        <%= new Date(order.createdAt).toLocaleDateString('en-IN') %>
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        <strong>Payment:</strong>
+
+                        <%= order.paymentMethod %>
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <h5>
+                        Delivery Address
+                    </h5>
+
+                    <p class="mb-1">
+
+                        <%= order.firstName %>
+                        <%= order.lastName %>
+
+                    </p>
+
+                    <p class="mb-1">
+                        <%= order.address %>
+                    </p>
+
+                    <p class="mb-1">
+
+                        <%= order.city %>,
+                        <%= order.state %>
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        <%= order.country %>
+                        -
+                        <%= order.pincode %>
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        Phone:
+                        <%= order.phone %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- PRODUCTS -->
+
+            <h5 class="mb-4">
+                Ordered Products
+            </h5>
+
+
+            <% order.items.forEach(item => { %>
+
+
+                <div class="row align-items-center border-bottom py-3">
+
+
+                    <div class="col-md-2">
+
+                        <% if (
+                            item.product &&
+                            item.product.images &&
+                            item.product.images.length > 0
+                        ) { %>
+
+                            <img
+                                src="<%= item.product.images[0].imageUrl %>"
+                                style="
+                                    width:80px;
+                                    height:80px;
+                                    object-fit:contain;
+                                "
+                                class="img-fluid rounded"
+                            >
+
+                        <% } %>
+
+                    </div>
+
+
+                    <div class="col-md-5">
+
+                        <h6>
+
+                            <%= item.name %>
+
+                        </h6>
+
+                        <small class="text-muted">
+
+                            Quantity:
+                            <%= item.quantity %>
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-md-2">
+
+                        ₹<%= Number(item.price).toFixed(2) %>
+
+                    </div>
+
+
+                    <div class="col-md-3 text-end">
+
+                        <strong>
+
+                            ₹<%= Number(item.total).toFixed(2) %>
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            <% }) %>
+
+
+            <!-- TOTAL -->
+
+            <div class="row justify-content-end mt-4">
+
+                <div class="col-md-5">
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+
+                            ₹<%= Number(order.subtotal).toFixed(2) %>
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            Shipping
+                        </span>
+
+                        <strong>
+
+                            ₹<%= Number(order.shippingCharge).toFixed(2) %>
+
+                        </strong>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <h5>
+                            Total
+                        </h5>
+
+                        <h5 class="text-primary">
+
+                            ₹<%= Number(order.totalAmount).toFixed(2) %>
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-4">
+
+                <a
+                    href="/customer/orders"
+                    class="btn btn-primary rounded-pill px-4"
+                >
+
+                    <i class="fa fa-arrow-left me-2"></i>
+
+                    Back to Orders
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<%- include('layouts/footer') %>

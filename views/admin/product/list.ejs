@@ -1,0 +1,372 @@
+<style>
+
+    /* =========================
+       PRODUCT ACTION BUTTONS
+    ========================== */
+
+    .product-action-btn {
+
+        width: 36px;
+        height: 36px;
+
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 7px;
+
+        padding: 0;
+
+        transition: all 0.2s ease;
+
+    }
+
+
+    .product-action-btn i {
+
+        font-size: 14px;
+
+    }
+
+
+    .product-action-btn:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+
+    }
+
+</style>
+
+
+
+<%- include("../layouts/header", { title: "Product List" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="content-body">
+
+                <div class="main-content">
+
+                    <div class="container mt-4">
+
+                        <!-- =========================
+                 Product Filter Buttons
+            ========================== -->
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+
+                                <!-- All Products -->
+                                <a href="/admin/product/list" class="btn btn-primary">
+                                    <i class="fa fa-cubes"></i>
+                                    All Products
+                                </a>
+
+                                <!-- Pending -->
+                                <a href="/admin/product/pending" class="btn btn-warning">
+                                    <i class="fa fa-clock-o"></i>
+                                    Pending
+                                </a>
+
+                                <!-- Approved -->
+                                <a href="/admin/product/approved" class="btn btn-success">
+                                    <i class="fa fa-check-circle"></i>
+                                    Approved
+                                </a>
+
+                                <!-- Rejected -->
+                                <a href="/admin/product/rejected" class="btn btn-danger">
+                                    <i class="fa fa-times-circle"></i>
+                                    Rejected
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =========================
+                 Product Table
+            ========================== -->
+
+                        <div class="card shadow">
+
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-hover datatable">
+
+                                        <thead class="table-dark">
+
+                                            <tr>
+
+                                                <th>#</th>
+
+                                                <th>Image</th>
+
+                                                <th>Name</th>
+
+                                                <th>Category</th>
+
+                                                <th>Brand</th>
+
+                                                <!-- <th>Vendor</th> -->
+
+                                                <th>Store</th>
+
+                                                <th>Price</th>
+
+                                                <th>Stock</th>
+
+                                                <th>Status</th>
+
+                                                <th>Featured</th>
+
+                                                <th width="230">Action</th>
+
+                                            </tr>
+
+                                        </thead>
+
+
+                                        <tbody>
+
+                                            <% if(products.length> 0){ %>
+
+                                                <% products.forEach((product,index)=>{ %>
+
+                                                    <tr>
+
+                                                        <!-- Number -->
+
+                                                        <td>
+                                                            <%= index + 1 %>
+                                                        </td>
+
+
+                                                        <!-- Image -->
+
+                                                        <td>
+
+                                                            <% if(product.thumbnail){ %>
+
+                                                                <img src="<%= product.thumbnail %>" width="60"
+                                                                    height="60" class="rounded"
+                                                                    style="object-fit:cover;">
+
+                                                                <% } else { %>
+
+                                                                    <img src="/images/auth/default-product.png" width="60"
+                                                                        height="60" class="rounded">
+
+                                                                    <% } %>
+
+                                                        </td>
+
+
+                                                        <!-- Name -->
+
+                                                        <td>
+                                                            <%= product.name %>
+                                                        </td>
+
+
+                                                        <!-- Category -->
+
+                                                        <td>
+                                                            <%= product.category ? product.category.name : "-" %>
+                                                        </td>
+
+
+                                                        <!-- Brand -->
+
+                                                        <td>
+                                                            <%= product.brand ? product.brand.name : "-" %>
+                                                        </td>
+
+
+                                                        <!-- Vendor -->
+
+                                                        <!-- <td>
+                                                            <%= product.vendor?.user?.name || "-" %>
+                                                        </td> -->
+
+                                                        <!-- Store -->
+
+                                                        <td>
+                                                            <%= product.store ? product.store.storeName : "-" %>
+                                                        </td>
+
+
+                                                        <!-- Price -->
+
+                                                        <td>
+                                                            ₹ <%= product.price %>
+                                                        </td>
+
+
+                                                        <!-- Stock -->
+
+                                                        <td>
+
+                                                            <% if(product.stock <=5){ %>
+
+                                                                <span class="badge bg-danger">
+                                                                    <i class="fa fa-exclamation-triangle"></i>
+                                                                    <%= product.stock %>
+                                                                </span>
+
+                                                                <% }else{ %>
+
+                                                                    <span class="badge bg-success">
+                                                                        <i class="fa fa-check"></i>
+                                                                        <%= product.stock %>
+                                                                    </span>
+
+                                                                    <% } %>
+
+                                                        </td>
+
+
+                                                        <!-- Status -->
+
+                                                        <td>
+
+                                                            <% if(product.status=="Approved" ){ %>
+
+                                                                <span class="badge bg-success">
+                                                                    <i class="fa fa-check-circle"></i>
+                                                                    Approved
+                                                                </span>
+
+                                                                <% }else if(product.status=="Pending" ){ %>
+
+                                                                    <span class="badge bg-warning text-dark">
+                                                                        <i class="fa fa-clock-o"></i>
+                                                                        Pending
+                                                                    </span>
+
+                                                                    <% }else{ %>
+
+                                                                        <span class="badge bg-danger">
+                                                                            <i class="fa fa-times-circle"></i>
+                                                                            Rejected
+                                                                        </span>
+
+                                                                        <% } %>
+
+                                                        </td>
+
+
+                                                        <!-- Featured -->
+
+                                                        <td>
+
+                                                            <% if(product.isFeatured){ %>
+
+                                                                <span class="badge bg-primary">
+                                                                    <i class="fa fa-star"></i>
+                                                                    Yes
+                                                                </span>
+
+                                                                <% }else{ %>
+
+                                                                    <span class="badge bg-secondary">
+                                                                        No
+                                                                    </span>
+
+                                                                    <% } %>
+
+                                                        </td>
+
+
+                                                        <!-- Actions -->
+
+                                                        <!-- Actions -->
+
+<td class="text-center">
+
+    <div class="d-flex justify-content-center align-items-center gap-1">
+
+        <!-- 1. View -->
+        <a
+            href="/admin/product/details/<%= product._id %>"
+            class="btn btn-sm btn-outline-info product-action-btn"
+            title="View Product"
+        >
+            <i class="fa fa-eye"></i>
+        </a>
+
+
+        <!-- 2. Edit -->
+        <a
+            href="/admin/product/edit/<%= product._id %>"
+            class="btn btn-sm btn-outline-warning product-action-btn"
+            title="Edit Product"
+        >
+            <i class="fa fa-edit"></i>
+        </a>
+
+
+        <!-- 3. Delete -->
+        <a
+            href="/admin/product/delete/<%= product._id %>"
+            class="btn btn-sm btn-outline-danger product-action-btn"
+            title="Delete Product"
+            onclick="return confirm('Are you sure you want to delete this product?')"
+        >
+            <i class="fa fa-trash"></i>
+        </a>
+
+    </div>
+
+</td>
+
+                                                    </tr>
+
+                                                    <% }) %>
+
+
+                                                        <% }else{ %>
+
+                                                            <tr>
+
+                                                                <td colspan="12" class="text-center">
+
+                                                                    <i class="fa fa-info-circle"></i>
+
+                                                                    No Products Found
+
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <% } %>
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

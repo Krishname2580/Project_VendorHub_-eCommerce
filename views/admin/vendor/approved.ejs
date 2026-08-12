@@ -1,0 +1,251 @@
+<%- include("../layouts/header", { title: "Approved Vendors" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+<div class="content-body">
+
+    <div class="container-fluid py-4">
+
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold">
+                    <i class="bi bi-person-check-fill text-success me-2"></i>
+                    Approved Vendors
+                </h2>
+
+                <p class="text-muted">
+                    List of approved vendors in VendorHub.
+                </p>
+
+            </div>
+
+            <a href="/admin/vendor/list" class="btn btn-primary rounded-pill">
+
+                <i class="bi bi-arrow-left me-1"></i>
+
+                All Vendors
+
+            </a>
+
+        </div>
+
+
+        <!-- Approved Vendor Card -->
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-header bg-success text-white py-3">
+
+                <h5 class="mb-0">
+
+                    <i class="bi bi-check-circle-fill me-2"></i>
+
+                    Approved Vendor List
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <% if(vendors && vendors.length > 0){ %>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th>#</th>
+
+                                    <th>Vendor</th>
+
+                                    <th>Email</th>
+
+                                    <th>Shop</th>
+
+                                    <th>Phone</th>
+
+                                    <th>Status</th>
+
+                                    <th class="text-center">Action</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <% vendors.forEach((vendor,index)=>{ %>
+
+                                    <tr>
+
+                                        <!-- Number -->
+                                        <td>
+
+                                            <strong>
+                                                <%= index + 1 %>
+                                            </strong>
+
+                                        </td>
+
+
+                                        <!-- Vendor -->
+                                        <td>
+
+                                            <div class="d-flex align-items-center">
+
+                                                <img
+                                                    src="<%= vendor.user && vendor.user.image ? vendor.user.image : '/images/default-user.png' %>"
+                                                    class="rounded-circle"
+                                                    width="55"
+                                                    height="55"
+                                                    style="object-fit:cover;"
+                                                >
+
+                                                <div class="ms-3">
+
+                                                    <h6 class="mb-0">
+
+                                                        <%= vendor.user ? vendor.user.name : "N/A" %>
+
+                                                    </h6>
+
+                                                    <small class="text-muted">
+
+                                                        <i class="bi bi-shop me-1"></i>
+                                                        Vendor
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- Email -->
+                                        <td>
+
+                                            <%= vendor.user ? vendor.user.email : "N/A" %>
+
+                                        </td>
+
+
+                                        <!-- Shop -->
+                                        <td>
+
+                                            <%= vendor.shopName || "N/A" %>
+
+                                        </td>
+
+
+                                        <!-- Phone -->
+                                        <td>
+
+                                            <%= vendor.user ? vendor.user.phone : "N/A" %>
+
+                                        </td>
+
+
+                                        <!-- Status -->
+                                        <td>
+
+                                            <span class="badge bg-success px-3 py-2">
+
+                                                <i class="bi bi-check-circle-fill me-1"></i>
+
+                                                Approved
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- Actions -->
+                                        <td class="text-center">
+
+                                            <!-- View -->
+                                            <a
+                                                href="/admin/vendor/details/<%= vendor._id %>"
+                                                class="btn btn-info btn-sm me-1"
+                                                title="View Vendor"
+                                            >
+
+                                                <i class="bi bi-eye-fill"></i>
+
+                                            </a>
+
+
+                                            <!-- Suspend -->
+                                            <a
+                                                href="/admin/vendor/rejected/<%= vendor._id %>"
+                                                class="btn btn-warning btn-sm"
+                                                onclick="return confirm('Suspend this vendor?')"
+                                                title="Suspend Vendor"
+                                            >
+
+                                                <i class="bi bi-pause-circle-fill"></i>
+
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                <% }) %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                <% } else { %>
+
+
+                    <!-- Empty State -->
+                    <div class="text-center py-5">
+
+                        <i class="bi bi-person-check-fill text-success"
+                           style="font-size:70px;"></i>
+
+                        <h4 class="mt-3">
+
+                            No Approved Vendors Found
+
+                        </h4>
+
+                        <p class="text-muted">
+
+                            There are currently no approved vendors.
+
+                        </p>
+
+                    </div>
+
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>

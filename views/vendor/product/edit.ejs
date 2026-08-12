@@ -1,0 +1,385 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <div class="card shadow-lg border-0 rounded-4">
+
+                        <div class="card-header text-white d-flex justify-content-between align-items-center"
+                            style="background:linear-gradient(90deg,#ff9800,#ff5722);">
+
+                            <h3 class="mb-0">
+
+                                <i class="fas fa-edit me-2"></i>
+
+                                Edit Product
+
+                            </h3>
+
+                            <a href="/vendor/product/list" class="btn btn-light">
+
+                                <i class="fas fa-arrow-left"></i>
+
+                                Back
+
+                            </a>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/vendor/product/update/<%= product._id %>" method="POST"
+                                enctype="multipart/form-data">
+
+                                <div class="row">
+
+                                    <!-- Product Name -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Product Name
+
+                                        </label>
+
+                                        <input type="text" name="name" class="form-control" value="<%= product.name %>"
+                                            required>
+
+                                    </div>
+
+                                    <!-- Category -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Category
+
+                                        </label>
+
+                                        <select name="category" class="form-select" required>
+
+                                            <% categories.forEach(category=>{ %>
+
+                                                <option value="<%= category._id %>"
+                                                    <%=String(product.category)==String(category._id) ? "selected" : ""
+                                                    %>>
+
+                                                    <%= category.name %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Brand -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Brand
+
+                                        </label>
+
+                                        <select name="brand" class="form-select">
+
+                                            <option value="">
+
+                                                Select Brand
+
+                                            </option>
+
+                                            <% brands.forEach(brand=>{ %>
+
+                                                <option value="<%= brand._id %>" <%=product.brand &&
+                                                    String(product.brand)==String(brand._id) ? "selected" : "" %>>
+
+                                                    <%= brand.name %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Price -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Price
+
+                                        </label>
+
+                                        <input type="number" name="price" value="<%= product.price %>"
+                                            class="form-control" required>
+
+                                    </div>
+
+                                    <!-- Discount Price -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Discount Price
+
+                                        </label>
+
+                                        <input type="number" name="discountPrice" value="<%= product.discountPrice %>"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- Stock -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Stock
+
+                                        </label>
+
+                                        <input type="number" name="stock" value="<%= product.stock %>"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- Weight -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Weight (Kg)
+
+                                        </label>
+
+                                        <input type="number" step="0.01" name="weight" value="<%= product.weight %>"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- Length -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Length
+
+                                        </label>
+
+                                        <input type="number" name="length"
+                                            value="<%= product.dimensions ? product.dimensions.length : '' %>"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- Width -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Width
+
+                                        </label>
+
+                                        <input type="number" name="width"
+                                            value="<%= product.dimensions ? product.dimensions.width : '' %>"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- Height -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Height
+
+                                        </label>
+
+                                        <input type="number" name="height"
+                                            value="<%= product.dimensions ? product.dimensions.height : '' %>"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- Description -->
+
+                                    <div class="col-md-12 mb-4">
+
+                                        <label class="form-label fw-bold">
+
+                                            Description
+
+                                        </label>
+
+                                        <textarea name="description" rows="5" class="form-control"
+                                            required><%= product.description %></textarea>
+
+                                    </div>
+                                    <!-- Current Thumbnail -->
+
+                                    <div class="col-md-6 mb-4">
+
+                                        <label class="form-label fw-bold">
+
+                                            Current Thumbnail
+
+                                        </label>
+
+                                        <div class="border rounded p-3 text-center bg-light">
+
+                                            <% if(product.thumbnail){ %>
+
+                                                <img src="<%= product.thumbnail %>" class="img-fluid rounded shadow"
+                                                    style="max-height:180px;object-fit:cover;">
+
+                                                <% }else{ %>
+
+                                                    <img src="/images/no-image.png" class="img-fluid rounded"
+                                                        style="max-height:180px;">
+
+                                                    <% } %>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Upload Thumbnail -->
+
+                                    <div class="col-md-6 mb-4">
+
+                                        <label class="form-label fw-bold">
+
+                                            Upload New Thumbnail
+
+                                        </label>
+
+                                        <input type="file" name="thumbnail" class="form-control" accept="image/*">
+
+                                        <small class="text-muted">
+
+                                            Leave empty if you don't want to change the thumbnail.
+
+                                        </small>
+
+                                    </div>
+
+                                    <!-- Current Gallery -->
+
+                                    <div class="col-md-12 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Current Product Images
+
+                                        </label>
+
+                                        <div class="row">
+
+                                            <% if(product.images && product.images.length> 0){ %>
+
+                                                <% product.images.forEach(image=>{ %>
+
+                                                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+
+                                                        <img src="<%= image.imageUrl %>"
+                                                            class="img-fluid rounded shadow border"
+                                                            style="height:120px;width:100%;object-fit:cover;">
+
+                                                    </div>
+
+                                                    <% }) %>
+
+                                                        <% }else{ %>
+
+                                                            <div class="col-12">
+
+                                                                <div class="alert alert-secondary mb-0">
+
+                                                                    No product images uploaded.
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            <% } %>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Upload New Gallery -->
+
+                                    <div class="col-md-12 mb-4">
+
+                                        <label class="form-label fw-bold">
+
+                                            Upload New Product Images
+
+                                        </label>
+
+                                        <input type="file" name="images" class="form-control" multiple accept="image/*">
+
+                                        <small class="text-muted">
+
+                                            Selecting new images will replace the existing gallery.
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="d-flex justify-content-end gap-2">
+
+                                    <a href="/vendor/product/list" class="btn btn-secondary">
+
+                                        <i class="fas fa-arrow-left me-1"></i>
+
+                                        Cancel
+
+                                    </a>
+
+                                    <button type="submit" class="btn btn-warning text-white px-4">
+
+                                        <i class="fas fa-save me-1"></i>
+
+                                        Update Product
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>

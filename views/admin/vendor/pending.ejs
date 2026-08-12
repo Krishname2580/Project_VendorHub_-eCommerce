@@ -1,0 +1,313 @@
+<%- include("../layouts/header", { title: "Pending Vendors" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+<div class="content-body">
+
+    <div class="container-fluid py-4">
+
+        <!-- Page Heading -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+
+                    <i class="bi bi-person-fill-exclamation text-warning me-2"></i>
+
+                    Pending Vendors
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    Approve or reject newly registered vendors.
+
+                </p>
+
+            </div>
+
+
+            <a href="/admin/vendor/list"
+               class="btn btn-primary rounded-pill px-4">
+
+                <i class="bi bi-arrow-left me-2"></i>
+
+                All Vendors
+
+            </a>
+
+        </div>
+
+
+        <!-- Pending Vendor Card -->
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-header bg-warning text-dark rounded-top-4 py-3">
+
+                <h5 class="mb-0">
+
+                    <i class="bi bi-person-lines-fill me-2"></i>
+
+                    Pending Vendor List
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <% if(vendors && vendors.length > 0){ %>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th>#</th>
+
+                                    <th>Vendor</th>
+
+                                    <th>Email</th>
+
+                                    <th>Shop</th>
+
+                                    <th>Phone</th>
+
+                                    <th>Status</th>
+
+                                    <th class="text-center">Actions</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <% vendors.forEach((vendor,index)=>{ %>
+
+                                    <tr>
+
+                                        <!-- Number -->
+                                        <td>
+
+                                            <strong>
+                                                <%= index + 1 %>
+                                            </strong>
+
+                                        </td>
+
+
+                                        <!-- Vendor -->
+                                        <td>
+
+                                            <div class="d-flex align-items-center">
+
+                                                <img
+                                                    src="<%= vendor.user && vendor.user.image ? vendor.user.image : '/images/default-user.png' %>"
+                                                    class="rounded-circle shadow"
+                                                    width="55"
+                                                    height="55"
+                                                    style="object-fit:cover;"
+                                                >
+
+                                                <div class="ms-3">
+
+                                                    <h6 class="mb-0">
+
+                                                        <%= vendor.user ? vendor.user.name : "N/A" %>
+
+                                                    </h6>
+
+                                                    <small class="text-muted">
+
+                                                        <i class="bi bi-person-badge me-1"></i>
+
+                                                        Vendor ID:
+                                                        <%= vendor._id.toString().slice(-6).toUpperCase() %>
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- Email -->
+                                        <td>
+
+                                            <% if(vendor.user && vendor.user.email){ %>
+
+                                                <i class="bi bi-envelope me-1 text-muted"></i>
+
+                                                <%= vendor.user.email %>
+
+                                            <% } else { %>
+
+                                                N/A
+
+                                            <% } %>
+
+                                        </td>
+
+
+                                        <!-- Shop -->
+                                        <td>
+
+                                            <i class="bi bi-shop me-1 text-muted"></i>
+
+                                            <%= vendor.shopName || "N/A" %>
+
+                                        </td>
+
+
+                                        <!-- Phone -->
+                                        <td>
+
+                                            <% if(vendor.user && vendor.user.phone){ %>
+
+                                                <i class="bi bi-telephone me-1 text-muted"></i>
+
+                                                <%= vendor.user.phone %>
+
+                                            <% } else { %>
+
+                                                N/A
+
+                                            <% } %>
+
+                                        </td>
+
+
+                                        <!-- Status -->
+                                        <td>
+
+                                            <span class="badge bg-warning text-dark px-3 py-2">
+
+                                                <i class="bi bi-hourglass-split me-1"></i>
+
+                                                Pending
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- Actions -->
+                                        <td class="text-center">
+
+                                            <div class="d-flex justify-content-center gap-2">
+
+                                                <!-- View -->
+                                                <a
+                                                    href="/admin/vendor/<%= vendor._id %>"
+                                                    class="btn btn-info btn-sm"
+                                                    title="View Vendor"
+                                                >
+
+                                                    <i class="bi bi-eye-fill"></i>
+
+                                                </a>
+
+
+                                                <!-- Approve -->
+                                                <a
+                                                    href="/admin/vendor/approve/<%= vendor._id %>"
+                                                    class="btn btn-success btn-sm"
+                                                    title="Approve Vendor"
+                                                    onclick="return confirm('Approve this vendor?')"
+                                                >
+
+                                                    <i class="bi bi-check-lg"></i>
+
+                                                </a>
+
+
+                                                <!-- Reject -->
+                                                <a
+                                                    href="/admin/vendor/reject/<%= vendor._id %>"
+                                                    class="btn btn-danger btn-sm"
+                                                    title="Reject Vendor"
+                                                    onclick="return confirm('Reject this vendor?')"
+                                                >
+
+                                                    <i class="bi bi-x-lg"></i>
+
+                                                </a>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                <% }) %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                <% } else { %>
+
+
+                    <!-- Empty State -->
+                    <div class="text-center py-5">
+
+                        <i
+                            class="bi bi-person-exclamation text-warning"
+                            style="font-size:70px;"
+                        ></i>
+
+                        <h4 class="text-muted mt-3">
+
+                            No Pending Vendors Found
+
+                        </h4>
+
+                        <p class="text-secondary">
+
+                            All vendor registration requests have been processed.
+
+                        </p>
+
+
+                        <a
+                            href="/admin/vendor/list"
+                            class="btn btn-primary rounded-pill"
+                        >
+
+                            <i class="bi bi-people-fill me-2"></i>
+
+                            View All Vendors
+
+                        </a>
+
+                    </div>
+
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>

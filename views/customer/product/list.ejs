@@ -1,0 +1,202 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <div class="container py-5">
+
+            <div class="row">
+
+                <!-- ===================== -->
+                <!-- Sidebar Filter -->
+                <!-- ===================== -->
+
+                <div class="col-lg-3">
+
+                    <div class="card shadow-sm">
+
+                        <div class="card-body">
+
+                            <h4 class="mb-4">
+
+                                Filters
+
+                            </h4>
+
+                            <form method="GET" action="/customer/products">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Search
+
+                                    </label>
+
+                                    <input type="text" name="search" value="<%= search %>" class="form-control"
+                                        placeholder="Search Product">
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Category
+
+                                    </label>
+
+                                    <select name="category" class="form-select">
+
+                                        <option value="">
+
+                                            All Categories
+
+                                        </option>
+
+                                        <% categories.forEach(cat=>{ %>
+
+                                            <option value="<%= cat._id %>" <%=category==cat._id.toString() ? "selected"
+                                                : "" %>>
+
+                                                <%= cat.name %>
+
+                                            </option>
+
+                                            <% }) %>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Brand
+
+                                    </label>
+
+                                    <select name="brand" class="form-select">
+
+                                        <option value="">
+
+                                            All Brands
+
+                                        </option>
+
+                                        <% brands.forEach(br=>{ %>
+
+                                            <option value="<%= br._id %>" <%=brand==br._id.toString() ? "selected" : ""
+                                                %>>
+
+                                                <%= br.name %>
+
+                                            </option>
+
+                                            <% }) %>
+
+                                    </select>
+
+                                </div>
+
+                                <button class="btn btn-primary w-100">
+
+                                    Apply Filter
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ===================== -->
+                <!-- Product Grid -->
+                <!-- ===================== -->
+
+                <div class="col-lg-9">
+
+                    <div class="row">
+
+                        <% if(products.length){ %>
+
+                            <% products.forEach(product=>{ %>
+
+                                <div class="col-md-4 mb-4">
+
+                                    <div class="card h-100 shadow-sm border-0">
+
+                                        <img src="<%= product.thumbnail %>" class="card-img-top"
+                                            style="height:220px;object-fit:cover;">
+
+                                        <div class="card-body">
+
+                                            <small class="text-primary">
+
+                                                <%= product.category.name %>
+
+                                            </small>
+
+                                            <h5 class="mt-2">
+
+                                                <%= product.name %>
+
+                                            </h5>
+
+                                            <p class="text-muted">
+
+                                                <%= product.brand ? product.brand.name : "" %>
+
+                                            </p>
+
+                                            <h4 class="text-success">
+
+                                                ₹ <%= product.price %>
+
+                                            </h4>
+
+                                        </div>
+
+                                        <div class="card-footer bg-white border-0">
+
+                                            <a href="/customer/product/<%= product._id %>"
+                                                class="btn btn-primary w-100">
+
+                                                View Details
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <% }) %>
+
+                                    <% } else { %>
+
+                                        <div class="col-12">
+
+                                            <div class="alert alert-warning">
+
+                                                No Products Found.
+
+                                            </div>
+
+                                        </div>
+
+                                        <% } %>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <%- include("../layouts/footer") %>

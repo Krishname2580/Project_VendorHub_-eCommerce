@@ -1,0 +1,213 @@
+<%- include("../layouts/header", { title: "Edit Coupon" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-8">
+
+                            <div class="card shadow">
+
+                                <div class="card-header bg-warning text-dark">
+
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-edit"></i>
+                                        Edit Coupon
+                                    </h4>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <form action="/admin/coupon/update/<%= coupon._id %>" method="POST">
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Coupon Title
+                                                </label>
+
+                                                <input type="text" name="title" class="form-control"
+                                                    value="<%= coupon.title %>" required>
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Coupon Code
+                                                </label>
+
+                                                <input type="text" name="code" class="form-control"
+                                                    value="<%= coupon.code %>" required>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="mb-3">
+
+                                            <label class="form-label">
+                                                Description
+                                            </label>
+
+                                            <textarea name="description" class="form-control"
+                                                rows="3"><%= coupon.description %></textarea>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Discount Type
+                                                </label>
+
+                                                <select name="discountType" class="form-select" required>
+
+                                                    <option value="Flat" <%=coupon.discountType==="Flat" ? "selected"
+                                                        : "" %>>
+                                                        Flat
+                                                    </option>
+
+                                                    <option value="Percentage" <%=coupon.discountType==="Percentage"
+                                                        ? "selected" : "" %>>
+                                                        Percentage
+                                                    </option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Discount Value
+                                                </label>
+
+                                                <input type="number" name="discountValue" class="form-control"
+                                                    value="<%= coupon.discountValue %>" required>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Minimum Purchase
+                                                </label>
+
+                                                <input type="number" name="minimumPurchase" class="form-control"
+                                                    value="<%= coupon.minimumPurchase %>">
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Maximum Discount
+                                                </label>
+
+                                                <input type="number" name="maximumDiscount" class="form-control"
+                                                    value="<%= coupon.maximumDiscount %>">
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Usage Limit
+                                                </label>
+
+                                                <input type="number" name="usageLimit" class="form-control"
+                                                    value="<%= coupon.usageLimit %>">
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+                                                    Expiry Date
+                                                </label>
+
+                                                <input type="date" name="expiryDate" class="form-control"
+                                                    value="<%= coupon.expiryDate ? new Date(coupon.expiryDate).toISOString().split('T')[0] : '' %>"
+                                                    required>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="mb-4">
+
+                                            <label class="form-label">
+                                                Status
+                                            </label>
+
+                                            <select name="status" class="form-select">
+
+                                                <option value="true" <%=coupon.status ? "selected" : "" %>>
+                                                    Active
+                                                </option>
+
+                                                <option value="false" <%=!coupon.status ? "selected" : "" %>>
+                                                    Inactive
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class="text-end">
+
+                                            <a href="/admin/coupon/list" class="btn btn-secondary">
+
+                                                <i class="fas fa-arrow-left"></i>
+
+                                                Back
+
+                                            </a>
+
+                                            <button type="submit" class="btn btn-warning">
+
+                                                <i class="fas fa-save"></i>
+
+                                                Update Coupon
+
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

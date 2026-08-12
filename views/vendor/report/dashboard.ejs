@@ -1,0 +1,1585 @@
+<%- include("../layouts/header", { title: "Vendor Reports" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+
+<div class="main-content">
+
+    <div class="container-fluid py-4">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+
+                    <i class="fas fa-chart-line text-primary me-2"></i>
+
+                    Reports Dashboard
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    View your sales, orders and product performance.
+
+                </p>
+
+            </div>
+
+
+            <button
+                onclick="window.print()"
+                class="btn btn-primary no-print">
+
+                <i class="fas fa-print me-2"></i>
+
+                Print
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             REPORT NAVIGATION
+        ====================================================== -->
+
+        <div class="report-nav mb-4 no-print">
+
+            <a
+                href="/vendor/report/dashboard"
+                class="report-btn dashboard-btn">
+
+                <i class="fas fa-chart-pie"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/vendor/report/sales"
+                class="report-btn sales-btn">
+
+                <i class="fas fa-chart-line"></i>
+
+                Sales
+
+            </a>
+
+
+            <a
+                href="/vendor/report/orders"
+                class="report-btn orders-btn">
+
+                <i class="fas fa-shopping-bag"></i>
+
+                Orders
+
+            </a>
+
+
+            <a
+                href="/vendor/report/products"
+                class="report-btn products-btn">
+
+                <i class="fas fa-box"></i>
+
+                Products
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SUMMARY CARDS
+        ====================================================== -->
+
+        <div class="row">
+
+
+            <!-- TOTAL PRODUCTS -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+
+                <div class="report-card product-card">
+
+                    <div class="report-card-icon">
+
+                        <i class="fas fa-box"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Total Products</p>
+
+                        <h3>
+
+                            <%= typeof totalProducts !== "undefined"
+                                ? totalProducts
+                                : 0 %>
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+
+                <div class="report-card order-card">
+
+                    <div class="report-card-icon">
+
+                        <i class="fas fa-shopping-cart"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Total Orders</p>
+
+                        <h3>
+
+                            <%= typeof totalOrders !== "undefined"
+                                ? totalOrders
+                                : 0 %>
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL SALES -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+
+                <div class="report-card sales-card">
+
+                    <div class="report-card-icon">
+
+                        <i class="fas fa-indian-rupee-sign"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Total Sales</p>
+
+                        <h3>
+
+                            ₹ <%= Number(
+                                typeof totalSales !== "undefined"
+                                    ? totalSales
+                                    : 0
+                            ).toLocaleString("en-IN") %>
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- QUANTITY SOLD -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+
+                <div class="report-card quantity-card">
+
+                    <div class="report-card-icon">
+
+                        <i class="fas fa-cubes"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Quantity Sold</p>
+
+                        <h3>
+
+                            <%= typeof totalQuantity !== "undefined"
+                                ? totalQuantity
+                                : 0 %>
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MONTHLY SALES + ORDER SUMMARY
+        ====================================================== -->
+
+        <div class="row">
+
+
+            <!-- MONTHLY SALES -->
+
+            <div class="col-xl-8 col-lg-7 mb-4">
+
+                <div class="card shadow border-0 report-chart-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h5 class="mb-1">
+
+                                <i class="fas fa-chart-line text-success me-2"></i>
+
+                                Monthly Sales
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Sales performance for the last 12 months
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="chart-container">
+
+                            <canvas id="salesChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="col-xl-4 col-lg-5 mb-4">
+
+                <div class="card shadow border-0 report-chart-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h5 class="mb-1">
+
+                                <i class="fas fa-chart-pie text-primary me-2"></i>
+
+                                Order Summary
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Current order status
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="order-chart-container">
+
+                            <canvas id="orderSummaryChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ORDER STATUS CARDS
+        ====================================================== -->
+
+        <div class="row">
+
+
+            <!-- PENDING -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card pending">
+
+                    <div>
+
+                        <span>Pending Orders</span>
+
+                        <strong>
+
+                            <%= typeof pendingOrders !== "undefined"
+                                ? pendingOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-clock"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONFIRMED -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card confirmed">
+
+                    <div>
+
+                        <span>Confirmed Orders</span>
+
+                        <strong>
+
+                            <%= typeof confirmedOrders !== "undefined"
+                                ? confirmedOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-check-circle"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PACKED -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card packed">
+
+                    <div>
+
+                        <span>Packed Orders</span>
+
+                        <strong>
+
+                            <%= typeof packedOrders !== "undefined"
+                                ? packedOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-box-open"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SHIPPED -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card shipped">
+
+                    <div>
+
+                        <span>Shipped Orders</span>
+
+                        <strong>
+
+                            <%= typeof shippedOrders !== "undefined"
+                                ? shippedOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-truck"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DELIVERED -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card delivered">
+
+                    <div>
+
+                        <span>Delivered Orders</span>
+
+                        <strong>
+
+                            <%= typeof deliveredOrders !== "undefined"
+                                ? deliveredOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-check-double"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CANCELLED -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card cancelled">
+
+                    <div>
+
+                        <span>Cancelled Orders</span>
+
+                        <strong>
+
+                            <%= typeof cancelledOrders !== "undefined"
+                                ? cancelledOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-times-circle"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RETURNED -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+
+                <div class="status-card returned">
+
+                    <div>
+
+                        <span>Returned Orders</span>
+
+                        <strong>
+
+                            <%= typeof returnedOrders !== "undefined"
+                                ? returnedOrders
+                                : 0 %>
+
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-rotate-left"></i>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             QUICK REPORTS
+        ====================================================== -->
+
+        <div class="card shadow border-0 quick-report-card mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-file-alt me-2"></i>
+
+                    Quick Reports
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+
+
+                    <div class="col-md-4 mb-3 mb-md-0">
+
+                        <a
+                            href="/vendor/report/sales"
+                            class="quick-report sales">
+
+                            <i class="fas fa-chart-line"></i>
+
+                            <span>
+
+                                Sales Report
+
+                            </span>
+
+                            <i class="fas fa-arrow-right ms-auto"></i>
+
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="col-md-4 mb-3 mb-md-0">
+
+                        <a
+                            href="/vendor/report/orders"
+                            class="quick-report orders">
+
+                            <i class="fas fa-shopping-bag"></i>
+
+                            <span>
+
+                                Orders Report
+
+                            </span>
+
+                            <i class="fas fa-arrow-right ms-auto"></i>
+
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="col-md-4">
+
+                        <a
+                            href="/vendor/report/products"
+                            class="quick-report products">
+
+                            <i class="fas fa-box"></i>
+
+                            <span>
+
+                                Product Report
+
+                            </span>
+
+                            <i class="fas fa-arrow-right ms-auto"></i>
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>
+
+</div>
+
+
+
+<!-- =========================================================
+     CSS
+========================================================= -->
+
+<style>
+
+
+/* =========================================================
+   REPORT NAVIGATION
+========================================================= */
+
+.report-nav {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+
+.report-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    text-decoration: none !important;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+
+}
+
+
+.report-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,0.12);
+
+}
+
+
+/* Dashboard */
+
+.dashboard-btn {
+
+    background: #212529;
+
+    color: #fff;
+
+}
+
+.dashboard-btn:hover {
+
+    background: #343a40;
+
+    color: #fff;
+
+}
+
+
+/* Sales */
+
+.sales-btn {
+
+    background: #198754;
+
+    color: #fff;
+
+}
+
+.sales-btn:hover {
+
+    background: #157347;
+
+    color: #fff;
+
+}
+
+
+/* Orders */
+
+.orders-btn {
+
+    background: #0d6efd;
+
+    color: #fff;
+
+}
+
+.orders-btn:hover {
+
+    background: #0b5ed7;
+
+    color: #fff;
+
+}
+
+
+/* Products */
+
+.products-btn {
+
+    background: #ffc107;
+
+    color: #212529;
+
+}
+
+.products-btn:hover {
+
+    background: #ffca2c;
+
+    color: #212529;
+
+}
+
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.report-card {
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    min-height: 125px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.06);
+
+    transition: all 0.25s ease;
+
+}
+
+
+.report-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.10);
+
+}
+
+
+.report-card p {
+
+    margin: 0 0 5px;
+
+    color: #7a8492;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.report-card h3 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #252b33;
+
+}
+
+
+.report-card-icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    min-width: 55px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+
+}
+
+
+.product-card .report-card-icon {
+
+    background: #eef2ff;
+
+    color: #4e73df;
+
+}
+
+
+.order-card .report-card-icon {
+
+    background: #eaf7ff;
+
+    color: #0d6efd;
+
+}
+
+
+.sales-card .report-card-icon {
+
+    background: #e9f9f0;
+
+    color: #198754;
+
+}
+
+
+.quantity-card .report-card-icon {
+
+    background: #fff5d9;
+
+    color: #f59f00;
+
+}
+
+
+
+/* =========================================================
+   CHART CARD
+========================================================= */
+
+.report-chart-card {
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+}
+
+
+.report-chart-card .card-header {
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #eeeeee;
+
+    padding: 18px 20px;
+
+}
+
+
+.report-chart-card .card-header h5 {
+
+    font-weight: 700;
+
+    color: #343a40;
+
+}
+
+
+.chart-container {
+
+    width: 100%;
+
+    height: 380px;
+
+    position: relative;
+
+}
+
+
+.order-chart-container {
+
+    width: 100%;
+
+    height: 380px;
+
+    position: relative;
+
+}
+
+
+
+/* =========================================================
+   STATUS CARDS
+========================================================= */
+
+.status-card {
+
+    min-height: 105px;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.06);
+
+}
+
+
+.status-card span {
+
+    display: block;
+
+    color: #737b87;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.status-card strong {
+
+    display: block;
+
+    font-size: 24px;
+
+    color: #252b33;
+
+}
+
+
+.status-card > i {
+
+    font-size: 28px;
+
+    opacity: 0.75;
+
+}
+
+
+.status-card.pending {
+
+    border-left: 4px solid #ffc107;
+
+}
+
+
+.status-card.pending > i {
+
+    color: #ffc107;
+
+}
+
+
+.status-card.confirmed {
+
+    border-left: 4px solid #0d6efd;
+
+}
+
+
+.status-card.confirmed > i {
+
+    color: #0d6efd;
+
+}
+
+
+.status-card.packed {
+
+    border-left: 4px solid #0dcaf0;
+
+}
+
+
+.status-card.packed > i {
+
+    color: #0dcaf0;
+
+}
+
+
+.status-card.shipped {
+
+    border-left: 4px solid #6c757d;
+
+}
+
+
+.status-card.shipped > i {
+
+    color: #6c757d;
+
+}
+
+
+.status-card.delivered {
+
+    border-left: 4px solid #198754;
+
+}
+
+
+.status-card.delivered > i {
+
+    color: #198754;
+
+}
+
+
+.status-card.cancelled {
+
+    border-left: 4px solid #dc3545;
+
+}
+
+
+.status-card.cancelled > i {
+
+    color: #dc3545;
+
+}
+
+
+.status-card.returned {
+
+    border-left: 4px solid #6f42c1;
+
+}
+
+
+.status-card.returned > i {
+
+    color: #6f42c1;
+
+}
+
+
+
+/* =========================================================
+   QUICK REPORTS
+========================================================= */
+
+.quick-report-card {
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+}
+
+
+.quick-report-card .card-header {
+
+    background: #212529;
+
+    color: #ffffff;
+
+    padding: 15px 20px;
+
+}
+
+
+.quick-report {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    border-radius: 10px;
+
+    text-decoration: none !important;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+
+}
+
+
+.quick-report:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+.quick-report.sales {
+
+    background: #eaf8f0;
+
+    color: #198754;
+
+}
+
+
+.quick-report.orders {
+
+    background: #eef4ff;
+
+    color: #0d6efd;
+
+}
+
+
+.quick-report.products {
+
+    background: #fff8df;
+
+    color: #997404;
+
+}
+
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    .no-print,
+
+    .sidebar,
+
+    .admin-sidebar,
+
+    .navbar,
+
+    .header-content {
+
+        display: none !important;
+
+    }
+
+
+    .main-content {
+
+        margin: 0 !important;
+
+        width: 100% !important;
+
+        padding: 0 !important;
+
+    }
+
+
+    .report-card,
+    .report-chart-card,
+    .status-card {
+
+        box-shadow: none !important;
+
+        border: 1px solid #ddd !important;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .report-nav {
+
+        gap: 7px;
+
+    }
+
+
+    .report-btn {
+
+        padding: 9px 12px;
+
+        font-size: 12px;
+
+    }
+
+
+    .report-card {
+
+        min-height: 105px;
+
+    }
+
+
+    .chart-container {
+
+        height: 300px;
+
+    }
+
+
+    .order-chart-container {
+
+        height: 300px;
+
+    }
+
+}
+
+</style>
+
+
+
+<!-- =========================================================
+     CHART.JS
+========================================================= -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("================================");
+    console.log("VENDOR REPORT CHARTS");
+    console.log("================================");
+
+
+    // =====================================================
+    // DATA FROM CONTROLLER
+    // =====================================================
+
+    const salesLabels =
+        <%- JSON.stringify(salesLabels || []) %>;
+
+
+    const salesData =
+        <%- JSON.stringify(salesData || []) %>;
+
+
+    const orderSummary =
+        <%- JSON.stringify(orderSummary || []) %>;
+
+
+    console.log("SALES LABELS:", salesLabels);
+
+    console.log("SALES DATA:", salesData);
+
+    console.log("ORDER SUMMARY:", orderSummary);
+
+
+    // =====================================================
+    // MONTHLY SALES CHART
+    // =====================================================
+
+    const salesCanvas =
+        document.getElementById("salesChart");
+
+
+    if (salesCanvas) {
+
+        new Chart(
+            salesCanvas,
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: salesLabels,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Monthly Sales",
+
+                            data:
+                                salesData,
+
+                            borderWidth: 3,
+
+                            tension: 0.4,
+
+                            fill: false,
+
+                            pointRadius: 5,
+
+                            pointHoverRadius: 7
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+
+                            ticks: {
+
+                                callback:
+                                    function(value) {
+
+                                        return "₹" +
+                                            Number(value)
+                                                .toLocaleString(
+                                                    "en-IN"
+                                                );
+
+                                    }
+
+                            },
+
+
+                            title: {
+
+                                display: true,
+
+                                text:
+                                    "Sales Amount (₹)"
+
+                            }
+
+                        },
+
+
+                        x: {
+
+                            ticks: {
+
+                                maxRotation: 45,
+
+                                minRotation: 45
+
+                            }
+
+                        }
+
+                    },
+
+
+                    plugins: {
+
+                        legend: {
+
+                            display: true
+
+                        },
+
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label:
+                                    function(context) {
+
+                                        return "Sales: ₹" +
+                                            Number(
+                                                context.raw || 0
+                                            )
+                                            .toLocaleString(
+                                                "en-IN"
+                                            );
+
+                                    }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // =====================================================
+    // ORDER SUMMARY PIE / DOUGHNUT
+    // =====================================================
+
+    const orderCanvas =
+        document.getElementById(
+            "orderSummaryChart"
+        );
+
+
+    if (orderCanvas) {
+
+        new Chart(
+            orderCanvas,
+            {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: [
+
+                        "Pending",
+
+                        "Confirmed",
+
+                        "Packed",
+
+                        "Shipped",
+
+                        "Delivered",
+
+                        "Cancelled",
+
+                        "Returned"
+
+                    ],
+
+
+                    datasets: [
+
+                        {
+
+                            data:
+                                orderSummary,
+
+                            borderWidth: 2
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+
+                    plugins: {
+
+                        legend: {
+
+                            position:
+                                "bottom"
+
+                        },
+
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label:
+                                    function(context) {
+
+                                        return (
+                                            context.label +
+                                            ": " +
+                                            context.raw
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+});
+
+</script>

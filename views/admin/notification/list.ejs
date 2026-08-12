@@ -1,0 +1,610 @@
+<%- include("../layouts/header", { title: "Notification List" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+
+<div class="content-body">
+
+    <div class="container-fluid py-4">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+
+                    <i class="fas fa-bell text-primary me-2"></i>
+
+                    Notification Management
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    Manage all system notifications.
+
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <!-- Mark All Read -->
+
+                <button
+                    type="button"
+                    id="markAllReadBtn"
+                    class="btn btn-success me-2">
+
+                    <i class="fas fa-check-double"></i>
+
+                    Mark All Read
+
+                </button>
+
+
+                <!-- Add Notification -->
+
+                <a
+                    href="/admin/notification/add"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-plus"></i>
+
+                    Add Notification
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= NOTIFICATION CARD ================= -->
+
+        <div class="card shadow border-0 rounded-4">
+
+
+            <div class="card-header bg-primary text-white py-3">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+
+                        <i class="fas fa-list me-2"></i>
+
+                        Notification List
+
+                    </h5>
+
+
+                    <% if(notifications && notifications.length > 0){ %>
+
+                        <span class="badge bg-light text-primary">
+
+                            <%= notifications.length %> Notifications
+
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card-body">
+
+
+                <% if(notifications && notifications.length > 0){ %>
+
+
+                    <!-- ================= TABLE ================= -->
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-hover align-middle">
+
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th width="60">#</th>
+
+                                    <th>Title</th>
+
+                                    <th>Message</th>
+
+                                    <th>Vendor</th>
+
+                                    <th>Type</th>
+
+                                    <th width="100">Read</th>
+
+                                    <th width="150">Date</th>
+
+                                    <th width="190">Action</th>
+
+                                </tr>
+
+                            </thead>
+
+
+
+                            <tbody>
+
+
+                                <% notifications.forEach((notification,index)=>{ %>
+
+
+                                    <tr
+                                        class="<%= !notification.isRead ? 'table-warning' : '' %>">
+
+
+                                        <!-- NUMBER -->
+
+                                        <td>
+
+                                            <%= index + 1 %>
+
+                                        </td>
+
+
+
+                                        <!-- TITLE -->
+
+                                        <td>
+
+                                            <strong>
+
+                                                <%= notification.title %>
+
+                                            </strong>
+
+
+                                            <% if(!notification.isRead){ %>
+
+                                                <span
+                                                    class="badge bg-danger ms-2">
+
+                                                    NEW
+
+                                                </span>
+
+                                            <% } %>
+
+                                        </td>
+
+
+
+                                        <!-- MESSAGE -->
+
+                                        <td>
+
+                                            <span>
+
+                                                <%= notification.message %>
+
+                                            </span>
+
+                                        </td>
+
+
+
+                                        <!-- VENDOR -->
+
+                                        <td>
+
+                                            <% if(notification.vendor){ %>
+
+
+                                                <% if(notification.vendor.storeName){ %>
+
+                                                    <strong>
+
+                                                        <%= notification.vendor.storeName %>
+
+                                                    </strong>
+
+                                                    <% if(notification.vendor.email){ %>
+
+                                                        <br>
+
+                                                        <small class="text-muted">
+
+                                                            <%= notification.vendor.email %>
+
+                                                        </small>
+
+                                                    <% } %>
+
+
+                                                <% }else if(notification.vendor.name){ %>
+
+
+                                                    <strong>
+
+                                                        <%= notification.vendor.name %>
+
+                                                    </strong>
+
+
+                                                <% }else{ %>
+
+
+                                                    <span class="text-muted">
+
+                                                        Vendor
+
+                                                    </span>
+
+
+                                                <% } %>
+
+
+                                            <% }else{ %>
+
+
+                                                <span class="badge bg-secondary">
+
+                                                    All Vendors
+
+                                                </span>
+
+
+                                            <% } %>
+
+                                        </td>
+
+
+
+                                        <!-- TYPE -->
+
+                                        <td>
+
+
+                                            <% if(notification.type === "product"){ %>
+
+                                                <span class="badge bg-primary">
+
+                                                    <i class="fas fa-box me-1"></i>
+
+                                                    Product
+
+                                                </span>
+
+
+                                            <% }else if(notification.type === "order"){ %>
+
+                                                <span class="badge bg-success">
+
+                                                    <i class="fas fa-shopping-cart me-1"></i>
+
+                                                    Order
+
+                                                </span>
+
+
+                                            <% }else if(notification.type === "vendor"){ %>
+
+                                                <span class="badge bg-warning text-dark">
+
+                                                    <i class="fas fa-store me-1"></i>
+
+                                                    Vendor
+
+                                                </span>
+
+
+                                            <% }else if(notification.type === "customer"){ %>
+
+                                                <span class="badge bg-info">
+
+                                                    <i class="fas fa-user me-1"></i>
+
+                                                    Customer
+
+                                                </span>
+
+
+                                            <% }else{ %>
+
+                                                <span class="badge bg-secondary">
+
+                                                    <i class="fas fa-cog me-1"></i>
+
+                                                    System
+
+                                                </span>
+
+                                            <% } %>
+
+
+                                        </td>
+
+
+
+                                        <!-- READ STATUS -->
+
+                                        <td class="text-center">
+
+
+                                            <% if(notification.isRead){ %>
+
+
+                                                <span
+                                                    class="badge bg-success">
+
+                                                    <i class="fas fa-check"></i>
+
+                                                    Read
+
+                                                </span>
+
+
+                                            <% }else{ %>
+
+
+                                                <span
+                                                    class="badge bg-warning text-dark">
+
+                                                    <i class="fas fa-envelope"></i>
+
+                                                    Unread
+
+                                                </span>
+
+
+                                            <% } %>
+
+
+                                        </td>
+
+
+
+                                        <!-- DATE -->
+
+                                        <td>
+
+                                            <%= new Date(
+                                                notification.createdAt
+                                            ).toLocaleDateString() %>
+
+                                            <br>
+
+                                            <small class="text-muted">
+
+                                                <%= new Date(
+                                                    notification.createdAt
+                                                ).toLocaleTimeString([], {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit"
+                                                }) %>
+
+                                            </small>
+
+                                        </td>
+
+
+
+                                        <!-- ACTION -->
+
+                                        <td>
+
+
+                                            <!-- MARK READ -->
+
+                                            <% if(!notification.isRead){ %>
+
+
+                                                <a
+                                                    href="/admin/notification/read/<%= notification._id %>"
+                                                    class="btn btn-success btn-sm"
+                                                    title="Mark as Read">
+
+                                                    <i class="fas fa-check"></i>
+
+                                                </a>
+
+
+                                            <% }else{ %>
+
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-secondary btn-sm"
+                                                    disabled
+                                                    title="Already Read">
+
+                                                    <i class="fas fa-check-double"></i>
+
+                                                </button>
+
+
+                                            <% } %>
+
+
+
+                                            <!-- EDIT -->
+
+                                            <a
+                                                href="/admin/notification/edit/<%= notification._id %>"
+                                                class="btn btn-warning btn-sm"
+                                                title="Edit">
+
+                                                <i class="fas fa-edit"></i>
+
+                                            </a>
+
+
+
+                                            <!-- DELETE -->
+
+                                            <a
+                                                href="/admin/notification/delete/<%= notification._id %>"
+                                                class="btn btn-danger btn-sm"
+                                                title="Delete"
+                                                onclick="return confirm('Are you sure you want to delete this notification?')">
+
+                                                <i class="fas fa-trash"></i>
+
+                                            </a>
+
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                <% }) %>
+
+
+                            </tbody>
+
+
+                        </table>
+
+                    </div>
+
+
+                <% }else{ %>
+
+
+                    <!-- ================= EMPTY ================= -->
+
+                    <div class="text-center py-5">
+
+
+                        <div class="mb-4">
+
+                            <i
+                                class="fas fa-bell-slash fa-5x text-muted">
+                            </i>
+
+                        </div>
+
+
+                        <h3>
+
+                            No Notifications Found
+
+                        </h3>
+
+
+                        <p class="text-muted">
+
+                            No notifications have been created yet.
+
+                        </p>
+
+
+                        <a
+                            href="/admin/notification/add"
+                            class="btn btn-primary">
+
+                            <i class="fas fa-plus"></i>
+
+                            Add Notification
+
+                        </a>
+
+
+                    </div>
+
+
+                <% } %>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>
+
+
+
+<!-- ================= MARK ALL READ ================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const markAllReadBtn =
+            document.getElementById("markAllReadBtn");
+
+
+        if(markAllReadBtn){
+
+            markAllReadBtn.addEventListener(
+                "click",
+                async function () {
+
+
+                    try {
+
+
+                        const response =
+                            await fetch(
+                                "/admin/notification/mark-all-read",
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    }
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        if(data.success){
+
+                            location.reload();
+
+                        }
+
+
+                    }catch(error){
+
+                        console.log(
+                            "Mark all notification error:",
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+);
+
+</script>

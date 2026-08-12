@@ -1,0 +1,205 @@
+<%- include("../layouts/header",{title:"Edit Product"}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+            <div class="content-body">
+                <div class="main-content">
+
+                    <div class="container-fluid py-4">
+
+                        <div class="card shadow rounded-4">
+
+                            <div class="card-header bg-warning text-dark">
+
+                                <h3>
+
+                                    <i class="fas fa-edit"></i>
+
+                                    Edit Product
+
+                                </h3>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <form action="/admin/product/update/<%= product._id %>" method="POST"
+                                    enctype="multipart/form-data">
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Product Name</label>
+
+                                            <input type="text" name="name" class="form-control"
+                                                value="<%= product.name %>" required>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Category</label>
+
+                                            <select name="category" class="form-select">
+
+                                                <% categories.forEach(category=>{ %>
+
+                                                    <option value="<%= category._id %>" <%=product.category &&
+                                                        product.category._id.toString()==category._id.toString()
+                                                        ? "selected" : "" %>>
+
+                                                        <%= category.name %>
+
+                                                    </option>
+
+                                                    <% }) %>
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Brand</label>
+
+                                            <select name="brand" class="form-select">
+
+                                                <% brands.forEach(brand=>{ %>
+
+                                                    <option value="<%= brand._id %>" <%=product.brand &&
+                                                        product.brand._id.toString()==brand._id.toString() ? "selected"
+                                                        : "" %>>
+
+                                                        <%= brand.name %>
+
+                                                    </option>
+
+                                                    <% }) %>
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Price</label>
+
+                                            <input type="number" name="price" class="form-control"
+                                                value="<%= product.price %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Discount Price</label>
+
+                                            <input type="number" name="discountPrice" class="form-control"
+                                                value="<%= product.discountPrice %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Stock</label>
+
+                                            <input type="number" name="stock" class="form-control"
+                                                value="<%= product.stock %>">
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <label>Length</label>
+
+                                            <input type="number" name="length" class="form-control"
+                                                value="<%= product.dimensions.length %>">
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <label>Width</label>
+
+                                            <input type="number" name="width" class="form-control"
+                                                value="<%= product.dimensions.width %>">
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <label>Height</label>
+
+                                            <input type="number" name="height" class="form-control"
+                                                value="<%= product.dimensions.height %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Weight</label>
+
+                                            <input type="number" name="weight" class="form-control"
+                                                value="<%= product.weight %>">
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label>Thumbnail</label>
+
+                                            <input type="file" name="image" class="form-control">
+
+                                            <br>
+
+                                            <% if(product.thumbnail){ %>
+
+                                                <img src="<%= product.thumbnail %>" width="120" class="rounded shadow">
+
+                                                <% } %>
+
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+
+                                            <label>Description</label>
+
+                                            <textarea name="description" rows="5"
+                                                class="form-control"><%= product.description %></textarea>
+
+                                        </div>
+
+                                        <div class="col-md-12 text-end">
+
+                                            <a href="/admin/product/list" class="btn btn-secondary">
+
+                                                Back
+
+                                            </a>
+
+                                            <button class="btn btn-warning">
+
+                                                <i class="fas fa-save"></i>
+
+                                                Update Product
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

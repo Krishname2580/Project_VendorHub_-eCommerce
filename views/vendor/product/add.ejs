@@ -1,0 +1,909 @@
+<%- include("../layouts/header",{title:"Add Product"}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <div class="card shadow-lg border-0 rounded-4">
+
+                        <div class="card-header text-white" style="background:linear-gradient(90deg,#198754,#20c997);">
+
+                            <h3 class="mb-0">
+
+                                <i class="fas fa-box-open me-2"></i>
+
+                                Add New Product
+
+                            </h3>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/vendor/product/create" method="POST" enctype="multipart/form-data">
+
+                                <div class="row">
+
+                                    <!-- Category -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Category
+
+                                        </label>
+
+                                        <select id="category" name="category" class="form-select" required>
+
+                                            <option value="">
+
+                                                Select Category
+
+                                            </option>
+
+                                            <% categories.forEach(category=>{ %>
+
+                                                <option value="<%= category._id %>">
+
+                                                    <%= category.name %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Brand -->
+
+                                    <!-- ================= BRAND ================= -->
+
+<div class="col-md-6 mb-3">
+
+    <label class="form-label fw-bold">
+        Brand
+    </label>
+
+    <select
+        name="brand"
+        id="brand"
+        class="form-select"
+        onchange="toggleOtherBrand()"
+        required
+    >
+
+        <option value="">
+            Select Brand
+        </option>
+
+        <!-- Other option at top -->
+        <option value="Other">
+            Other
+        </option>
+
+        <% brands.forEach(brand => { %>
+
+            <option value="<%= brand._id %>">
+                <%= brand.name %>
+            </option>
+
+        <% }) %>
+
+    </select>
+
+</div>
+
+
+<!-- ================= CUSTOM BRAND ================= -->
+
+<div
+    class="col-md-6 mb-3"
+    id="otherBrandBox"
+    style="display:none;"
+>
+
+    <label class="form-label fw-bold">
+        Custom Brand Name
+    </label>
+
+    <input
+        type="text"
+        name="otherBrand"
+        id="otherBrand"
+        class="form-control"
+        placeholder="Enter your brand name"
+    >
+
+    <small class="text-muted">
+        Enter your own brand name.
+    </small>
+
+</div>
+
+                                    <div class="mb-3" id="otherBrandBox" style="display:none;">
+
+                                        <label class="form-label fw-semibold">
+                                            <i class="fas fa-plus-circle me-1"></i>
+                                            Custom Brand Name
+                                        </label>
+
+                                        <input type="text" name="otherBrand" id="otherBrand" class="form-control"
+                                            placeholder="Enter brand name">
+
+                                    </div>
+
+                                    <!-- Price -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Price
+
+                                        </label>
+
+                                        <input type="number" name="price" class="form-control" required>
+
+                                    </div>
+
+                                    <!-- Discount -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Discount Price
+
+                                        </label>
+
+                                        <input type="number" name="discountPrice" value="0" class="form-control">
+
+                                    </div>
+
+                                    <!-- Stock -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Stock
+
+                                        </label>
+
+                                        <input type="number" name="stock" value="0" class="form-control">
+
+                                    </div>
+
+                                    <!-- Weight -->
+
+                                    <div class="col-md-3 mb-3">
+
+                                        <label class="form-label fw-bold">
+
+                                            Weight (Kg)
+
+                                        </label>
+
+                                        <input type="number" step="0.01" name="weight" class="form-control">
+
+                                    </div>
+                                    <!-- ================= AI PRODUCT GENERATOR ================= -->
+
+                                    <div class="col-12 mt-4">
+
+                                        <div class="card border-0 shadow-lg rounded-4">
+
+                                            <div class="card-header text-white py-3"
+                                                style="background:linear-gradient(90deg,#0d6efd,#6610f2);">
+
+                                                <div class="d-flex justify-content-between align-items-center">
+
+                                                    <h4 class="mb-0">
+
+                                                        <i class="fas fa-robot me-2"></i>
+
+                                                        AI Product Generator
+
+                                                    </h4>
+
+                                                    <button type="button" id="generateAI"
+                                                        class="btn btn-warning fw-bold px-4">
+
+                                                        <i class="fas fa-wand-magic-sparkles me-2"></i>
+
+                                                        Generate Complete Product
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="card-body">
+
+                                                <div class="alert alert-info">
+
+                                                    <i class="fas fa-lightbulb me-2"></i>
+
+                                                    Select the <b>Category</b> and <b>Brand</b> above, then click
+                                                    <b>Generate Complete Product</b>.
+                                                    AI will automatically generate all product details.
+
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <!-- Product Name -->
+
+                                                    <div class="col-md-12 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            Product Name
+
+                                                        </label>
+
+                                                        <input type="text" id="name" name="name"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="AI will generate Product Name">
+
+                                                    </div>
+
+                                                    <!-- Short Description -->
+
+                                                    <div class="col-md-12 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            Short Description
+
+                                                        </label>
+
+                                                        <textarea id="shortDescription" name="shortDescription" rows="3"
+                                                            class="form-control"
+                                                            placeholder="AI generated short description"></textarea>
+
+                                                    </div>
+
+                                                    <!-- Full Description -->
+
+                                                    <div class="col-md-12 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            Product Description
+
+                                                        </label>
+
+                                                        <textarea id="description" name="description" rows="8"
+                                                            class="form-control"
+                                                            placeholder="AI generated detailed description"></textarea>
+
+                                                    </div>
+
+                                                    <!-- Features -->
+
+                                                    <div class="col-md-12 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            Product Features
+
+                                                        </label>
+
+                                                        <textarea id="features" name="features" rows="6"
+                                                            class="form-control"
+                                                            placeholder="One feature per line"></textarea>
+
+                                                    </div>
+
+                                                    <!-- SEO Title -->
+
+                                                    <div class="col-md-6 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            SEO Title
+
+                                                        </label>
+
+                                                        <input type="text" id="seoTitle" name="seoTitle"
+                                                            class="form-control" placeholder="SEO Title">
+
+                                                    </div>
+
+                                                    <!-- SEO Keywords -->
+
+                                                    <div class="col-md-6 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            SEO Keywords
+
+                                                        </label>
+
+                                                        <input type="text" id="seoKeywords" name="seoKeywords"
+                                                            class="form-control"
+                                                            placeholder="keyword1, keyword2, keyword3">
+
+                                                    </div>
+
+                                                    <!-- SEO Description -->
+
+                                                    <div class="col-md-12 mb-4">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            SEO Description
+
+                                                        </label>
+
+                                                        <textarea id="seoDescription" name="seoDescription" rows="4"
+                                                            class="form-control"
+                                                            placeholder="SEO Description"></textarea>
+
+                                                    </div>
+
+                                                    <!-- Product Tags -->
+
+                                                    <div class="col-md-12">
+
+                                                        <label class="form-label fw-bold">
+
+                                                            Product Tags
+
+                                                        </label>
+
+                                                        <input type="text" id="tags" name="tags" class="form-control"
+                                                            placeholder="Nike, Shoes, Running, Sports">
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!-- ================= PRODUCT IMAGES ================= -->
+
+                                    <div class="card shadow-lg border-0 rounded-4 mt-4">
+
+                                        <div class="card-header bg-success text-white">
+
+                                            <h4 class="mb-0">
+
+                                                <i class="fas fa-images me-2"></i>
+
+                                                Product Images
+
+                                            </h4>
+
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6 mb-3">
+
+                                                    <label class="form-label fw-bold">
+
+                                                        Thumbnail Image
+
+                                                    </label>
+
+                                                    <input type="file" name="thumbnail" class="form-control"
+                                                        accept="image/*">
+
+                                                    <small class="text-muted">
+
+                                                        Recommended Size : 800 × 800
+
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+
+                                                    <label class="form-label fw-bold">
+
+                                                        Gallery Images
+
+                                                    </label>
+
+                                                    <input type="file" name="images" multiple class="form-control"
+                                                        accept="image/*">
+
+                                                    <small class="text-muted">
+
+                                                        Select Multiple Images
+
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ================= PRODUCT DIMENSIONS ================= -->
+
+                                    <div class="card shadow-lg border-0 rounded-4 mt-4">
+
+                                        <div class="card-header bg-dark text-white">
+
+                                            <h4 class="mb-0">
+
+                                                <i class="fas fa-ruler-combined me-2"></i>
+
+                                                Product Dimensions
+
+                                            </h4>
+
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <div class="row">
+
+                                                <div class="col-md-4 mb-3">
+
+                                                    <label class="form-label fw-bold">
+
+                                                        Length (cm)
+
+                                                    </label>
+
+                                                    <input type="number" class="form-control" name="length">
+
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+
+                                                    <label class="form-label fw-bold">
+
+                                                        Width (cm)
+
+                                                    </label>
+
+                                                    <input type="number" class="form-control" name="width">
+
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+
+                                                    <label class="form-label fw-bold">
+
+                                                        Height (cm)
+
+                                                    </label>
+
+                                                    <input type="number" class="form-control" name="height">
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ================= PRODUCT OPTIONS ================= -->
+
+                                    <div class="card shadow-lg border-0 rounded-4 mt-4">
+
+                                        <div class="card-header bg-warning">
+
+                                            <h4 class="mb-0">
+
+                                                <i class="fas fa-star me-2"></i>
+
+                                                Product Options
+
+                                            </h4>
+
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <div class="row">
+
+                                                <div class="col-md-4">
+
+                                                    <div class="form-check form-switch">
+
+                                                        <input class="form-check-input" type="checkbox" id="featured"
+                                                            name="isFeatured">
+
+                                                        <label class="form-check-label" for="featured">
+
+                                                            Featured Product
+
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-4">
+
+                                                    <div class="form-check form-switch">
+
+                                                        <input class="form-check-input" type="checkbox" id="bestseller"
+                                                            name="isBestSeller">
+
+                                                        <label class="form-check-label" for="bestseller">
+
+                                                            Best Seller
+
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-4">
+
+                                                    <div class="form-check form-switch">
+
+                                                        <input class="form-check-input" type="checkbox" id="newarrival"
+                                                            name="isNewArrival">
+
+                                                        <label class="form-check-label" for="newarrival">
+
+                                                            New Arrival
+
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- ================= SAVE BUTTON ================= -->
+
+                                    <div class="text-center mt-5 mb-3">
+
+                                        <button class="btn btn-success btn-lg px-5">
+
+                                            <i class="fas fa-save me-2"></i>
+
+                                            Save Product
+
+                                        </button>
+
+                                        <a href="/vendor/products" class="btn btn-secondary btn-lg ms-3">
+
+                                            <i class="fas fa-arrow-left me-2"></i>
+
+                                            Cancel
+
+                                        </a>
+
+                                    </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <script>
+
+/* =========================================================
+   OTHER BRAND
+========================================================= */
+
+function toggleOtherBrand() {
+
+    const brandSelect = document.getElementById("brand");
+    const otherBrandBox = document.getElementById("otherBrandBox");
+    const otherBrandInput = document.getElementById("otherBrand");
+
+    if (!brandSelect) {
+        return;
+    }
+
+    if (brandSelect.value === "Other") {
+
+        otherBrandBox.style.display = "block";
+
+        otherBrandInput.required = true;
+
+        otherBrandInput.focus();
+
+    } else {
+
+        otherBrandBox.style.display = "none";
+
+        otherBrandInput.required = false;
+
+        otherBrandInput.value = "";
+
+    }
+
+}
+
+
+/* =========================================================
+   AI PRODUCT GENERATOR
+========================================================= */
+
+document
+    .getElementById("generateAI")
+    .addEventListener("click", async function () {
+
+        const btn = this;
+
+        const categorySelect =
+            document.getElementById("category");
+
+        const brandSelect =
+            document.getElementById("brand");
+
+        const otherBrandInput =
+            document.getElementById("otherBrand");
+
+        const nameInput =
+            document.getElementById("name");
+
+
+        /* ---------------- CATEGORY ---------------- */
+
+        if (
+            !categorySelect ||
+            !categorySelect.value
+        ) {
+
+            alert("Please select a category.");
+
+            return;
+
+        }
+
+
+        const category =
+            categorySelect
+                .options[
+                    categorySelect.selectedIndex
+                ]
+                .text;
+
+
+        /* ---------------- BRAND ---------------- */
+
+        let brand = "";
+
+
+        if (brandSelect.value === "Other") {
+
+            brand =
+                otherBrandInput.value.trim();
+
+
+            if (!brand) {
+
+                alert("Please enter your custom brand name.");
+
+                otherBrandInput.focus();
+
+                return;
+
+            }
+
+        } else {
+
+            if (!brandSelect.value) {
+
+                alert("Please select a brand.");
+
+                return;
+
+            }
+
+
+            brand =
+                brandSelect
+                    .options[
+                        brandSelect.selectedIndex
+                    ]
+                    .text;
+
+        }
+
+
+        /* ---------------- PRODUCT NAME ---------------- */
+
+        const name =
+            nameInput.value.trim();
+
+
+        /* ---------------- BUTTON ---------------- */
+
+        btn.disabled = true;
+
+        btn.innerHTML =
+            '<i class="fas fa-spinner fa-spin me-2"></i>Generating...';
+
+
+        try {
+
+            /* ---------------- API CALL ---------------- */
+
+            const response =
+                await fetch(
+                    "/vendor/ai/generate-description",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            name: name,
+
+                            category: category,
+
+                            brand: brand
+
+                        })
+
+                    }
+                );
+
+
+            /* ---------------- RESPONSE ---------------- */
+
+            const result =
+                await response.json();
+
+
+            console.log(
+                "AI RESPONSE:",
+                result
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "AI request failed."
+                );
+
+            }
+
+
+            if (!result.success) {
+
+                alert(
+                    result.message ||
+                    "AI generation failed."
+                );
+
+                return;
+
+            }
+
+
+            const data =
+                result.data || {};
+
+
+            /* =================================================
+               FILL PRODUCT DATA
+            ================================================= */
+
+            document.getElementById("name").value =
+                data.title || "";
+
+
+            document.getElementById("shortDescription").value =
+                data.shortDescription || "";
+
+
+            document.getElementById("description").value =
+                data.description || "";
+
+
+            document.getElementById("features").value =
+                Array.isArray(data.features)
+                    ? data.features.join("\n")
+                    : data.features || "";
+
+
+            document.getElementById("seoTitle").value =
+                data.seoTitle || "";
+
+
+            document.getElementById("seoDescription").value =
+                data.seoDescription || "";
+
+
+            document.getElementById("seoKeywords").value =
+                Array.isArray(data.seoKeywords)
+                    ? data.seoKeywords.join(", ")
+                    : data.seoKeywords || "";
+
+
+            document.getElementById("tags").value =
+                Array.isArray(data.tags)
+                    ? data.tags.join(", ")
+                    : data.tags || "";
+
+
+            alert(
+                "Product generated successfully!"
+            );
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "AI GENERATOR ERROR:",
+                error
+            );
+
+
+            alert(
+                error.message ||
+                "Something went wrong while generating the product."
+            );
+
+        }
+
+
+        finally {
+
+            btn.disabled = false;
+
+            btn.innerHTML =
+                '<i class="fas fa-wand-magic-sparkles me-2"></i> Generate Complete Product';
+
+        }
+
+    });
+
+
+/* =========================================================
+   INITIAL BRAND STATE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        toggleOtherBrand();
+
+    }
+);
+
+</script>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>
+                    

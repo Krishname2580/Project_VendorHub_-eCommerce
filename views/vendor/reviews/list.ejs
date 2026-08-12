@@ -1,0 +1,298 @@
+<%- include("../layouts/header", { title: "Product Reviews" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="card shadow">
+
+                    <div class="card-header d-flex justify-content-between align-items-center">
+
+                        <h4>
+
+                            Product Reviews
+
+                        </h4>
+
+                        <form action="/vendor/reviews" method="GET" class="d-flex">
+
+                            <input type="text" name="search" class="form-control me-2" placeholder="Product Name">
+
+                            <select name="rating" class="form-select me-2">
+
+                                <option value="">All Ratings</option>
+
+                                <option value="5">★★★★★</option>
+
+                                <option value="4">★★★★☆</option>
+
+                                <option value="3">★★★☆☆</option>
+
+                                <option value="2">★★☆☆☆</option>
+
+                                <option value="1">★☆☆☆☆</option>
+
+                            </select>
+
+                            <button class="btn btn-primary">
+
+                                Search
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Summary -->
+
+                        <div class="row mb-4">
+
+                            <div class="col-md-3">
+
+                                <div class="card bg-primary text-white">
+
+                                    <div class="card-body text-center">
+
+                                        <h5>Total Reviews</h5>
+
+                                        <h2>
+
+                                            <%= totalReviews %>
+
+                                        </h2>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="card bg-success text-white">
+
+                                    <div class="card-body text-center">
+
+                                        <h5>Average Rating</h5>
+
+                                        <h2>
+
+                                            <%= averageRating.toFixed(1) %>
+
+                                                ⭐
+
+                                        </h2>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="card bg-warning text-dark">
+
+                                    <div class="card-body text-center">
+
+                                        <h5>Approved</h5>
+
+                                        <h2>
+
+                                            <%= approvedReviews %>
+
+                                        </h2>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="card bg-danger text-white">
+
+                                    <div class="card-body text-center">
+
+                                        <h5>Pending</h5>
+
+                                        <h2>
+
+                                            <%= pendingReviews %>
+
+                                        </h2>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Reviews Table -->
+
+                        <table class="table table-bordered table-hover">
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th>#</th>
+
+                                    <th>Customer</th>
+
+                                    <th>Product</th>
+
+                                    <th>Rating</th>
+
+                                    <th>Review</th>
+
+                                    <th>Status</th>
+
+                                    <th>Date</th>
+
+                                    <th>Action</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <% if(reviews.length){ %>
+
+                                    <% reviews.forEach((review,index)=>{ %>
+
+                                        <tr>
+
+                                            <td>
+
+                                                <%= index+1 %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <%= review.customer.name %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <%= review.product.name %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <% for(let i=1;i<=5;i++){ %>
+
+                                                    <% if(i<=review.rating){ %>
+
+                                                        <i class="fas fa-star text-warning"></i>
+
+                                                        <% }else{ %>
+
+                                                            <i class="far fa-star text-secondary"></i>
+
+                                                            <% } %>
+
+                                                                <% } %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <%= review.review %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <% if(review.status){ %>
+
+                                                    <span class="badge bg-success">
+
+                                                        Approved
+
+                                                    </span>
+
+                                                    <% }else{ %>
+
+                                                        <span class="badge bg-warning text-dark">
+
+                                                            Pending
+
+                                                        </span>
+
+                                                        <% } %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <%= review.createdAt.toDateString() %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <% if(!review.status){ %>
+
+                                                    <a href="/vendor/reviews/approve/<%= review._id %>"
+                                                        class="btn btn-success btn-sm">
+
+                                                        <i class="fas fa-check"></i>
+
+                                                    </a>
+
+                                                    <% } %>
+
+                                                        <a href="/vendor/reviews/delete/<%= review._id %>"
+                                                            class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Delete Review?')">
+
+                                                            <i class="fas fa-trash"></i>
+
+                                                        </a>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <% }) %>
+
+                                            <% } else { %>
+
+                                                <tr>
+
+                                                    <td colspan="8" class="text-center">
+
+                                                        No Reviews Found
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <% } %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

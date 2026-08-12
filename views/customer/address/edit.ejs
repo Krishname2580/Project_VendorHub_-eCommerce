@@ -1,0 +1,181 @@
+<%- include("../layouts/header",{title:title}) %>
+
+<%- include("../layouts/navbar") %>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+
+            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+
+            My Addresses
+
+        </h2>
+
+        <a href="/customer/address/add" class="btn btn-primary">
+
+            <i class="fas fa-plus me-1"></i>
+
+            Add New Address
+
+        </a>
+
+    </div>
+
+    <% if(addresses.length === 0){ %>
+
+        <div class="card shadow border-0">
+
+            <div class="card-body text-center py-5">
+
+                <i class="fas fa-map-marker-alt fa-4x text-secondary mb-3"></i>
+
+                <h4>No Address Found</h4>
+
+                <p class="text-muted">
+
+                    Please add your delivery address.
+
+                </p>
+
+                <a href="/customer/address/add" class="btn btn-success">
+
+                    <i class="fas fa-plus me-1"></i>
+
+                    Add Address
+
+                </a>
+
+            </div>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="row">
+
+            <% addresses.forEach(address => { %>
+
+                <div class="col-md-6 col-lg-4 mb-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                <h5 class="fw-bold mb-0">
+
+                                    <%= address.fullName %>
+
+                                </h5>
+
+                                <% if(address.isDefault){ %>
+
+                                    <span class="badge bg-success">
+
+                                        Default
+
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+                            <p class="mb-2">
+
+                                <i class="fas fa-phone text-success me-2"></i>
+
+                                <%= address.mobile %>
+
+                            </p>
+
+                            <p class="mb-2">
+
+                                <i class="fas fa-home text-primary me-2"></i>
+
+                                <%= address.addressLine1 %>
+
+                            </p>
+
+                            <% if(address.addressLine2){ %>
+
+                                <p class="mb-2">
+
+                                    <%= address.addressLine2 %>
+
+                                </p>
+
+                            <% } %>
+
+                            <p class="mb-2">
+
+                                <i class="fas fa-city text-info me-2"></i>
+
+                                <%= address.city %>, <%= address.state %>
+
+                            </p>
+
+                            <p class="mb-2">
+
+                                <i class="fas fa-globe text-secondary me-2"></i>
+
+                                <%= address.country %> -
+
+                                <strong><%= address.pincode %></strong>
+
+                            </p>
+
+                            <p class="mb-3">
+
+                                <span class="badge bg-primary">
+
+                                    <%= address.addressType %>
+
+                                </span>
+
+                            </p>
+
+                            <div class="d-flex gap-2">
+
+                                <a href="/customer/address/edit/<%= address._id %>"
+
+                                    class="btn btn-warning btn-sm flex-fill">
+
+                                    <i class="fas fa-edit"></i>
+
+                                    Edit
+
+                                </a>
+
+                                <a href="/customer/address/delete/<%= address._id %>"
+
+                                    class="btn btn-danger btn-sm flex-fill"
+
+                                    onclick="return confirm('Delete this address?')">
+
+                                    <i class="fas fa-trash"></i>
+
+                                    Delete
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</div>
+
+<%- include("../layouts/footer") %>

@@ -1,0 +1,307 @@
+<%- include('layouts/header') %>
+
+
+    <%- include("layouts/navbar") %>
+
+        <%- include("layouts/sidebar") %>
+            <div class="main-content">
+                <div class="container-fluid py-5">
+
+                    <div class="container">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <div>
+
+                                <h2 class="fw-bold">
+                                    Customer Orders
+                                </h2>
+
+                                <p class="text-muted mb-0">
+                                    Orders containing your products
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <% if (!orders || orders.length===0) { %>
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-body text-center py-5">
+
+                                    <i class="fa fa-shopping-bag fa-4x text-muted mb-4"></i>
+
+                                    <h4>
+                                        No Orders Yet
+                                    </h4>
+
+                                    <p class="text-muted">
+                                        You haven't received any customer orders.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <% } else { %>
+
+
+                                <div class="row g-4">
+
+
+                                    <% orders.forEach(order=> { %>
+
+
+                                        <div class="col-12">
+
+
+                                            <div class="card border-0 shadow-sm rounded-4">
+
+
+                                                <!-- Header -->
+
+                                                <div class="card-header bg-white p-4">
+
+                                                    <div class="row align-items-center">
+
+                                                        <div class="col-md-4">
+
+                                                            <small class="text-muted">
+                                                                ORDER NUMBER
+                                                            </small>
+
+                                                            <h6 class="mb-0">
+
+                                                                <%= order.orderNumber %>
+
+                                                            </h6>
+
+                                                        </div>
+
+
+                                                        <div class="col-md-3">
+
+                                                            <small class="text-muted">
+                                                                CUSTOMER
+                                                            </small>
+
+                                                            <h6 class="mb-0">
+
+                                                                <%= order.firstName %>
+                                                                    <%= order.lastName %>
+
+                                                            </h6>
+
+                                                        </div>
+
+
+                                                        <div class="col-md-3">
+
+                                                            <small class="text-muted">
+                                                                DATE
+                                                            </small>
+
+                                                            <h6 class="mb-0">
+
+                                                                <%= new Date( order.createdAt
+                                                                    ).toLocaleDateString("en-IN") %>
+
+                                                            </h6>
+
+                                                        </div>
+
+
+                                                        <div class="col-md-2 text-md-end">
+
+                                                            <% if ( order.orderStatus==="Pending" ) { %>
+
+                                                                <span class="badge bg-warning text-dark">
+                                                                    Pending
+                                                                </span>
+
+                                                                <% } else if ( order.orderStatus==="Confirmed" ) { %>
+
+                                                                    <span class="badge bg-info">
+                                                                        Confirmed
+                                                                    </span>
+
+                                                                    <% } else if ( order.orderStatus==="Packed" ) { %>
+
+                                                                        <span class="badge bg-primary">
+                                                                            Packed
+                                                                        </span>
+
+                                                                        <% } else if ( order.orderStatus==="Shipped" ) {
+                                                                            %>
+
+                                                                            <span class="badge bg-primary">
+                                                                                Shipped
+                                                                            </span>
+
+                                                                            <% } else if (
+                                                                                order.orderStatus==="Delivered" ) { %>
+
+                                                                                <span class="badge bg-success">
+                                                                                    Delivered
+                                                                                </span>
+
+                                                                                <% } else if (
+                                                                                    order.orderStatus==="Cancelled" ) {
+                                                                                    %>
+
+                                                                                    <span class="badge bg-danger">
+                                                                                        Cancelled
+                                                                                    </span>
+
+                                                                                    <% } %>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+
+                                                <!-- Body -->
+
+                                                <div class="card-body p-4">
+
+
+                                                    <% order.items.forEach(item=> { %>
+
+
+                                                        <div class="row align-items-center border-bottom py-3">
+
+
+                                                            <div class="col-md-2">
+
+                                                                <% if ( item.product && item.product.images &&
+                                                                    item.product.images.length ) { %>
+
+                                                                    <img src="<%= item.product.images[0].imageUrl %>"
+                                                                        style="
+                                                        width:80px;
+                                                        height:80px;
+                                                        object-fit:contain;
+                                                    " class="img-fluid rounded">
+
+                                                                    <% } %>
+
+                                                            </div>
+
+
+                                                            <div class="col-md-4">
+
+                                                                <h6>
+
+                                                                    <%= item.name %>
+
+                                                                </h6>
+
+                                                                <small class="text-muted">
+
+                                                                    Quantity:
+                                                                    <%= item.quantity %>
+
+                                                                </small>
+
+                                                            </div>
+
+
+                                                            <div class="col-md-3">
+
+                                                                ₹<%= Number( item.price ).toFixed(2) %>
+
+                                                                    ×
+
+                                                                    <%= item.quantity %>
+
+                                                            </div>
+
+
+                                                            <div class="col-md-3 text-end">
+
+                                                                <strong>
+
+                                                                    ₹<%= Number( item.total ).toFixed(2) %>
+
+                                                                </strong>
+
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                        <% }) %>
+
+
+                                                </div>
+
+
+                                                <!-- Footer -->
+
+                                                <div class="card-footer bg-light border-0 p-4">
+
+                                                    <div class="row align-items-center">
+
+
+                                                        <div class="col-md-6">
+
+                                                            <strong>
+                                                                Payment:
+                                                            </strong>
+
+                                                            <span class="ms-2">
+
+                                                                <%= order.paymentMethod %>
+
+                                                            </span>
+
+                                                        </div>
+
+
+                                                        <div class="col-md-6 text-md-end">
+
+                                                            <a href="/vendor/orders/<%= order._id %>"
+                                                                class="btn btn-primary rounded-pill px-4">
+
+                                                                <i class="fa fa-eye me-2"></i>
+
+                                                                View Order
+
+                                                            </a>
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <% }) %>
+
+
+                                </div>
+
+
+                                <% } %>
+
+
+                    </div>
+
+                </div>
+                <%- include('layouts/footer') %>
+            </div>
+
+            

@@ -1,0 +1,208 @@
+<%- include("../layouts/header", { title: "Bank Settings" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-8">
+
+                        <div class="card shadow">
+
+                            <div class="card-header">
+
+                                <h4>
+
+                                    Bank Account Settings
+
+                                </h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <form action="/vendor/settings/bank" method="POST">
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Account Holder Name
+
+                                            </label>
+
+                                            <input type="text" name="accountHolder" class="form-control"
+                                                value="<%= bank.accountHolder || '' %>" required>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Bank Name
+
+                                            </label>
+
+                                            <input type="text" name="bankName" class="form-control"
+                                                value="<%= bank.bankName || '' %>" required>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Account Number
+
+                                            </label>
+
+                                            <input type="text" name="accountNumber" class="form-control"
+                                                value="<%= bank.accountNumber || '' %>" required>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Confirm Account Number
+
+                                            </label>
+
+                                            <input type="text" name="confirmAccountNumber" class="form-control"
+                                                value="<%= bank.accountNumber || '' %>" required>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                IFSC Code
+
+                                            </label>
+
+                                            <input type="text" name="ifscCode" class="form-control"
+                                                value="<%= bank.ifscCode || '' %>" required>
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label">
+
+                                                Branch Name
+
+                                            </label>
+
+                                            <input type="text" name="branchName" class="form-control"
+                                                value="<%= bank.branchName || '' %>">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            UPI ID
+
+                                        </label>
+
+                                        <input type="text" name="upiId" class="form-control"
+                                            value="<%= bank.upiId || '' %>">
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Account Type
+
+                                        </label>
+
+                                        <select name="accountType" class="form-select">
+
+                                            <option value="Savings" <%=bank.accountType==="Savings" ? "selected" : "" %>
+                                                >
+
+                                                Savings
+
+                                            </option>
+
+                                            <option value="Current" <%=bank.accountType==="Current" ? "selected" : "" %>
+                                                >
+
+                                                Current
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">
+
+                                        <i class="fas fa-save"></i>
+
+                                        Save Bank Details
+
+                                    </button>
+
+                                    <button type="reset" class="btn btn-warning">
+
+                                        Reset
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                document.querySelector("form").addEventListener("submit", function (e) {
+
+                    const account = document.querySelector("[name='accountNumber']").value;
+
+                    const confirm = document.querySelector("[name='confirmAccountNumber']").value;
+
+                    if (account !== confirm) {
+
+                        alert("Account numbers do not match.");
+
+                        e.preventDefault();
+
+                    }
+
+                });
+
+            </script>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

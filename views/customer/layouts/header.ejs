@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        <%= typeof pageTitle !=='undefined' ? pageTitle : 'Vhub - VendorHub Website' %>
+    </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    
+    <div class="container-fluid px-5 py-4 d-none d-lg-block">
+        <div class="row gx-0 align-items-center text-center">
+            <div class="col-md-4 col-lg-3 text-center text-lg-start">
+                <div class="d-inline-flex align-items-center">
+                    <a class="navbar-brand d-flex align-items-center" href="/">
+
+                        <div class="logo-circle">
+                            <img src="/images/auth/logo1.png" alt="VendorHub">
+                        </div>
+
+                        <div class="brand-text ms-3">
+
+                            <h4 class="brand-title mb-0">
+                                Vendor<span>Hub</span>
+                                <i class="fas fa-leaf brand-icon"></i>
+                            </h4>
+
+                            <p class="brand-subtitle mb-0">
+                                Sell • Manage • Grow
+                            </p>
+
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-6 text-center">
+    <div class="position-relative ps-4">
+
+        <form class="customer-search-form" action="/shop" method="GET">
+
+            <div class="search-box">
+
+                <!-- Search Input -->
+                <div class="search-field">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="text"
+                        name="q"
+                        value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+                        placeholder="Search products..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <!-- Category -->
+                <div class="category-field">
+
+                    <select name="category">
+
+                        <option value="">All Categories</option>
+
+                        <% if (typeof categories !== "undefined" && categories.length > 0) { %>
+
+                            <% categories.forEach(cat => { %>
+
+                                <option
+                                    value="<%= cat._id %>"
+                                    <%= typeof activeCategory !== "undefined" &&
+                                        activeCategory &&
+                                        activeCategory.toString() === cat._id.toString()
+                                        ? "selected"
+                                        : "" %>
+                                >
+                                    <%= cat.name %>
+                                </option>
+
+                            <% }) %>
+
+                        <% } %>
+
+                    </select>
+
+                </div>
+
+                <!-- Search Button -->
+                <button type="submit" class="search-btn">
+
+                    <i class="fas fa-search"></i>
+
+                    <span>Search</span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+            <div class="col-md-4 col-lg-3 text-center text-lg-end">
+                <div class="d-inline-flex align-items-center">
+                   
+                    <a href="/customer/wishlist" class="text-muted d-flex align-items-center justify-content-center me-3"><span
+                            class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></span></a>
+                    <a href="/customer/cart" class="text-muted d-flex align-items-center justify-content-center"><span
+                            class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span>
+                        <span class="text-dark ms-2">
+                        </span></a>
+                        <div class="dropdown">
+                        <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small><i
+                                    class="fa fa-home me-2"></i>
+                                <% if (typeof customer !=='undefined' && customer) { %>
+                                    <%= customer.name %>
+                                        <% } else { %>
+                                            My Dashboard
+                                            <% } %>
+                            </small></a>
+                        <div class="dropdown-menu rounded">
+                            <% if (typeof customer !=='undefined' && customer) { %>
+                                <a href="/customer/dashboard" class="dropdown-item"> My Dashboard</a>
+                                <a href="/wishlist" class="dropdown-item"> Wishlist</a>
+                                <a href="/cart" class="dropdown-item"> My Card</a>
+                                <a href="#" class="dropdown-item"> Notifications</a>
+                                <a href="#" class="dropdown-item"> Account Settings</a>
+                                <form action="/customer/logout" method="POST" class="m-0">
+                                    <button type="submit" class="dropdown-item"> Log Out</button>
+                                </form>
+                                <% } else { %>
+                                    <a href="/customer/login" class="dropdown-item"> Login</a>
+                                    <a href="/customer/register" class="dropdown-item"> Register</a>
+                                    <a href="/wishlist" class="dropdown-item"> Wishlist</a>
+                                    <a href="/cart" class="dropdown-item"> My Card</a>
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid nav-bar p-0">
+        <div class="row gx-0 bg-primary px-5 align-items-center">
+            <div class="col-lg-3 d-none d-lg-block">
+                <nav class="navbar navbar-light position-relative" style="width: 250px;">
+                    <button class="navbar-toggler border-0 fs-4 w-100 px-0 text-start" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#allCat">
+                        <h4 class="m-0"><i class="fa fa-bars me-2"></i>All Categories</h4>
+                    </button>
+                    <div class="collapse navbar-collapse rounded-bottom" id="allCat">
+                        <div class="navbar-nav ms-auto py-0">
+                            <ul class="list-unstyled categories-bars">
+                                <li>
+                                    <div class="categories-bars-item">
+                                        <a href="/shop?category=accessories">Accessories</a>
+                                        <span>(3)</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="categories-bars-item">
+                                        <a href="/shop?category=electronics">Electronics & Computer</a>
+                                        <span>(5)</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="categories-bars-item">
+                                        <a href="/shop?category=laptops">Laptops & Desktops</a>
+                                        <span>(2)</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="categories-bars-item">
+                                        <a href="/shop?category=mobiles">Mobiles & Tablets</a>
+                                        <span>(8)</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="categories-bars-item">
+                                        <a href="/shop?category=smartphones">SmartPhone & Smart TV</a>
+                                        <span>(5)</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-12 col-lg-9">
+                <nav class="navbar navbar-expand-lg navbar-light bg-primary ">
+                    <a href="/" class="navbar-brand d-block d-lg-none">
+                        <h1 class="display-5 text-secondary m-0"><i
+                                class="fas fa-shopping-bag text-white me-2"></i>Electro</h1>
+                    </a>
+                    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars fa-1x"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto py-0">
+                            <a href="/"
+                                class="nav-item nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Home</a>
+                            <a href="/shop"
+                                class="nav-item nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'shop' ? 'active' : '' %>">Shop</a>
+                            <!-- <a href="/product"
+                                class="nav-item nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'single' ? 'active' : '' %>">Single
+                                Page</a> -->
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu m-0">
+                                    <a href="/customer/bestseller" class="dropdown-item">Top Seller</a>
+                                    <a href="/customer/cart" class="dropdown-item">My Cart</a>
+                                    <a href="/customer/checkout" class="dropdown-item">Checkout</a>
+                                    <a href="/customer/orders" class="dropdown-item">My Order</a>
+                                </div>
+                            </div>
+                            <a href="/contact"
+                                class="nav-item nav-link me-2 <%= typeof currentPage !== 'undefined' && currentPage === 'contact' ? 'active' : '' %>">Contact</a>
+                            <div class="nav-item dropdown d-block d-lg-none mb-3">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">All Category</a>
+                                <div class="dropdown-menu m-0">
+                                    <ul class="list-unstyled categories-bars">
+                                        <li>
+                                            <div class="categories-bars-item">
+                                                <a href="/shop?category=accessories">Accessories</a>
+                                                <span>(3)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="categories-bars-item">
+                                                <a href="/shop?category=electronics">Electronics & Computer</a>
+                                                <span>(5)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="categories-bars-item">
+                                                <a href="/shop?category=laptops">Laptops & Desktops</a>
+                                                <span>(2)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="categories-bars-item">
+                                                <a href="/shop?category=mobiles">Mobiles & Tablets</a>
+                                                <span>(8)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="categories-bars-item">
+                                                <a href="/shop?category=smartphones">SmartPhone & Smart TV</a>
+                                                <span>(5)</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="tel:+01234567890"
+                            class="btn btn-secondary rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0"><i
+                                class="fa fa-mobile-alt me-2"></i> +0123 456 7890</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar & Hero End -->

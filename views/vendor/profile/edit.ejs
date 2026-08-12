@@ -1,0 +1,130 @@
+<%- include("../layouts/header",{title:title}) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-success text-white">
+
+                            <h4>Edit Profile</h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/vendor/profile/update" method="POST" enctype="multipart/form-data">
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label>Name</label>
+
+                                        <input type="text" name="name" class="form-control"
+                                            value="<%= vendor.user.name %>">
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label>Phone</label>
+
+                                        <input type="text" name="phone" class="form-control"
+                                            value="<%= vendor.user.phone %>">
+
+                                    </div>
+
+                                    <img src="<%= vendor.user.image ? vendor.user.image : '/images/auth/user.png' %>"
+                                        class="rounded-circle shadow"
+                                        style="width:180px;height:180px;object-fit:cover;">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Profile Image</label>
+
+
+                                        <input type="file" name="image" class="form-control" accept="image/*">
+
+
+                                        <% if(vendor.user.image){ %>
+                                            <img src="<%= vendor.user.image %>" class="img-thumbnail mt-2"
+                                                style="width:120px;height:120px;object-fit:cover;border-radius:50%;">
+                                            <% } %>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+
+                                        <label>GST Number</label>
+
+                                        <input type="text" name="gstNumber" class="form-control"
+                                            value="<%= vendor.gstNumber || '' %>">
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label>PAN Number</label>
+
+                                        <input type="text" name="panNumber" class="form-control"
+                                            value="<%= vendor.panNumber || '' %>">
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label>Aadhar Number</label>
+
+                                        <input type="text" name="aadharNumber" class="form-control"
+                                            value="<%= vendor.aadharNumber || '' %>">
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label>Store Name</label>
+
+                                        <input type="text" name="storeName" class="form-control"
+                                            value="<%= store ? store.storeName : '' %>">
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+
+                                        <label>Store Address</label>
+
+                                        <textarea name="address"
+                                            class="form-control"><%= store ? store.address : '' %></textarea>
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+
+                                        <label>Description</label>
+
+                                        <textarea name="description"
+                                            class="form-control"><%= store ? store.description : '' %></textarea>
+
+                                    </div>
+
+                                </div>
+
+                                <button class="btn btn-success">
+
+                                    Update Profile
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>

@@ -1,0 +1,344 @@
+<%- include("../layouts/header", { title: "Earnings Report" }) %>
+
+<%- include("../layouts/navbar") %>
+
+<%- include("../layouts/sidebar") %>
+
+<div class="container-fluid p-4">
+
+    <div class="card shadow">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h4>Earnings Report</h4>
+
+            <div>
+
+                <button onclick="window.print()" class="btn btn-secondary">
+
+                    <i class="fas fa-print"></i>
+
+                    Print
+
+                </button>
+
+                <a href="/vendor/reports/earnings/pdf"
+                   class="btn btn-danger">
+
+                    <i class="fas fa-file-pdf"></i>
+
+                    PDF
+
+                </a>
+
+                <a href="/vendor/reports/earnings/excel"
+                   class="btn btn-success">
+
+                    <i class="fas fa-file-excel"></i>
+
+                    Excel
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <!-- Date Filter -->
+
+            <form action="/vendor/reports/earnings" method="GET">
+
+                <div class="row mb-4">
+
+                    <div class="col-md-4">
+
+                        <label>From Date</label>
+
+                        <input type="date"
+                               name="from"
+                               class="form-control"
+                               value="<%= from || '' %>">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label>To Date</label>
+
+                        <input type="date"
+                               name="to"
+                               class="form-control"
+                               value="<%= to || '' %>">
+
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-end">
+
+                        <button class="btn btn-primary me-2">
+
+                            Filter
+
+                        </button>
+
+                        <a href="/vendor/reports/earnings"
+                           class="btn btn-secondary">
+
+                            Reset
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <!-- Summary Cards -->
+
+            <div class="row mb-4">
+
+                <div class="col-md-3">
+
+                    <div class="card bg-primary text-white">
+
+                        <div class="card-body text-center">
+
+                            <h6>Total Earnings</h6>
+
+                            <h3>₹ <%= totalEarnings %></h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card bg-success text-white">
+
+                        <div class="card-body text-center">
+
+                            <h6>Available Balance</h6>
+
+                            <h3>₹ <%= availableBalance %></h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card bg-warning">
+
+                        <div class="card-body text-center">
+
+                            <h6>Pending Payout</h6>
+
+                            <h3>₹ <%= pendingPayout %></h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card bg-danger text-white">
+
+                        <div class="card-body text-center">
+
+                            <h6>Withdrawn</h6>
+
+                            <h3>₹ <%= withdrawnAmount %></h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Chart -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+
+                    Monthly Earnings
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="earningChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <!-- Earnings Table -->
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Date</th>
+
+                        <th>Order No</th>
+
+                        <th>Customer</th>
+
+                        <th>Payment</th>
+
+                        <th>Status</th>
+
+                        <th>Amount</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <% if(earnings.length){ %>
+
+                        <% earnings.forEach((item,index)=>{ %>
+
+                            <tr>
+
+                                <td><%= index + 1 %></td>
+
+                                <td><%= item.createdAt.toDateString() %></td>
+
+                                <td><%= item.orderNumber %></td>
+
+                                <td><%= item.customer.name %></td>
+
+                                <td><%= item.paymentMethod %></td>
+
+                                <td>
+
+                                    <span class="badge bg-success">
+
+                                        <%= item.paymentStatus %>
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    ₹ <%= item.totalAmount %>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    <% } else { %>
+
+                        <tr>
+
+                            <td colspan="7" class="text-center">
+
+                                No Earnings Found
+
+                            </td>
+
+                        </tr>
+
+                    <% } %>
+
+                </tbody>
+
+            </table>
+
+            <!-- Pagination -->
+
+            <% if(totalPages > 1){ %>
+
+                <nav>
+
+                    <ul class="pagination justify-content-center">
+
+                        <% for(let i=1; i<=totalPages; i++){ %>
+
+                            <li class="page-item <%= currentPage==i ? 'active' : '' %>">
+
+                                <a class="page-link"
+
+                                   href="?page=<%= i %>">
+
+                                    <%= i %>
+
+                                </a>
+
+                            </li>
+
+                        <% } %>
+
+                    </ul>
+
+                </nav>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById("earningChart");
+
+new Chart(ctx,{
+
+    type:"line",
+
+    data:{
+
+        labels:JSON.stringify(monthLabels || []) ,
+
+        datasets:[{
+
+            label:"Monthly Earnings",
+
+            data:JSON.stringify(monthValues || []) ,
+
+            borderWidth:2,
+
+            fill:false
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true
+
+    }
+
+});
+
+</script>
+
+<%- include("../layouts/footer") %>
+
+<%- include("../layouts/scripts") %>

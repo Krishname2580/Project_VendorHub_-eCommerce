@@ -1,0 +1,166 @@
+<%- include("../layouts/header", { title: "Edit Category" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="row">
+
+                    <div class="col-md-8 mx-auto">
+
+                        <div class="card shadow">
+
+                            <div class="card-header bg-warning text-dark">
+
+                                <h4 class="mb-0">
+
+                                    Edit Category
+
+                                </h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <form action="/admin/category/update/<%= category._id %>" method="POST"
+                                    enctype="multipart/form-data">
+
+                                    <!-- Category Name -->
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Category Name
+
+                                        </label>
+
+                                        <input type="text" name="name" class="form-control" value="<%= category.name %>"
+                                            required>
+
+                                    </div>
+
+                                    <!-- Description -->
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Description
+
+                                        </label>
+
+                                        <textarea name="description" rows="4"
+                                            class="form-control"><%= category.description %></textarea>
+
+                                    </div>
+
+                                    <!-- Current Image -->
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Current Image
+
+                                        </label>
+
+                                        <br>
+
+                                        <img id="preview" src="<%= category.image %>" width="150"
+                                            class="img-thumbnail">
+
+                                    </div>
+
+                                    <!-- New Image -->
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Change Image
+
+                                        </label>
+
+                                        <input type="file" name="image" class="form-control" accept="image/*"
+                                            onchange="previewImage(event)">
+
+                                    </div>
+
+                                    <!-- Status -->
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Status
+
+                                        </label>
+
+                                        <select name="status" class="form-select">
+
+                                            <option value="true" <%=category.status ? "selected" : "" %>>
+
+                                                Active
+
+                                            </option>
+
+                                            <option value="false" <%=!category.status ? "selected" : "" %>>
+
+                                                Inactive
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Buttons -->
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <a href="/admin/category/list" class="btn btn-secondary">
+
+                                            Cancel
+
+                                        </a>
+
+                                        <button type="submit" class="btn btn-warning">
+
+                                            <i class="fas fa-edit"></i>
+
+                                            Update Category
+
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                function previewImage(event) {
+
+                    const preview = document.getElementById("preview");
+
+                    preview.src = URL.createObjectURL(event.target.files[0]);
+
+                }
+
+            </script>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

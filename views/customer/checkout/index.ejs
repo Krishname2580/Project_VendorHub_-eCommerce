@@ -1,0 +1,69 @@
+<h2>Checkout</h2>
+
+<h3>Delivery Address</h3>
+
+<select name="address" required>
+
+    <% addresses.forEach(address=>{ %>
+
+        <option value="<%= address._id %>" <%=address.isDefault ? "selected" : "" %>>
+
+            <%= address.fullName %>
+
+                -
+
+                <%= address.city %>
+
+                    -
+
+                    <%= address.addressLine1 %>
+
+        </option>
+
+        <% }) %>
+
+</select>
+
+<hr>
+
+<h3>Order Summary</h3>
+
+<p>Subtotal : ₹ <%= subtotal %>
+</p>
+
+<p>Shipping : ₹ <%= shippingCharge %>
+</p>
+
+<p>Tax : ₹ <%= tax %>
+</p>
+
+<h2>Total : ₹ <%= grandTotal %>
+</h2>
+
+<form action="/order/place" method="POST">
+
+    <input type="hidden" name="address" value="">
+
+    <select name="paymentMethod">
+
+        <option value="COD">
+
+            Cash On Delivery
+
+        </option>
+
+        <option value="Razorpay">
+
+            Razorpay
+
+        </option>
+
+    </select>
+
+    <button>
+
+        Place Order
+
+    </button>
+
+</form>

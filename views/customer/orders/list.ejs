@@ -1,0 +1,57 @@
+<h2>My Orders</h2>
+
+<table border="1">
+
+    <tr>
+
+        <th>Order No.</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Payment</th>
+        <th>Action</th>
+
+    </tr>
+
+    <% orders.forEach(order=>{ %>
+
+        <tr>
+
+            <td>
+
+                <%= order.orderNumber %>
+
+            </td>
+
+            <td>
+
+                ₹ <%= order.totalAmount %>
+
+            </td>
+
+            <td>
+
+                <%= order.orderStatus %>
+
+            </td>
+
+            <td>
+
+                <%= order.paymentStatus %>
+
+            </td>
+
+            <td>
+
+                <a href="/orders/<%= order._id %>">
+
+                    View
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        <% }) %>
+
+</table>

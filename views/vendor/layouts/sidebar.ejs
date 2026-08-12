@@ -1,0 +1,103 @@
+<div class="sidebar">
+
+    
+    <ul class="sidebar-menu">
+
+        <li>
+            <a href="/vendor/dashboard"
+                class="<%= req.originalUrl === '/vendor/dashboard' ? 'active' : '' %>">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/profile"
+                class="<%= req.originalUrl.startsWith('/vendor/profile') ? 'active' : '' %>">
+                <i class="fas fa-user-circle"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/store"
+                class="<%= req.originalUrl.startsWith('/vendor/store') ? 'active' : '' %>">
+                <i class="fas fa-store"></i>
+                <span>My Store</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/product/add"
+                class="<%= req.originalUrl === '/vendor/product/add' ? 'active' : '' %>">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Product</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/product/list"
+                class="<%= req.originalUrl.startsWith('/vendor/product/list') ? 'active' : '' %>">
+                <i class="fas fa-box-open"></i>
+                <span>Product List</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/product/pending"
+                class="<%= req.originalUrl.startsWith('/vendor/product/pending') ? 'active' : '' %>">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Pending Products</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/product/approved"
+                class="<%= req.originalUrl.startsWith('/vendor/product/approved') ? 'active' : '' %>">
+                <i class="fas fa-check-circle"></i>
+                <span>Approved Products</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/product/rejected"
+                class="<%= req.originalUrl.startsWith('/vendor/product/rejected') ? 'active' : '' %>">
+                <i class="fas fa-times-circle"></i>
+                <span>Rejected Products</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/orders"
+                class="<%= req.originalUrl.startsWith('/vendor/orders') ? 'active' : '' %>">
+                <i class="fas fa-shopping-bag"></i>
+                <span>Orders</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/report/dashboard"
+                class="<%= req.originalUrl.startsWith('/vendor/report') ? 'active' : '' %>">
+                <i class="fas fa-chart-pie"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/vendor/notification/list"
+                class="<%= req.originalUrl.startsWith('/vendor/notification') ? 'active' : '' %>">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="/auth/logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>

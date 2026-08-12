@@ -1,0 +1,172 @@
+<%- include("../layouts/header", { title: "Edit Notification" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-8">
+
+                            <div class="card shadow">
+
+                                <div class="card-header bg-warning text-dark">
+
+                                    <h4 class="mb-0">
+
+                                        <i class="fas fa-edit"></i>
+
+                                        Edit Notification
+
+                                    </h4>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <form action="/admin/notification/update/<%= notification._id %>" method="POST">
+
+                                        <div class="mb-3">
+
+                                            <label class="form-label">
+
+                                                Notification Title
+
+                                            </label>
+
+                                            <input type="text" name="title" class="form-control"
+                                                value="<%= notification.title %>" required>
+
+                                        </div>
+
+                                        <div class="mb-3">
+
+                                            <label class="form-label">
+
+                                                Notification Message
+
+                                            </label>
+
+                                            <textarea name="message" class="form-control" rows="5"
+                                                required><%= notification.message %></textarea>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+
+                                                    Notification Type
+
+                                                </label>
+
+                                                <select name="type" class="form-select" required>
+
+                                                    <option value="General" <%=notification.type==="General"
+                                                        ? "selected" : "" %>>
+                                                        General
+                                                    </option>
+
+                                                    <option value="Order" <%=notification.type==="Order" ? "selected"
+                                                        : "" %>>
+                                                        Order
+                                                    </option>
+
+                                                    <option value="Offer" <%=notification.type==="Offer" ? "selected"
+                                                        : "" %>>
+                                                        Offer
+                                                    </option>
+
+                                                    <option value="Payment" <%=notification.type==="Payment"
+                                                        ? "selected" : "" %>>
+                                                        Payment
+                                                    </option>
+
+                                                    <option value="System" <%=notification.type==="System" ? "selected"
+                                                        : "" %>>
+                                                        System
+                                                    </option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+
+                                                <label class="form-label">
+
+                                                    Send To
+
+                                                </label>
+
+                                                <select name="user" class="form-select">
+
+                                                    <option value="" <%=!notification.user ? "selected" : "" %>>
+                                                        All Users
+                                                    </option>
+
+                                                    <% if(vendors && vendors.length> 0){ %>
+
+                                                        <% vendors.forEach(vendor=> { %>
+
+                                                            <option value="<%= vendor._id %>" <%=notification.vendor &&
+                                                                notification.vendor.toString()===vendor._id.toString()
+                                                                ? "selected" : "" %>>
+
+                                                                <%= vendor.storeName || vendor.name || vendor.email %>
+
+                                                            </option>
+
+                                                            <% }) %>
+
+                                                                <% } %>
+
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="text-end">
+
+                                            <a href="/admin/notification/list" class="btn btn-secondary">
+
+                                                <i class="fas fa-arrow-left"></i>
+
+                                                Back
+
+                                            </a>
+
+                                            <button type="submit" class="btn btn-warning">
+
+                                                <i class="fas fa-save"></i>
+
+                                                Update Notification
+
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

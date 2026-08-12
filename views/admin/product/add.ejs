@@ -1,0 +1,457 @@
+<%- include("../layouts/header", { title: "Add Product" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+            <div class="content-body">
+                <div class="container-fluid p-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-primary text-white">
+
+                            <h4 class="mb-0">
+
+                                Add Product
+
+                            </h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/admin/product/create" method="POST" enctype="multipart/form-data">
+
+                                <div class="row">
+
+                                    <!-- Product Name -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Product Name
+
+                                        </label>
+
+                                        <input type="text" name="name" class="form-control" required>
+
+                                    </div>
+
+                                    <!-- Slug -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Slug
+
+                                        </label>
+
+                                        <input type="text" name="slug" class="form-control">
+
+                                    </div>
+
+                                    <!-- Vendor -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Vendor
+
+                                        </label>
+
+                                        <select name="vendor" class="form-select" required>
+
+                                            <option value="">Select Vendor</option>
+
+                                            <% vendors.forEach(vendor=>{ %>
+
+                                                <option value="<%= vendor._id %>">
+
+                                                    <%= vendor.storeName %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Store -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Store
+
+                                        </label>
+
+                                        <select name="store" class="form-select" required>
+
+                                            <option value="">Select Store</option>
+
+                                            <% stores.forEach(store=>{ %>
+
+                                                <option value="<%= store._id %>">
+
+                                                    <%= store.storeName %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Category -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Category
+
+                                        </label>
+
+                                        <select name="category" class="form-select" required>
+
+                                            <option value="">Select Category</option>
+
+                                            <% categories.forEach(category=>{ %>
+
+                                                <option value="<%= category._id %>">
+
+                                                    <%= category.name %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Brand -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Brand
+
+                                        </label>
+
+                                        <select name="brand" class="form-select">
+
+                                            <option value="">Select Brand</option>
+
+                                            <% brands.forEach(brand=>{ %>
+
+                                                <option value="<%= brand._id %>">
+
+                                                    <%= brand.name %>
+
+                                                </option>
+
+                                                <% }) %>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Price -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label">
+
+                                            Price
+
+                                        </label>
+
+                                        <input type="number" name="price" class="form-control" required>
+
+                                    </div>
+
+                                    <!-- Discount Price -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label">
+
+                                            Discount Price
+
+                                        </label>
+
+                                        <input type="number" name="discountPrice" class="form-control">
+
+                                    </div>
+
+                                    <!-- Stock -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label">
+
+                                            Stock
+
+                                        </label>
+
+                                        <input type="number" name="stock" class="form-control">
+
+                                    </div>
+
+                                    <!-- SKU -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            SKU
+
+                                        </label>
+
+                                        <input type="text" name="sku" class="form-control">
+
+                                    </div>
+
+                                    <!-- Weight -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+
+                                            Weight
+
+                                        </label>
+
+                                        <input type="number" step="0.01" name="weight" class="form-control">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Description -->
+
+                                <div class="col-md-12 mb-3">
+
+                                    <label class="form-label">
+
+                                        Description
+
+                                    </label>
+
+                                    <textarea name="description" rows="5" class="form-control" required></textarea>
+
+                                </div>
+
+                                <!-- Thumbnail -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Thumbnail Image
+
+                                    </label>
+
+                                    <input type="file" name="thumbnail" class="form-control" accept="image/*"
+                                        onchange="previewThumbnail(event)">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3 text-center">
+
+                                    <img id="thumbnailPreview" src="/images/no-image.png" width="180"
+                                        class="img-thumbnail">
+
+                                </div>
+
+                                <!-- Product Gallery -->
+
+                                <div class="col-md-12 mb-3">
+
+                                    <label class="form-label">
+
+                                        Product Gallery
+
+                                    </label>
+
+                                    <input type="file" name="images" class="form-control" multiple accept="image/*">
+
+                                </div>
+
+                                <!-- Dimensions -->
+
+                                <div class="col-md-4 mb-3">
+
+                                    <label class="form-label">
+
+                                        Length
+
+                                    </label>
+
+                                    <input type="number" step="0.01" name="length" class="form-control">
+
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+
+                                    <label class="form-label">
+
+                                        Width
+
+                                    </label>
+
+                                    <input type="number" step="0.01" name="width" class="form-control">
+
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+
+                                    <label class="form-label">
+
+                                        Height
+
+                                    </label>
+
+                                    <input type="number" step="0.01" name="height" class="form-control">
+
+                                </div>
+
+                                <!-- Status -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Product Status
+
+                                    </label>
+
+                                    <select name="status" class="form-select">
+
+                                        <option value="Pending">
+
+                                            Pending
+
+                                        </option>
+
+                                        <option value="Approved">
+
+                                            Approved
+
+                                        </option>
+
+                                        <option value="Rejected">
+
+                                            Rejected
+
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Options -->
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Product Options
+
+                                    </label>
+
+                                    <div class="form-check">
+
+                                        <input class="form-check-input" type="checkbox" name="isFeatured" value="true">
+
+                                        <label class="form-check-label">
+
+                                            Featured Product
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-check">
+
+                                        <input class="form-check-input" type="checkbox" name="isBestSeller"
+                                            value="true">
+
+                                        <label class="form-check-label">
+
+                                            Best Seller
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-check">
+
+                                        <input class="form-check-input" type="checkbox" name="isNewArrival"
+                                            value="true">
+
+                                        <label class="form-check-label">
+
+                                            New Arrival
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="/admin/product/list" class="btn btn-secondary">
+
+                                <i class="fas fa-arrow-left"></i>
+
+                                Back
+
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+
+                                <i class="fas fa-save"></i>
+
+                                Save Product
+
+                            </button>
+
+                        </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                function previewThumbnail(event) {
+
+                    const preview = document.getElementById("thumbnailPreview");
+
+                    preview.src = URL.createObjectURL(event.target.files[0]);
+
+                }
+
+            </script>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

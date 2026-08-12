@@ -1,0 +1,182 @@
+<%- include("../layouts/header", { title: "Add Coupon" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="card shadow">
+
+                    <div class="card-header d-flex justify-content-between align-items-center">
+
+                        <h4>Add Coupon</h4>
+
+                        <a href="/vendor/coupons" class="btn btn-secondary">
+
+                            Back
+
+                        </a>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="/vendor/coupons/create" method="POST">
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">Coupon Code</label>
+
+                                    <input type="text" name="code" class="form-control" placeholder="WELCOME10"
+                                        required>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">Discount Type</label>
+
+                                    <select name="discountType" class="form-select" required>
+
+                                        <option value="">Select</option>
+
+                                        <option value="Percentage">
+
+                                            Percentage
+
+                                        </option>
+
+                                        <option value="Fixed">
+
+                                            Fixed Amount
+
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">Discount Value</label>
+
+                                    <input type="number" name="discountValue" class="form-control" required>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Minimum Order Amount
+
+                                    </label>
+
+                                    <input type="number" name="minimumOrderAmount" class="form-control" value="0">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Maximum Discount
+
+                                    </label>
+
+                                    <input type="number" name="maximumDiscount" class="form-control">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Usage Limit
+
+                                    </label>
+
+                                    <input type="number" name="usageLimit" class="form-control" value="1">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Start Date
+
+                                    </label>
+
+                                    <input type="date" name="startDate" class="form-control" required>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Expiry Date
+
+                                    </label>
+
+                                    <input type="date" name="expiryDate" class="form-control" required>
+
+                                </div>
+
+                                <div class="col-md-12 mb-4">
+
+                                    <label class="form-label">
+
+                                        Status
+
+                                    </label>
+
+                                    <select name="status" class="form-select">
+
+                                        <option value="true">
+
+                                            Active
+
+                                        </option>
+
+                                        <option value="false">
+
+                                            Inactive
+
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="btn btn-success">
+
+                                <i class="fas fa-save"></i>
+
+                                Save Coupon
+
+                            </button>
+
+                            <button type="reset" class="btn btn-warning">
+
+                                Reset
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

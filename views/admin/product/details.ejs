@@ -1,0 +1,317 @@
+<%- include("../layouts/header", { title: "Product Details" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+            <div class="content-body">
+                <div class="container-fluid p-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-info text-white">
+
+                            <h4 class="mb-0">
+
+                                Product Details
+
+                            </h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <!-- Thumbnail -->
+
+                                <div class="col-md-4 text-center">
+
+                                    <% if(product.thumbnail){ %>
+
+                                        <img src="<%= product.thumbnail %>"
+                                            class="img-fluid rounded shadow" style="max-height:300px;">
+
+                                        <% } else { %>
+
+                                            <img src="/images/auth/default-product.png" class="img-fluid rounded shadow"
+                                                style="max-height:300px;">
+
+                                            <% } %>
+
+                                </div>
+
+                                <!-- Product Information -->
+
+                                <div class="col-md-8">
+
+                                    <table class="table table-bordered">
+
+                                        <tr>
+                                            <th width="220">Product Name</th>
+                                            <td>
+                                                <%= product.name %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Slug</th>
+                                            <td>
+                                                <%= product.slug %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>SKU</th>
+                                            <td>
+                                                <%= product.sku %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Vendor</th>
+                                            <td>
+                                                <%= product.vendor ? product.vendor.storeName : "-" %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Store</th>
+                                            <td>
+                                                <%= product.store ? product.store.storeName : "-" %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Category</th>
+                                            <td>
+                                                <%= product.category ? product.category.name : "-" %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Brand</th>
+                                            <td>
+                                                <%= product.brand ? product.brand.name : "-" %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Price</th>
+                                            <td>₹ <%= product.price %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Discount Price</th>
+                                            <td>₹ <%= product.discountPrice %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Stock</th>
+                                            <td>
+                                                <%= product.stock %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Weight</th>
+                                            <td>
+                                                <%= product.weight %> Kg
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Dimensions</th>
+                                            <td>
+                                                <%= product.dimensions.length %> ×
+                                                    <%= product.dimensions.width %> ×
+                                                        <%= product.dimensions.height %>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Status</th>
+
+                                            <td>
+
+                                                <% if(product.status=="Approved" ){ %>
+
+                                                    <span class="badge bg-success">
+
+                                                        Approved
+
+                                                    </span>
+
+                                                    <% } else if(product.status=="Pending" ){ %>
+
+                                                        <span class="badge bg-warning text-dark">
+
+                                                            Pending
+
+                                                        </span>
+
+                                                        <% } else { %>
+
+                                                            <span class="badge bg-danger">
+
+                                                                Rejected
+
+                                                            </span>
+
+                                                            <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Featured</th>
+
+                                            <td>
+
+                                                <%= product.isFeatured ? "Yes" : "No" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Best Seller</th>
+
+                                            <td>
+
+                                                <%= product.isBestSeller ? "Yes" : "No" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>New Arrival</th>
+
+                                            <td>
+
+                                                <%= product.isNewArrival ? "Yes" : "No" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Description</th>
+
+                                            <td>
+
+                                                <%= product.description %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Created At</th>
+
+                                            <td>
+
+                                                <%= product.createdAt.toLocaleString() %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>Updated At</th>
+
+                                            <td>
+
+                                                <%= product.updatedAt.toLocaleString() %>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <!-- Product Gallery -->
+
+                            <h5 class="mb-3">
+
+                                Product Gallery
+
+                            </h5>
+
+                            <div class="row">
+
+                                <% if(product.images.length> 0){ %>
+
+                                    <% product.images.forEach(image=>{ %>
+
+                                        <div class="col-md-2 mb-3">
+
+                                            <img src="<%= image.imageUrl %>" class="img-fluid rounded border shadow">
+
+                                        </div>
+
+                                        <% }) %>
+
+                                            <% } else { %>
+
+                                                <div class="col-md-12">
+
+                                                    <div class="alert alert-warning">
+
+                                                        No Gallery Images Available
+
+                                                    </div>
+
+                                                </div>
+
+                                                <% } %>
+
+                            </div>
+
+                            <hr>
+
+                            <div class="text-end">
+
+                                <a href="/admin/product/list" class="btn btn-secondary">
+
+                                    <i class="fas fa-arrow-left"></i>
+
+                                    Back
+
+                                </a>
+
+                                <a href="/admin/product/edit/<%= product._id %>" class="btn btn-warning">
+
+                                    <i class="fas fa-edit"></i>
+
+                                    Edit Product
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

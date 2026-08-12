@@ -1,0 +1,207 @@
+<%- include("../layouts/header", { title: "Category List" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <!-- Main Content -->
+            <div class="content-body">
+
+                <div class="container-fluid">
+
+                    <!-- Page Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+                            <h2 class="fw-bold mb-1">
+                                <i class="fas fa-layer-group text-primary me-2"></i>
+                                Category Management
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Manage all product categories
+                            </p>
+                        </div>
+
+                        <a href="/admin/category/add" class="btn btn-primary shadow">
+                            <i class="fas fa-plus-circle me-2"></i>
+                            Add Category
+                        </a>
+
+                    </div>
+
+                    <!-- Card -->
+                    <div class="card border-0 shadow-lg rounded-4">
+
+                        <div class="card-header bg-white border-0 py-3">
+
+                            <h5 class="mb-0 fw-bold">
+                                Category List
+                            </h5>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+
+                                <table class="table table-hover align-middle datatable">
+
+                                    <thead class="table-primary">
+
+                                        <tr class="text-center">
+
+                                            <th>#</th>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Created</th>
+                                            <th width="230">Actions</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        <% if(categories.length> 0){ %>
+
+                                            <% categories.forEach((category,index)=>{ %>
+
+                                                <tr>
+
+                                                    <td class="text-center fw-bold">
+
+                                                        <%= index + 1 %>
+
+                                                    </td>
+
+                                                    <td class="text-center">
+
+                                                        <img src="<%= category.image %>" class="rounded-circle shadow"
+                                                            width="60" height="60" style="object-fit:cover;">
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <strong>
+
+                                                            <%= category.name %>
+
+                                                        </strong>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <%= category.description %>
+
+                                                    </td>
+
+                                                    <td class="text-center">
+
+                                                        <% if(category.status){ %>
+
+                                                            <span class="badge bg-success px-3 py-2">
+
+                                                                Active
+
+                                                            </span>
+
+                                                            <% }else{ %>
+
+                                                                <span class="badge bg-danger px-3 py-2">
+
+                                                                    Inactive
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                                    </td>
+
+                                                    <td class="text-center">
+
+                                                        <%= category.createdAt.toDateString() %>
+
+                                                    </td>
+
+                                                    <td class="text-center">
+
+                                                        <a href="/admin/category/details/<%= category._id %>"
+                                                            class="btn btn-info btn-sm text-white">
+
+                                                            <i class="fas fa-eye"></i>
+
+                                                        </a>
+
+                                                        <a href="/admin/category/edit/<%= category._id %>"
+                                                            class="btn btn-warning btn-sm">
+
+                                                            <i class="fas fa-edit"></i>
+
+                                                        </a>
+
+                                                        <a href="/admin/category/change-status/<%= category._id %>"
+                                                            class="btn btn-secondary btn-sm">
+
+                                                            <i class="fas fa-sync-alt"></i>
+
+                                                        </a>
+
+                                                        <a href="/admin/category/delete/<%= category._id %>"
+                                                            class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Delete this category?')">
+
+                                                            <i class="fas fa-trash"></i>
+
+                                                        </a>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <% }) %>
+
+                                                    <% }else{ %>
+
+                                                        <tr>
+
+                                                            <td colspan="7" class="text-center py-5">
+
+                                                                <img src="/images/no-data.svg" width="180" class="mb-3">
+
+                                                                <h5>No Categories Found</h5>
+
+                                                                <p class="text-muted">
+
+                                                                    Click the "Add Category" button to create your first
+                                                                    category.
+
+                                                                </p>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <% } %>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

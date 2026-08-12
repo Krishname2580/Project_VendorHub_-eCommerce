@@ -1,0 +1,213 @@
+<%- include("../layouts/header", { title: "Customer Details" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="main-content">
+
+                <div class="container-fluid py-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-primary text-white">
+
+                            <h4>
+
+                                Customer Details
+
+                            </h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-md-4 text-center">
+
+                                    <% if(customer.image){ %>
+
+                                        <img src="<%= customer.image %>" width="220" class="img-thumbnail rounded">
+
+                                        <% }else{ %>
+
+                                            <img src="/images/no-user.png" width="220" class="img-thumbnail rounded">
+
+                                            <% } %>
+
+                                </div>
+
+                                <div class="col-md-8">
+
+                                    <table class="table table-bordered">
+
+                                        <tr>
+
+                                            <th width="220">
+
+                                                Name
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= customer.name %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Email
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= customer.email %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Phone
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= customer.phone %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Role
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= customer.role.roleName %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Verified
+
+                                            </th>
+
+                                            <td>
+
+                                                <% if(customer.isVerified){ %>
+
+                                                    <span class="badge bg-success">
+
+                                                        Verified
+
+                                                    </span>
+
+                                                    <% }else{ %>
+
+                                                        <span class="badge bg-warning text-dark">
+
+                                                            Pending
+
+                                                        </span>
+
+                                                        <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Account Status
+
+                                            </th>
+
+                                            <td>
+
+                                                <% if(customer.isBlocked){ %>
+
+                                                    <span class="badge bg-danger">
+
+                                                        Blocked
+
+                                                    </span>
+
+                                                    <% }else{ %>
+
+                                                        <span class="badge bg-success">
+
+                                                            Active
+
+                                                        </span>
+
+                                                        <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th>
+
+                                                Registered On
+
+                                            </th>
+
+                                            <td>
+
+                                                <%= new Date(customer.createdAt).toLocaleString() %>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+                                    <a href="/admin/customer/list" class="btn btn-secondary">
+
+                                        <i class="fas fa-arrow-left"></i>
+
+                                        Back
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>

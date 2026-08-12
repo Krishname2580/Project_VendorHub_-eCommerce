@@ -1,0 +1,161 @@
+<%- include("../layouts/header", { title: "Payout History" }) %>
+
+    <%- include("../layouts/navbar") %>
+
+        <%- include("../layouts/sidebar") %>
+
+            <div class="container-fluid p-4">
+
+                <div class="card shadow">
+
+                    <div class="card-header d-flex justify-content-between align-items-center">
+
+                        <h4>Payout History</h4>
+
+                        <a href="/vendor/payouts/request" class="btn btn-success">
+
+                            <i class="fas fa-plus-circle"></i>
+
+                            Request Payout
+
+                        </a>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-bordered table-hover">
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th>#</th>
+
+                                    <th>Request Date</th>
+
+                                    <th>Amount</th>
+
+                                    <th>Bank</th>
+
+                                    <th>Account No.</th>
+
+                                    <th>Status</th>
+
+                                    <th>Paid Date</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <% if(payouts.length){ %>
+
+                                    <% payouts.forEach((payout,index)=>{ %>
+
+                                        <tr>
+
+                                            <td>
+                                                <%= index+1 %>
+                                            </td>
+
+                                            <td>
+
+                                                <%= payout.createdAt.toDateString() %>
+
+                                            </td>
+
+                                            <td>
+
+                                                ₹ <%= payout.amount %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <%= payout.bankName %>
+
+                                            </td>
+
+                                            <td>
+
+                                                ****<%= payout.accountNumber.slice(-4) %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <% if(payout.status=="Pending" ){ %>
+
+                                                    <span class="badge bg-warning text-dark">
+
+                                                        Pending
+
+                                                    </span>
+
+                                                    <% }else if(payout.status=="Approved" ){ %>
+
+                                                        <span class="badge bg-info">
+
+                                                            Approved
+
+                                                        </span>
+
+                                                        <% }else if(payout.status=="Paid" ){ %>
+
+                                                            <span class="badge bg-success">
+
+                                                                Paid
+
+                                                            </span>
+
+                                                            <% }else{ %>
+
+                                                                <span class="badge bg-danger">
+
+                                                                    Rejected
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                            </td>
+
+                                            <td>
+
+                                                <%= payout.paidAt ? payout.paidAt.toDateString() : "-" %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <% }) %>
+
+                                            <% }else{ %>
+
+                                                <tr>
+
+                                                    <td colspan="7" class="text-center">
+
+                                                        No payout requests found.
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <% } %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <%- include("../layouts/footer") %>
+
+                <%- include("../layouts/scripts") %>
