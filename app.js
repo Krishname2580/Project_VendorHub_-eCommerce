@@ -153,12 +153,11 @@ app.use("/customer", customerOrderRoute);
 const customerWishlistRoute = require("./app/routes/customer/customerWishlistRoute");
 app.use("/customer", customerWishlistRoute);
 
-const Port = 5006
+const PORT = process.env.PORT || 5006;
 
-app.listen(Port, () => {
-    console.log(`server is running on port ${Port}`)
-})
-
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 
 
